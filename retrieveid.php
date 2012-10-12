@@ -6,7 +6,7 @@ require_once('retrieveid_class.php');
 
 switch ($_GET['form']){
 	case "clients":
-		$example = "NOM, PRENOM, DATE DE NAISSANCE";
+		$example = "NOM, PRENOM, DATE DE NAISSANCE, (ID)";
 		$label = "Client";
 	break;
 

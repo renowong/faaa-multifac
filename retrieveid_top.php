@@ -18,7 +18,7 @@ function buildOptionsPersonnes($form) {
             $query = "SELECT `clientid`, `clientnom`, `clientprenom`, `clientdatenaissance` FROM `".DB."`.`clients` ORDER BY clientnom";
             $result = $Mysqli->query($query);
             while($row = $result->fetch_array(MYSQLI_ASSOC)){
-                echo '<option style="text-align:left" value="'.$row['clientid'].'">'.strtoupper($row['clientnom']).", ".strtoupper($row['clientprenom']).", ".date("d-m-Y",strtotime($row[clientdatenaissance])).'</option>';
+                echo '<option style="text-align:left" value="'.$row['clientid'].'">'.strtoupper($row['clientnom']).", ".strtoupper($row['clientprenom']).", ".date("d-m-Y",strtotime($row[clientdatenaissance])).", (".$row[clientid].')</option>';
             }
         break;
         
