@@ -1,0 +1,134 @@
+<?php
+require_once('checksession.php'); //already includes config.php
+
+//###############################procedures#####################################
+if (!empty($_SESSION['client'])) {
+                $arCompte = getCompteDisplay();
+                $arCompte = preg_split("/,/", $arCompte);
+        }
+
+
+//###############################variables######################################
+
+//#################################building forms################################
+$listfacture_avalider = getAllFactures($arCompte[1],$arCompte[2]);
+$listfacture_validees = getPaidFactures($arCompte[1],$arCompte[2]);
+
+//#################################functions#####################################
+function getAllFactures($id,$type){
+	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+	switch($type){
+		case "client":
+		$query = "SELECT * FROM `".DB."`.`factures_cantine` WHERE `reglement` = 0 AND `acceptation` = 1 AND `idclient` = $id";
+		//echo $query;
+		$result = $mysqli->query($query);
+		while($row = $result->fetch_array(MYSQLI_ASSOC)){
+			if($row["repas"]=='1'){$typef="repas";}else{$typef="cantine";}
+		$output .= "<tr><td>$typef</td>";
+		$output .= "<td>Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)";
+		if($row["restearegler"]!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : ".$row["restearegler"]." FCP";}
+		$output .= "<br/>Obs : ".$row["obs"];
+		$output .= "</td><td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=$typef\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
+		$output .= "<td style=\"text-align:center\"><a href=\"javascript:paiement('".$row["idfacture"]."','$typef')\"><img src=\"img/visa-icon.png\" height=\"32\" style=\"border:0px\"></a></td>";
+		}
+		break;
+		
+		case "mandataire":
+		$query = "SELECT * FROM `".DB."`.`factures_etal` WHERE `reglement` = 0 AND `acceptation` = 1 AND `idclient` = $id";
+		//echo $query;
+		$result = $mysqli->query($query);
+		while($row = $result->fetch_array(MYSQLI_ASSOC)){
+		$output .= "<tr><td>place et &eacute;tal</td>";
+		$output .= "<td>Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)";
+		if($row["restearegler"]!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : ".$row["restearegler"]." FCP";}
+		$output .= "<br/>Obs : ".$row["obs"];
+		$output .= "</td><td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=etal\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
+		$output .= "<td style=\"text-align:center\"><a href=\"javascript:paiement('".$row["idfacture"]."','etal')\"><img src=\"img/visa-icon.png\" height=\"32\" style=\"border:0px\"></a></td>";
+		}
+		break;
+	}
+
+	$mysqli->close();
+	return $output;
+}
+
+function getPaidFactures($id,$type){
+    $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+	
+	switch($type){
+		case "client":
+			$query = "SELECT `factures_cantine`.`idfacture`, `factures_cantine`.`datefacture`, `factures_cantine`.`communeid`, `factures_cantine`.`montantfcp`, `factures_cantine`.`montanteuro`, `factures_cantine`.`repas`".
+			", `paiements`.`date_paiement`, `paiements`.`payeur`, `paiements`.`mode`, `paiements`.`montantcfp`, `paiements`.`idpaiement`, `paiements`.`obs` FROM `".DB."`.`factures_cantine` ".
+			" JOIN `".DB."`.`paiements` ON `factures_cantine`.`idfacture`=`paiements`.`idfacture` WHERE `factures_cantine`.`reglement` = 1 AND `factures_cantine`.`acceptation` = 1 AND `factures_cantine`.`idclient` = $id ORDER BY `paiements`.`idpaiement` DESC LIMIT 10";
+			//echo $query;
+			$result = $mysqli->query($query);
+			while($row = $result->fetch_array(MYSQLI_ASSOC)){
+			if($row["repas"]=="1"){$typef="repas";}else{$typef="cantine";}
+			$output .= "<tr><td>$typef</td>".
+			"<td>Facture ".$row["communeid"]." du ".standarddateformat($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)<br/>".
+			"- R&eacute;gl&eacute;e la somme de <b>".trispace($row["montantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".standarddateformat($row["date_paiement"]).")<br/>".
+			"- Obs: ".$row["obs"]."</td>".
+			"<td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=$typef\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>".
+			"<td style=\"text-align:center\"><a href=\"createrecu.php?id=".$row['idpaiement']."&type=$typef\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
+			}
+		break;
+		
+		case "mandataire":
+			$query = "SELECT `factures_etal`.`idfacture`, `factures_etal`.`datefacture`, `factures_etal`.`communeid`, `factures_etal`.`montantfcp`, `factures_etal`.`montanteuro`".
+			", `paiements`.`date_paiement`, `paiements`.`payeur`, `paiements`.`mode`, `paiements`.`montantcfp`, `paiements`.`idpaiement`, `paiements`.`obs` FROM `".DB."`.`factures_etal` ".
+			" JOIN `".DB."`.`paiements` ON `factures_etal`.`idfacture`=`paiements`.`idfacture` WHERE `factures_etal`.`reglement` = 1 AND `factures_etal`.`acceptation` = 1 AND `factures_etal`.`idclient` = $id ORDER BY `paiements`.`idpaiement` DESC LIMIT 10";
+			//echo $query;
+			$result = $mysqli->query($query);
+			while($row = $result->fetch_array(MYSQLI_ASSOC)){
+			$output .= "<tr><td>place et &eacute;tal</td>".
+			"<td>Facture ".$row["communeid"]." du ".standarddateformat($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)<br/>".
+			"- R&eacute;gl&eacute;e la somme de <b>".trispace($row["montantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".standarddateformat($row["date_paiement"]).")<br/>".
+			"- Obs: ".$row["obs"]."</td>".
+			"<td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=etal\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>".
+			"<td style=\"text-align:center\"><a href=\"createrecu.php?id=".$row['idpaiement']."&type=etal\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
+			}
+		break;
+	}
+	$mysqli->close();
+	return $output;		
+}
+
+function standarddateformat($input){
+		$arr = explode('-', $input);
+		return $arr[2].'-'.$arr[1].'-'.$arr[0];
+}
+
+function translatemode($input){
+		switch($input){
+		case "num":
+			$mode = "Num&eacute;raire";	
+		break;
+
+		case "chq":
+			$mode = "Ch&egrave;que";	
+		break;
+
+		case "vir":
+			$mode = "Virement";	
+		break;
+				
+		case "tsr":
+			$mode = "Tr&eacute;sor";	
+		break;
+
+		case "anl":
+			$mode = "<b>Annulation</b>";	
+		break;
+
+		case "tpe":
+			$mode = "TPE";	
+		break;
+				
+		default:
+			$mode = "ERREUR TRADUCTION MODE";
+		break;
+		}
+		return $mode;
+}
+
+?>

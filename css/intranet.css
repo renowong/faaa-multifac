@@ -1,0 +1,291 @@
+/*////////HTML TAGS/////////////////////////*/
+body {
+	margin:0px;
+	font-size: 12px;
+	text-align:center;
+	font-family:arial,tahoma;
+	height:100%;
+	background:url(../img/bg.png) no-repeat fixed top;
+}
+
+label {
+	float:inherit;
+	width:25%;
+	margin-right:0.5em;
+	padding-top:0.2em;
+	text-align:right;
+	font-weight:bold;
+	display:inline;
+}
+
+h1 {
+	font-family: helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+p {
+	font-family: helvetica, sans-serif;
+	font-weight: normal;
+	font-size: 12px;
+}
+
+table{
+	margin-left: auto;
+	margin-right: auto;
+	background: lightyellow;
+}
+
+td{
+	border:dotted 1px #000;
+	padding:5px;
+	vertical-align:top;
+	font-family: helvetica, sans-serif;
+	font-size: 12px;
+}
+
+th{
+	border:dotted 1px #000;
+	font-family: helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	background-color: grey;
+	/*padding:15px;*/
+}
+
+input, select {
+	/*border:1px solid #006;*/
+	border: #999 1px solid;
+	font-family: helvetica, sans-serif;
+	font-weight: normal;
+	font-size: 12px
+}
+
+/*////////ID TAGS/////////////////////////*/
+#compte_div {
+	position:absolute;
+	border:2px solid red;
+	background:yellow;
+	padding:3px;
+	text-align:center;
+	right:0px;
+	top:0px;
+	width:auto;
+	z-index:2;
+	display:none;
+}
+
+#message {
+	position:absolute;
+	font-family:arial,tahoma;
+	font-size:12px;
+	font-weight:bold;
+	border-top:solid 2px #999999;
+	border-bottom:solid 2px #999999;
+	background-color:yellow;
+	width:100%;
+	z-index:1;
+	display:none;
+	}
+
+#invalidation {
+        position:relative;
+        font-family:arial,tahoma;
+        font-size:12px;
+        border-top:solid 2px #999999;
+        border-bottom:solid 2px #999999;
+        background-color:orange;
+        width:100%;
+        visibility:visible;
+        }
+
+#version {
+	position:absolute;
+	/*border:2px solid;*/
+	text-align:right;
+	right:1px;
+	bottom:1px;
+	width:auto;
+	z-index:1;
+}
+
+#addkid {
+	position:absolute;
+        top:200px;
+	z-index:3;
+	width:100%;
+	visibility:hidden;	
+}
+
+#opaquediv {
+	position:absolute;
+	top:0px;
+        width:100%;
+        height:100%;
+	background-color:black;
+        z-index:2;
+	/*opacity:0.8;*/
+	/*visibility:hidden;*/
+}
+
+#seeall {
+	position: fixed;
+	border:2px solid black;
+	background:yellow;
+	padding:3px;
+	margin: 0 auto;
+	left: 300px;
+	top: 25px;
+	width:600px;
+	height:75%;
+	z-index:3;
+	overflow:scroll;
+}
+
+/*#confirm {*/
+/*	position:relative;*/
+/*	top: 250px;*/
+/*	width: 450px;*/
+/*	height: 100px;*/
+/*	padding: 0.5em;*/
+/*	background-color:white;*/
+/*	margin-left: auto;*/
+/*	margin-right: auto;*/
+/*}*/
+
+#progress {
+	position:relative;
+	top: 250px;
+	width: 450px;
+	height: 100px;
+	padding: 0.5em;
+	background-color:white;
+	margin-left: auto;
+	margin-right: auto;
+	/*z-index: 3;*/
+}
+
+/*#divlogin {*/
+/*	position:absolute;*/
+/*	top: 250px;*/
+/*	width: 100%;*/
+/*	height: 100px;*/
+/*	padding: 0.5em;*/
+/*	margin-left: auto;*/
+/*	margin-right: auto;*/
+/*}*/
+/*////////CLASSES/////////////////////////*/
+
+.close {
+	display:inline;
+	border:0px;
+	width:16px;
+	height:16px;
+	margin-left:1em;
+	vertical-align:text-bottom;
+}
+
+.inputbox {
+	text-align:right;
+	}
+
+.legend {
+	font-style:italic;
+}
+
+.tblform {
+	position:relative;
+	border-style:solid;
+	border-width:2px;
+	border-color:#999999;
+	font-family:arial,tahoma;
+	font-size:12px;
+	background-color:#e9e8e8;
+	border-collapse:collapse;
+	}
+
+.hidden{
+	display:none;
+}
+
+.capitalize {
+	text-transform: capitalize;
+}
+
+.uppercase {
+	text-transform: uppercase;
+}
+
+.lowercase {
+	text-transform: lowercase;
+}
+
+/*.submit {*/
+/*	border:1px solid #006;*/
+/*	/*float: right;*/*/
+/*}*/
+
+.error {
+	display:block;
+	margin-left:0px;
+	color: #ff0000;
+}
+
+.red {
+	color: red;
+}
+
+.blue {
+	color: blue;
+}
+
+.right{
+	text-align:right;
+}
+
+.center{
+	text-align:center;
+}
+
+.left{
+	text-align:right;
+}
+
+td.collapsable{
+	visibility:collapse;
+}
+
+.italique{
+	font-style:italic;
+	font-size:xx-small;
+}
+
+/*////////PSEUDO AND SPECIFICS/////////////////////////*/
+a.compte {
+	font-weight:bold;
+	font-family:arial,tahoma;
+	color:black;
+}
+a.compte:link, a.compte:hover, a.compte:visited {
+	font-weight:bold;
+	text-decoration:none;
+	color:#000;
+}
+
+a:link, a:visited, a:hover {
+	font-size:12px;
+	font-weight:normal;
+	text-decoration:underline;
+	color:blue;
+}
+
+a.crossed:link, a.crossed:visited {
+	text-decoration: line-through;
+}
+
+/*///////////CURSORS///////////////////////////////////*/}
+.mousehand {
+	cursor: pointer;
+}
+
+img {border:none;}
