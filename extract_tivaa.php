@@ -263,6 +263,7 @@ function get_all($sql_db,$sql_df){
         foreach($result_array as $value){
                 $year = substr($value["date_paiement"],0,4);
                 $enfant = get_enfants($value["idfacture"]);
+                if($value["mode"]=='anl'){$value["montantcfp"]=0;}
                 $output .= '<Row ss:Height="12.8952">';
                 $output .= '<Cell><Data ss:Type="String">CANTECO</Data></Cell>';
 		$output .= '<Cell><Data ss:Type="String">'.reversedate($value["date_paiement"]).'</Data></Cell>';
