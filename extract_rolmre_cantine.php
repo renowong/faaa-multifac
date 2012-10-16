@@ -11,129 +11,14 @@ $data = get_all($sql_db,$sql_df);
 $file = "extract/temp.xml";
 
 $fh = fopen($file, 'w') or die("can't open file");
-$stringData = '<?xml version="1.0" encoding="UTF-8"?>';
-fwrite($fh, $stringData);
-$stringData = '<?mso-application progid="Excel.Sheet"?>';
-fwrite($fh, $stringData);
-$stringData = '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:c="urn:schemas-microsoft-com:office:component:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x2="http://schemas.microsoft.com/office/excel/2003/xml" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
-fwrite($fh, $stringData);
-$stringData = '<OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office"><Colors><Color><Index>3</Index><RGB>#c0c0c0</RGB></Color></Colors></OfficeDocumentSettings>';
-fwrite($fh, $stringData);
-$stringData = '<ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel"><WindowHeight>9000</WindowHeight><WindowWidth>13860</WindowWidth><WindowTopX>240</WindowTopX><WindowTopY>75</WindowTopY><ProtectStructure>False</ProtectStructure><ProtectWindows>False</ProtectWindows></ExcelWorkbook>';
-fwrite($fh, $stringData);
-$stringData = '<Styles><Style ss:ID="Default" ss:Name="Default"/><Style ss:ID="Result" ss:Name="Result"><Font ss:Bold="1" ss:Italic="1" ss:Underline="Single"/></Style><Style ss:ID="Result2" ss:Name="Result2"><Font ss:Bold="1" ss:Italic="1" ss:Underline="Single"/><NumberFormat ss:Format="Currency"/></Style><Style ss:ID="Heading" ss:Name="Heading"><Font ss:Bold="1" ss:Italic="1" ss:Size="16"/></Style><Style ss:ID="Heading1" ss:Name="Heading1"><Font ss:Bold="1" ss:Italic="1" ss:Size="16"/></Style><Style ss:ID="co2"/><Style ss:ID="co3"/><Style ss:ID="co4"/><Style ss:ID="co5"/><Style ss:ID="co6"/><Style ss:ID="co7"/><Style ss:ID="ta1"/><Style ss:ID="ce1"><Alignment ss:Horizontal="Center" ss:Vertical="Center"/></Style><Style ss:ID="ce2"><Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/><Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/></Borders></Style><Style ss:ID="ce3"><Alignment ss:Horizontal="Left" ss:Vertical="Center" ss:Indent="0"/></Style></Styles>';
-fwrite($fh, $stringData);
-$stringData = '<ss:Worksheet ss:Name="Sheet1">';
-fwrite($fh, $stringData);
 
-#begin table
-$stringData = '<Table ss:StyleID="ta1">';
-fwrite($fh, $stringData);
-$stringData = '<Column ss:Width="64.26"/><Column ss:Width="57.4064"/><Column ss:Width="150.396"/><Column ss:Width="55.052"/><Column ss:Width="95.2992"/><Column ss:Span="2" ss:Width="64.26"/>';
-fwrite($fh, $stringData);
 
-#commune de faaa
-$stringData = '<Row ss:Height="12.8952"><Cell ss:MergeAcross="8" ss:StyleID="ce1"><Data ss:Type="String">COMMUNE DE FAA\'A</Data></Cell></Row>';
-fwrite($fh, $stringData);
-
-#separation
-$stringData = '<Row ss:Height="12.8952"><Cell /></Row>';
-fwrite($fh, $stringData);
-
-#title
-$stringData = '<Row ss:Height="12.8952"><Cell ss:MergeAcross="8" ss:StyleID="ce1"><Data ss:Type="String">';
-fwrite($fh, $stringData);
-$stringData = 'ETAT NOMINATIF DES RECETTES PERCUES par imputation – PERIODE DU '.$db.' au '.$df;
-fwrite($fh, $stringData);
-$stringData = '</Data></Cell></Row>';
-fwrite($fh, $stringData);
-$stringData = '<Row ss:Height="12.8952"><Cell ss:MergeAcross="8" ss:StyleID="ce1"><Data ss:Type="String">';
-fwrite($fh, $stringData);
-$stringData = 'IMPUTATION : 7067 251 Redevance Sce Péri-SCOLAIRE';
-fwrite($fh, $stringData);
-$stringData = '</Data></Cell></Row>';
-fwrite($fh, $stringData);
-
-#separation
-$stringData = '<Row ss:Height="12.8952"><Cell /></Row>';
-fwrite($fh, $stringData);
-
-#columns
-$stringData = '<Row ss:Height="12.8952">';
-fwrite($fh, $stringData);
-$stringData = '<Cell ss:StyleID="ce2"><Data ss:Type="String">QUITTANCE</Data></Cell>';
-fwrite($fh, $stringData);
-$stringData = '<Cell ss:StyleID="ce2"><Data ss:Type="String">DATE</Data></Cell>';
-fwrite($fh, $stringData);
-$stringData = '<Cell ss:StyleID="ce2"><Data ss:Type="String">NOM DU REDEVABLE</Data></Cell>';
-fwrite($fh, $stringData);
-$stringData = '<Cell ss:StyleID="ce2"><Data ss:Type="String">N. ID.ART</Data></Cell>';
-fwrite($fh, $stringData);
-$stringData = '<Cell ss:StyleID="ce2"><Data ss:Type="String">EXERC</Data></Cell>';
-fwrite($fh, $stringData);
-$stringData = '<Cell ss:StyleID="ce2"><Data ss:Type="String">NATURE DU PRODUIT</Data></Cell>';
-fwrite($fh, $stringData);
-$stringData = '<Cell ss:StyleID="ce2"><Data ss:Type="String">NOM DU PAYEUR</Data></Cell>';
-fwrite($fh, $stringData);
-$stringData = '<Cell ss:StyleID="ce2"><Data ss:Type="String">MONTANT</Data></Cell>';
-fwrite($fh, $stringData);
-$stringData = '<Cell ss:StyleID="ce2"><Data ss:Type="String">M.REGT</Data></Cell>';
-fwrite($fh, $stringData);
-$stringData = '<Cell ss:StyleID="ce2"><Data ss:Type="String">N. CHEQUE</Data></Cell>';
-fwrite($fh, $stringData);
-$stringData = '<Cell ss:StyleID="ce2"><Data ss:Type="String">OBS.</Data></Cell>';
-fwrite($fh, $stringData);
-$stringData = '</Row>';
-fwrite($fh, $stringData);
-
-#separation
-$stringData = '<Row ss:Height="12.8952"><Cell /></Row>';
-fwrite($fh, $stringData);
-
-#data
-$stringData = $data[0];
-fwrite($fh, $stringData);
-
-#separation
-$stringData = '<Row ss:Height="12.8952"><Cell /></Row>';
-fwrite($fh, $stringData);
-
-#total
-$stringData = '<Row ss:Height="12.8952"><Cell><Data ss:Type="String">TOTAL GENERAL :</Data></Cell><Cell><Data ss:Type="Number">'.$data[1].'</Data></Cell><Cell /></Row>';
-fwrite($fh, $stringData);
-
-#separation
-$stringData = '<Row ss:Height="12.8952"><Cell /></Row>';
-fwrite($fh, $stringData);
-
-#ARRETE LE PRESENT
-$stringData = '<Row ss:Height="12.8952"><Cell ss:MergeAcross="2" ss:StyleID="ce3"><Data ss:Type="String">ARRETE LE PRESENT ETAT A LA SOMME DE : '.$data[1].' fcp</Data></Cell><Cell /></Row>';
-fwrite($fh, $stringData);
-
-#separation
-$stringData = '<Row ss:Height="12.8952"><Cell /></Row>';
-fwrite($fh, $stringData);
-
-#signature
-$stringData = '<Row ss:Height="12.8952"><Cell><Data ss:Type="String">Le Maire</Data></Cell><Cell><Data ss:Type="String">Le Régisseur</Data></Cell><Cell /></Row>';
-fwrite($fh, $stringData);
-
-#end table
-$stringData = '</Table>';
-fwrite($fh, $stringData);
-
-#end worksheet
-$stringData = '<x:WorksheetOptions/>';
-fwrite($fh, $stringData);
-$stringData = '</ss:Worksheet>';
-fwrite($fh, $stringData);
-$stringData = '</Workbook>';
-fwrite($fh, $stringData);
+fwrite($fh, $data);
 
 fclose($fh);
 
-
-output_file($file,"extract.xml","text/xml");
+//print_r($data);
+output_file($file,"rolmre_cant.txt","text/txt");
 
 function output_file($file, $name, $mime_type='')
 {
@@ -242,12 +127,15 @@ die();
 }
 
 function get_all($sql_db,$sql_df){
+
+    
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);      
-        $query = "SELECT DISTINCT `paiements`.`idpaiement`,`paiements`.`idfacture`,`paiements`.`date_paiement`,`paiements`.`montantcfp`,".
-        "`paiements`.`payeur`,`paiements`.`numero_cheque`,`paiements`.`mode`,`paiements`.`obs`".
-        "FROM `paiements` ".
-        "RIGHT JOIN `factures_cantine_details` ON `paiements`.`idfacture` = `factures_cantine_details`.`idfacture` ".
-        "WHERE `paiements`.`date_paiement` ".
+        $query = "SELECT `factures_cantine`.`idclient`,`factures_cantine`.`datefacture`,`factures_cantine`.`montantfcp`,".
+        "`clients`.`clientnom`,`clients`.`clientprenom`,`clients`.`clientprenom2`,`clients`.`clienttelephone`,".
+        "`clients`.`clientfax`,`clients`.`clientbp`,`clients`.`clientcp`,`clients`.`clientville`,`clients`.`clientcommune`,`clients`.`clientpays`,`clients`.`obs` ". 
+        "FROM `factures_cantine` ".
+        "RIGHT JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` ".
+        "WHERE `factures_cantine`.`datefacture` ".
         "BETWEEN '$sql_db' AND '$sql_df'";
         
 	$output = '';
@@ -259,54 +147,88 @@ function get_all($sql_db,$sql_df){
         
 	$mysqli->close();
         
-        $total = 0;
         foreach($result_array as $value){
-                $year = substr($value["date_paiement"],0,4);
-                $enfant = get_enfants($value["idfacture"]);
-                $output .= '<Row ss:Height="12.8952">';
-                $output .= '<Cell><Data ss:Type="String">CANTECO</Data></Cell>';
-		$output .= '<Cell><Data ss:Type="String">'.reversedate($value["date_paiement"]).'</Data></Cell>';
-                $output .= '<Cell><Data ss:Type="String">'.html_entity_decode($enfant,ENT_QUOTES, "UTF-8").'</Data></Cell>';
-                $output .= '<Cell><Data ss:Type="String">-</Data></Cell>';
-                $output .= '<Cell><Data ss:Type="String">'.$year.'</Data></Cell>';
-                $output .= '<Cell><Data ss:Type="String">Redevance Sce Péri-SCOLAIRE</Data></Cell>';
-                $output .= '<Cell><Data ss:Type="String">'.$value["payeur"].'</Data></Cell>';
-                $output .= '<Cell><Data ss:Type="String">'.$value["montantcfp"].'</Data></Cell>';
-                $output .= '<Cell><Data ss:Type="String">'.$value["mode"].'</Data></Cell>';
-                $output .= '<Cell><Data ss:Type="String">'.$value["numero_cheque"].'</Data></Cell>';
-                $output .= '<Cell><Data ss:Type="String">'.htmlentities($value["obs"],ENT_QUOTES, "UTF-8").'</Data></Cell>';
-                $output .= '</Row>';
-                $total += $value["montantcfp"];
+        
+        $ROLMVT='1';
+        $ROLCOL='10'; //Code collectivite a remplir champs de 2 caracteres
+        $ROLNAT='10'; //Code nature a determiner par la CF champs de 2 caracteres
+        $ROLEX='0000'; //idem année en cours champs de 4 caracteres
+        $ROLPER='0'; //periode champs de 1 caractere
+        $ROLDET='0000000000000'; //idclient (5 max) champs de 13 caracteres
+        $ROLCLE1='0';
+        $ROLNUL='0';
+        $ROLCLE2='0';
+        $ROLREC='00';
+        $ROLDAT='00000000'; //date d'emission format YYYYMMDD
+        $ROLROL='00'; //numéro du role champs de 2 caracteres
+        $ROLEAU='000000000000'; //montant EAU sans TVA champs de 12 caracteres
+        $ROLASS='000000000000'; //montant ASSAINISSEMENT sans TVA champs de 12 caracteres
+        $ROLTVE='000000000000'; //montant TVA sur EAU champs de 12 caracteres
+        $ROLTVA='000000000000'; //montant TVA sur ASSAINISSEMENT champs de 12 caracteres
+        $ROLTOT='000000000000'; //total champs de 12 caracteres
+        $ROLNMAJ='000000000000'; //montant assainissement non majorable
+        $ROLNOM='                                '; //nom du débiteur champs de 32 caracteres
+        $ROLCNM='                                '; //complement nom du débiteur champs de 32 caracteres
+        $ROLDIS='                                '; //mentions complémentaires
+        $ROLADR='                                '; //adresse du débiteur champs de 32 caracteres
+        $ROLCVI='00000000000000000000000000000000'; //complement ville champs de 32 caracteres
+        $ROLCP='00000'; //code postal champs de 5 caracteres
+        $ROLLOC='                      FAA\'A'; //localité champs de 27 caracteres
+        $ROLORU='00000000000000000000000000000000'; //rue champs de 32 caracteres
+        $ROLOVI='00000000000000000000000000000000'; //ville champs de 32 caracteres
+        $ROLPRE='0'; //Code prélèvement champs de 1 caractere
+        $ROLRET='00000'; //Code établissement champs de 5 caracteres
+        $ROLRGU='00000'; //Code guichet champs de 5 caracteres
+        $ROLRCO='00000000000'; //numéro du compte champs de 11 caracteres
+        $ROLRCL='00'; //clé rib champs de 2 caracteres
+        $ROLTIT='000000000000000000000000'; //titulaire du compte champs de 24 caracteres
+        $ROLCLI='00000000000000000000'; //Numéro compte client
+        $ROLSCH='0000000000'; //Chapitre champs de 10 caracteres
+        $ROLART='00000000000000000000'; //article champs de 20 caracteres
+        $ROLMONNAIE='F';
+        $ROLHOM='0';
+        $ROLDEB='00';
+        $FILLER='000000000000000000000000000000'; //champs de 30 caracteres
+        $ROLTPR='0'; //1=eau/assainissement, 2=redevances LEMA, 0=autres
+        $ROLVER='2';
+        
+        $ROLDET.= $value["idclient"];
+        $ROLDET = substr($ROLDET,-13);
+        $ROLDAT = convert_date($value["datefacture"]);
+        $ROLEX = substr($ROLDAT,0,4);
+        $ROLTOT .= $value["montantfcp"];
+        $ROLTOT = substr($ROLTOT,-12);
+        $ROLNOM = $value["clientnom"]." ".$value["clientprenom"].$ROLNOM;
+        $ROLNOM = substr($ROLNOM,0,32);
+        $ROLCNM = $value["clientprenom2"].$ROLCNM;
+        $ROLCNM = substr($ROLCNM,0,32);
+        $value["clienttelephone"] = str_replace("-","",$value["clienttelephone"]);
+        $value["clientfax"] = str_replace("-","",$value["clientfax"]);
+        $ROLDIS = "TEL:".$value["clienttelephone"]."-FAX/VINI:".$value["clientfax"].$ROLDIS;
+        $ROLDIS = substr($ROLDIS,0,32);
+        if($value["clientbp"]!=''){$value["clientbp"]="BP ".$value["clientbp"];}
+        if($value["clientbp"]!='' && $value["clientville"]!=''){$value["clientville"]=" ".$value["clientville"];}
+        $ROLADR = $value["clientbp"].$value["clientville"].$ROLADR;
+        $ROLADR = substr($ROLADR,0,32);
+        $ROLCP .= $value["clientcp"];
+        $ROLCP = substr($ROLCP,-5);
+        if(date("n")<7){$ROLPER="1";}else{$ROLPER="2";}
+        
+        $stringData .= $ROLMVT.$ROLCOL.$ROLNAT.$ROLEX.$ROLPER.$ROLDET.$ROLCLE1.$ROLNUL.$ROLCLE2.$ROLREC.$ROLDAT;
+        $stringData .= $ROLROL.$ROLEAU.$ROLASS.$ROLTVE.$ROLTVA.$ROLTOT.$ROLNMAJ.$ROLNOM.$ROLCNM.$ROLDIS.$ROLADR;
+        $stringData .= $ROLCVI.$ROLCP.$ROLLOC.$ROLORU.$ROLOVI.$ROLPRE.$ROLRET.$ROLRGU.$ROLRCO.$ROLRCL.$ROLTIT;
+        $stringData .= $ROLCLI.$ROLSCH.$ROLART.$ROLMONNAIE.$ROLHOM.$ROLDEB.$FILLER.$ROLTPR.$ROLVER."\n";
         }
-        //print_r($result_array);
-       
-	return array($output,$total);
+       //return $query;
+    
+
+return $stringData;
 }
 
-function get_enfants($idfacture){
-        $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $query = "SELECT DISTINCT `paiements`.`idfacture`,".
-        "(SELECT concat (`enfants`.`nom`, ' ',`enfants`.`prenom`, ' ',`enfants`.`classe`, ' ',`ecoles_faaa`.`nomecole`) AS `enfant`) FROM `paiements` ".
-        "RIGHT JOIN `factures_cantine_details` ON `paiements`.`idfacture` = `factures_cantine_details`.`idfacture` ".
-        "LEFT JOIN `enfants` ON `factures_cantine_details`.`idenfant` = `enfants`.`enfantid` ".
-        "LEFT JOIN `ecoles_faaa` ON `enfants`.`ecole` = `ecoles_faaa`.`ecoleid` ".
-        "WHERE `paiements`.`idfacture`='$idfacture'";
-        
-        $output = '';
-        $result = $mysqli->query($query);
 
-        while($row = $result->fetch_array(MYSQLI_ASSOC)){
-                $output .= $row['(SELECT concat (`enfants`.`nom`, \' \',`enfants`.`prenom`, \' \',`enfants`.`classe`, \' \',`ecoles_faaa`.`nomecole`) AS `enfant`)']. " \ ";
-	}
-        
-        $mysqli->close();
-        
-        $output = substr($output,0,-3);
-        return $output;
-    }
     
-function reversedate($d){
+function convert_date($d){
         $d = explode("-",$d);
-        return $d[2]."-".$d[1]."-".$d[0];
+        return $d[0].$d[1].$d[2];
         }
 ?>
