@@ -5,8 +5,9 @@ $db = $_GET["db"];
 $df = $_GET["df"];
 $sql_db = $_GET["sql_db"];
 $sql_df = $_GET["sql_df"];
+$rol = $_GET["rol"];
 
-$data = get_all($sql_db,$sql_df);
+$data = get_all($sql_db,$sql_df,$rol);
 
 $file = "extract/temp.xml";
 
@@ -126,13 +127,14 @@ function output_file($file, $name, $mime_type='')
 die();
 }
 
-function get_all($sql_db,$sql_df){
+function get_all($sql_db,$sql_df,$rol){
 
     
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);      
         $query = "SELECT `factures_cantine`.`idclient`,`factures_cantine`.`datefacture`,`factures_cantine`.`montantfcp`,".
         "`clients`.`clientnom`,`clients`.`clientprenom`,`clients`.`clientprenom2`,`clients`.`clienttelephone`,".
-        "`clients`.`clientfax`,`clients`.`clientbp`,`clients`.`clientcp`,`clients`.`clientville`,`clients`.`clientcommune`,`clients`.`clientpays`,`clients`.`obs` ". 
+        "`clients`.`clientfax`,`clients`.`clientbp`,`clients`.`clientcp`,`clients`.`clientville`,`clients`.`clientcommune`,`clients`.`clientpays`,`clients`.`clientrib`,`clients`.`obs` ".
+        
         "FROM `factures_cantine` ".
         "RIGHT JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` ".
         "WHERE `factures_cantine`.`datefacture` ".
@@ -196,6 +198,10 @@ function get_all($sql_db,$sql_df){
         $ROLDET = substr($ROLDET,-13);
         $ROLDAT = convert_date($value["datefacture"]);
         $ROLEX = substr($ROLDAT,0,4);
+        $ROLROL .= $rol;
+        $ROLROL = substr($ROLROL,-2);
+        $ROLEAU .= $value["montantfcp"];
+        $ROLEAU = substr($ROLEAU,-12);
         $ROLTOT .= $value["montantfcp"];
         $ROLTOT = substr($ROLTOT,-12);
         $ROLNOM = $value["clientnom"]." ".$value["clientprenom"].$ROLNOM;
@@ -213,11 +219,22 @@ function get_all($sql_db,$sql_df){
         $ROLCP .= $value["clientcp"];
         $ROLCP = substr($ROLCP,-5);
         if(date("n")<7){$ROLPER="1";}else{$ROLPER="2";}
-        
+        if($value["clientrib"]!=''){
+            $ar_rib = explode("-",$value["clientrib"]);
+            $ROLRET .= $ar_rib[0];
+            $ROLRET = substr($ROLRET,-5);
+            $ROLRGU .= $ar_rib[1];
+            $ROLRGU = substr($ROLRGU,-5);
+            $ROLRCO .= $ar_rib[2];
+            $ROLRCO = substr($ROLRCO,-11);
+            $ROLRCL .= $ar_rib[3];
+            $ROLRCL = substr($ROLRCL,-2);
+        }
+
         $stringData .= $ROLMVT.$ROLCOL.$ROLNAT.$ROLEX.$ROLPER.$ROLDET.$ROLCLE1.$ROLNUL.$ROLCLE2.$ROLREC.$ROLDAT;
         $stringData .= $ROLROL.$ROLEAU.$ROLASS.$ROLTVE.$ROLTVA.$ROLTOT.$ROLNMAJ.$ROLNOM.$ROLCNM.$ROLDIS.$ROLADR;
         $stringData .= $ROLCVI.$ROLCP.$ROLLOC.$ROLORU.$ROLOVI.$ROLPRE.$ROLRET.$ROLRGU.$ROLRCO.$ROLRCL.$ROLTIT;
-        $stringData .= $ROLCLI.$ROLSCH.$ROLART.$ROLMONNAIE.$ROLHOM.$ROLDEB.$FILLER.$ROLTPR.$ROLVER."\n";
+        $stringData .= $ROLCLI.$ROLSCH.$ROLART.$ROLMONNAIE.$ROLHOM.$ROLDEB.$FILLER.$ROLTPR.$ROLVER."\r\n";
         }
        //return $query;
     

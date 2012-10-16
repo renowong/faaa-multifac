@@ -17,7 +17,7 @@ switch ($type) {
 
 <html>
 	<head>
-		<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$compte_div.$jquery.$jqueryui.$message_div ?>
+		<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$compte_div.$jquery.$jqueryui.$message_div.$graburljs ?>
 		
 		
 		<script type="text/javascript" src="js/jquery.ui.datepicker-fr.js"></script>
@@ -28,6 +28,11 @@ switch ($type) {
 		$('#df').datepicker({inline: true,minDate: "-1Y",maxDate: "0"});
                 showCompte(<?php echo '"' . $arCompte[0] . '", "' . $arCompte[1] . '", "' . $arCompte[2] . '"' ?>);
 		
+		if(gup('type')=="tivaa"){
+			$("#div_rol").hide();
+			$("#rol").val('00');
+		}
+		
 		//////jqueryui buttons/////
 		$( "input:submit,input:button,button" ).button();
             });
@@ -35,14 +40,20 @@ switch ($type) {
             function submit(){
                 var db = $("#db").val();
                 var df = $("#df").val();
+		var rol = $("#rol").val();
                 var sql_db = reversedate(db);
                 var sql_df = reversedate(df);
+
+		if(rol==''){
+			message("Veuillez entrer un num\351ro de ROLMRE!")
+		}else{
+			if(db=='' || df==''){
+				message("Veuillez entrer une date de d\351but et de fin!")
+			}else{
+				window.location="extract_<?php print $_GET['type']; ?>.php?sql_db="+sql_db+"&sql_df="+sql_df+"&db="+db+"&df="+df+"&rol="+rol;
+			}
+		}
                 
-                if(db=='' || df==''){
-                    message("Veuillez entrer une date de d\351but et de fin!")
-                }else{
-                    window.location="extract_<?php print $_GET['type']; ?>.php?sql_db="+sql_db+"&sql_df="+sql_df+"&db="+db+"&df="+df;
-                }
                 
             }
             
@@ -59,7 +70,18 @@ switch ($type) {
 		<br/><br/>
 		<h1>Module d'extraction <? print $modtitle; ?></h1><br/><br/>
 		<div name="version" id="version">version <?php echo VERSION ?></div>
-
+		<div name="div_rol" id="div_rol">
+			<table>
+				<tr>
+					<th>Num&eacute;ro du ROLMRE</th>
+				</tr>
+				<tr>
+					<td style="text-align:center;">
+						<input id="rol" type="text" size="2" maxlength="2" />
+					</td>
+				</tr>
+			</table>
+		</div>
 		<table>
 			<tr>
 			    <th>Date D&eacute;part (incluse)</th><th>Date Fin (incluse)</th><th>Extraire</th>
