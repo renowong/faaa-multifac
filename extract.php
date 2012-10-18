@@ -23,7 +23,13 @@ switch ($type) {
 		<script type="text/javascript" src="js/jquery.ui.datepicker-fr.js"></script>
 	<script type="text/javascript">
             $(document).ready(function() {
-		var ar_rol = getrol("rolmre_cantine");
+		switch(gup('type')){
+			case 'tivaa':
+			break;
+			default:
+			var ar_rol = getrol(gup('type'));
+		}
+		
 		
 		$('#db').datepicker({inline: true,minDate: "-1Y",maxDate: "0"});
 		
@@ -38,18 +44,25 @@ switch ($type) {
 		//////jqueryui buttons/////
 		$( "input:submit,input:button,button" ).button();
 		
-		
-		
             });
+	    
+	    function list_rol(){
+		var output="<h1>Liste des ROL pr&eacute;c&eacute;dents</h1><br/>";
+		
+		for (var i in window.ar_rol) {
+			output += "<a href='"+window.ar_rol[i].filename+"' target='_blank'>"+window.ar_rol[i].filename+"</a></br>";
+		}
+		$("#list_rol").html(output);
+	    }
 	    
 	    function getrol(cat){
 			$.post("main_functions.php",{cat:cat},function(data){
 				ar_rol = jQuery.parseJSON(data); //global variable
+				list_rol();
 			});
 		}
 	    
 	    function inrange_date(db,df,dates_array){
-		//alert(window.ar_rol[0].from);
 		var inrange = false;       
 		var parse_db = Date.parse(db);
 		var parse_df = Date.parse(df);
@@ -154,5 +167,7 @@ switch ($type) {
                                 </td>
                         </tr>
 		</table>
+		<hr />
+		<div id="list_rol"></div>
 	</body>
 </html>
