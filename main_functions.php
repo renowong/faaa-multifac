@@ -49,7 +49,7 @@ function getsaint(){
 
 function getrol($type){
     $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-    $query = "SELECT `from`,`to`,`filename` FROM `rol` WHERE `type`='$type'";
+    $query = "SELECT `from`,`to`,`filename` FROM `rol` WHERE `type`='$type' ORDER BY `idrol` DESC LIMIT 10";
     $result = $mysqli->query($query);
     $result_array = array();
         while($row = $result->fetch_array(MYSQLI_ASSOC)){

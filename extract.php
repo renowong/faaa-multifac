@@ -50,7 +50,7 @@ switch ($type) {
 		var output="<h1>Liste des ROL pr&eacute;c&eacute;dents</h1><br/>";
 		
 		for (var i in window.ar_rol) {
-			output += "<a href='"+window.ar_rol[i].filename+"' target='_blank'>"+window.ar_rol[i].filename+"</a></br>";
+			output += "<a href='"+window.ar_rol[i].filename+"' target='_blank'>ROL du "+window.ar_rol[i].from+" au "+window.ar_rol[i].to+"</a></br></br>";
 		}
 		$("#list_rol").html(output);
 	    }
@@ -146,7 +146,9 @@ switch ($type) {
 					</td>
 				</tr>
 			</table>
+			</br>
 		</div>
+		
 		<table>
 			<tr>
 			    <th>Date D&eacute;part (incluse)</th><th>Date Fin (incluse)</th><th>Extraire</th>
