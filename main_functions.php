@@ -19,6 +19,9 @@ switch($cat){
     case "saint":
         print getsaint("01/01");
     break;
+    case "rolmre_cantine":
+	print getrol("rolmre_cantine");
+    break;
 }
 
 function getinfo($query){
@@ -34,6 +37,19 @@ function getsaint(){
     $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
     $today = date("d/m");
     $query = "SELECT `Fete` FROM `saint` WHERE `JourMois`='$today'";
+    $result = $mysqli->query($query);
+    $result_array = array();
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+            $result_array[] = $row;
+	}
+    $mysqli->close();
+    
+    return json_encode($result_array);
+}
+
+function getrol($type){
+    $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+    $query = "SELECT `from`,`to`,`filename` FROM `rol` WHERE `type`='$type'";
     $result = $mysqli->query($query);
     $result_array = array();
         while($row = $result->fetch_array(MYSQLI_ASSOC)){

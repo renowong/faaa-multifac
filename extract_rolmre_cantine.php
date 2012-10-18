@@ -6,10 +6,15 @@ $df = $_GET["df"];
 $sql_db = $_GET["sql_db"];
 $sql_df = $_GET["sql_df"];
 $rol = $_GET["rol"];
+$today = date("m.d.y");
+
+$file = "extract/rolmre_cant_".$rol."_".$today.".txt";
 
 $data = get_all($sql_db,$sql_df,$rol);
+$rol_id = insert_rol("rolmre_cantine",$sql_db,$sql_df,$file);
+update_rol($sql_db,$sql_df,$rol_id);
 
-$file = "extract/temp.xml";
+
 
 $fh = fopen($file, 'w') or die("can't open file");
 
@@ -19,7 +24,7 @@ fwrite($fh, $data);
 fclose($fh);
 
 //print_r($data);
-output_file($file,"rolmre_cant.txt","text/txt");
+output_file($file,"rolmre_cant_".$rol."_".$today.".txt","text/txt");
 
 function output_file($file, $name, $mime_type='')
 {
@@ -138,7 +143,7 @@ function get_all($sql_db,$sql_df,$rol){
         "FROM `factures_cantine` ".
         "RIGHT JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` ".
         "WHERE `factures_cantine`.`datefacture` ".
-        "BETWEEN '$sql_db' AND '$sql_df'";
+        "BETWEEN '$sql_db' AND '$sql_df' AND `reglement`='0' AND `validation`='1'";
         
 	$output = '';
         $result = $mysqli->query($query);
@@ -242,8 +247,28 @@ function get_all($sql_db,$sql_df,$rol){
 return $stringData;
 }
 
-
+function insert_rol($type,$sql_db,$sql_df,$filename){
+    $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);      
+        
+    $query = "INSERT INTO `rol` (`type`,`from`,`to`,`filename`) VALUES ('$type','$sql_db','$sql_df','$filename')";
     
+    $mysqli->query($query);
+    $lastid = $mysqli->insert_id;
+    $mysqli->close();
+    
+    return $lastid;
+}
+
+function update_rol($sql_db,$sql_df,$rol){
+    $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);      
+        
+    $query = "UPDATE `factures_cantine` SET `rol`='$rol' WHERE `factures_cantine`.`datefacture` ".
+    "BETWEEN '$sql_db' AND '$sql_df' AND `reglement`='0'";
+    
+    $mysqli->query($query);
+    $mysqli->close();
+}
+
 function convert_date($d){
         $d = explode("-",$d);
         return $d[0].$d[1].$d[2];

@@ -23,6 +23,8 @@ switch ($type) {
 		<script type="text/javascript" src="js/jquery.ui.datepicker-fr.js"></script>
 	<script type="text/javascript">
             $(document).ready(function() {
+		var ar_rol = getrol("rolmre_cantine");
+		
 		$('#db').datepicker({inline: true,minDate: "-1Y",maxDate: "0"});
 		
 		$('#df').datepicker({inline: true,minDate: "-1Y",maxDate: "0"});
@@ -35,25 +37,75 @@ switch ($type) {
 		
 		//////jqueryui buttons/////
 		$( "input:submit,input:button,button" ).button();
+		
+		
+		
             });
-                
+	    
+	    function getrol(cat){
+			$.post("main_functions.php",{cat:cat},function(data){
+				ar_rol = jQuery.parseJSON(data); //global variable
+			});
+		}
+	    
+	    function inrange_date(db,df,dates_array){
+		//alert(window.ar_rol[0].from);
+		var inrange = false;       
+		var parse_db = Date.parse(db);
+		var parse_df = Date.parse(df);
+		
+		for (var i in window.ar_rol) {
+			//alert(window.ar_rol[i].from);
+			var ar1 = Date.parse(window.ar_rol[i].from);
+			var ar2 = Date.parse(window.ar_rol[i].to);
+				
+			while(parse_db<=parse_df){
+				inrange = ((ar1 <= parse_db) && (parse_db <= ar2));
+				//alert(parse_db+"//ar1="+ar1+"//ar2="+ar2+" "+inrange);
+				if(inrange==true){
+					parse_db = parse_df+1; //get out of the while!
+				}else{
+					parse_db += 86400000; //add one day
+				}
+			}
+			if(inrange==true){
+				break; //get out of the loop!
+			}else{
+				parse_db = Date.parse(db);
+			}
+		}
+
+		
+		return inrange;
+	    }
+	    
             function submit(){
+		//alert(window.ar_rol[0].from);
+		
                 var db = $("#db").val();
                 var df = $("#df").val();
 		var rol = $("#rol").val();
                 var sql_db = reversedate(db);
                 var sql_df = reversedate(df);
-
-		if(rol==''){
-			message("Veuillez entrer un num\351ro de ROLMRE!")
+		
+		if(Date.parse(sql_db)>Date.parse(sql_df)){
+			message("Les dates choisies sont incorrectes!")
 		}else{
-			if(db=='' || df==''){
-				message("Veuillez entrer une date de d\351but et de fin!")
+			if(inrange_date(sql_db,sql_df,window.ar_rol)){
+				message("Les dates choisies entrecoupent un pr\351c\351dent ROLMRE!")
 			}else{
-				window.location="extract_<?php print $_GET['type']; ?>.php?sql_db="+sql_db+"&sql_df="+sql_df+"&db="+db+"&df="+df+"&rol="+rol;
+				if(rol==''){
+					message("Veuillez entrer un num\351ro de ROLMRE!")
+				}else{
+					if(db=='' || df==''){
+						message("Veuillez entrer une date de d\351but et de fin!")
+					}else{
+						$("#submitbt").prop("disabled",true);
+						window.location="extract_<?php print $_GET['type']; ?>.php?sql_db="+sql_db+"&sql_df="+sql_df+"&db="+db+"&df="+df+"&rol="+rol;
+					}
+				}
 			}
 		}
-                
                 
             }
             
@@ -98,7 +150,7 @@ switch ($type) {
                                     </form>
                                 </td>
                                 <td>
-                                    <button type="button" onclick="javascript:submit();">Soumettre</button>
+                                    <button id="submitbt" type="button" onclick="javascript:submit();">Soumettre</button>
                                 </td>
                         </tr>
 		</table>
