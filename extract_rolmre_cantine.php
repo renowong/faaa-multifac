@@ -143,7 +143,7 @@ function get_all($sql_db,$sql_df,$rol){
         "FROM `factures_cantine` ".
         "RIGHT JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` ".
         "WHERE `factures_cantine`.`datefacture` ".
-        "BETWEEN '$sql_db' AND '$sql_df' AND `reglement`='0' AND `validation`='1'";
+        "BETWEEN '$sql_db' AND '$sql_df' AND `reglement`='0' AND `validation`='1' AND `acceptation`='1'";
         
 	$output = '';
         $result = $mysqli->query($query);
