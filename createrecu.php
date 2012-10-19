@@ -33,18 +33,19 @@ function getinfo($id,$initiales,$typefacture){
 	$type = $row['type'];
 	$mode = $row['mode'];
 	$montant = $row['montantcfp'];
+	$idpaiement = $row['idpaiement'];
 	$idfacture = $row['communeid'];
 	$no_cheque = $row['numero_cheque'];
 	$organisme = $row['organisme'];
 	$obs = $row['observations'];
 	$Mysqli->close();
 	
-	genpdf($idfacture,$date,$payeur,$type,$mode,$montant,$initiales,$no_cheque,$organisme,$obs);	
+	genpdf($idfacture,$idpaiement,$date,$payeur,$type,$mode,$montant,$initiales,$no_cheque,$organisme,$obs);	
 }
 
 
 
-function genpdf($idfacture,$date,$payeur,$type,$mode,$montant,$initiales,$no_cheque,$organisme,$obs){
+function genpdf($idfacture,$idpaiement,$date,$payeur,$type,$mode,$montant,$initiales,$no_cheque,$organisme,$obs){
 	$xreg=1.5;
 	$yreg=3.5;
 
@@ -53,7 +54,7 @@ function genpdf($idfacture,$date,$payeur,$type,$mode,$montant,$initiales,$no_che
 
 
 	//logo
-	$pdf->Image('img/RF.png',6.5+$xreg,14+$yreg,17,10,'png');
+	$pdf->Image('img/logo.jpg',10+$xreg,14+$yreg,12,10,'jpg');
 	
 	$pdf->SetLineWidth(0.4);
 	$pdf->Rect(4+$xreg,7+$yreg,196,30); //rectangle global
@@ -87,6 +88,8 @@ function genpdf($idfacture,$date,$payeur,$type,$mode,$montant,$initiales,$no_che
 	$pdf->Cell(25,7, utf8_decode('DIVERS'),0,1,'C');
 	
 	//data
+	$pdf->SetXY(4+$xreg,25+$yreg);
+	$pdf->Cell(23,7,"No. ".$idpaiement,0,1,'C');
 	$pdf->SetXY(4+$xreg,31+$yreg);
 	$pdf->Cell(23,7,standarddateformat($date),0,1,'C');
 	$pdf->SetXY(27+$xreg,31+$yreg);
