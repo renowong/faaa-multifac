@@ -52,6 +52,7 @@ switch ($type) {
 		for (var i in window.ar_rol) {
 			output += "<a href='"+window.ar_rol[i].filename+"' target='_blank'>ROL du "+window.ar_rol[i].from+" au "+window.ar_rol[i].to+"</a></br></br>";
 		}
+		$("#list_rol").empty();
 		$("#list_rol").html(output);
 	    }
 	    

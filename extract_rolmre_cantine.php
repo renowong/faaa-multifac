@@ -136,14 +136,14 @@ function get_all($sql_db,$sql_df,$rol){
 
     
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);      
-        $query = "SELECT `factures_cantine`.`idclient`,`factures_cantine`.`datefacture`,`factures_cantine`.`montantfcp`,".
+        $query = "SELECT `factures_cantine`.`idclient`,`factures_cantine`.`datefacture`,`factures_cantine`.`restearegler`,".
         "`clients`.`clientnom`,`clients`.`clientprenom`,`clients`.`clientprenom2`,`clients`.`clienttelephone`,".
         "`clients`.`clientfax`,`clients`.`clientbp`,`clients`.`clientcp`,`clients`.`clientville`,`clients`.`clientcommune`,`clients`.`clientpays`,`clients`.`clientrib`,`clients`.`obs` ".
         
         "FROM `factures_cantine` ".
         "RIGHT JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` ".
         "WHERE `factures_cantine`.`datefacture` ".
-        "BETWEEN '$sql_db' AND '$sql_df' AND `reglement`='0' AND `validation`='1' AND `acceptation`='1'";
+        "BETWEEN '$sql_db' AND '$sql_df' AND `reglement`='0' AND `acceptation`='1'";
         
 	$output = '';
         $result = $mysqli->query($query);
@@ -205,9 +205,9 @@ function get_all($sql_db,$sql_df,$rol){
         $ROLEX = substr($ROLDAT,0,4);
         $ROLROL .= $rol;
         $ROLROL = substr($ROLROL,-2);
-        $ROLEAU .= $value["montantfcp"];
+        $ROLEAU .= $value["restearegler"];
         $ROLEAU = substr($ROLEAU,-12);
-        $ROLTOT .= $value["montantfcp"];
+        $ROLTOT .= $value["restearegler"];
         $ROLTOT = substr($ROLTOT,-12);
         $ROLNOM = $value["clientnom"]." ".$value["clientprenom"].$ROLNOM;
         $ROLNOM = substr($ROLNOM,0,32);
