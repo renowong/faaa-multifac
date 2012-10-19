@@ -263,7 +263,7 @@ function update_rol($sql_db,$sql_df,$rol){
     $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);      
         
     $query = "UPDATE `factures_cantine` SET `rol`='$rol' WHERE `factures_cantine`.`datefacture` ".
-    "BETWEEN '$sql_db' AND '$sql_df' AND `reglement`='0'";
+    "BETWEEN '$sql_db' AND '$sql_df' AND `reglement`='0' AND `validation`='1' AND `acceptation`='1'";
     
     $mysqli->query($query);
     $mysqli->close();
