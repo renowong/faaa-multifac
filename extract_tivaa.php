@@ -33,7 +33,7 @@ $stringData = '<Column ss:Width="64.26"/><Column ss:Width="57.4064"/><Column ss:
 fwrite($fh, $stringData);
 
 #commune de faaa
-$stringData = '<Row ss:Height="12.8952"><Cell ss:MergeAcross="8" ss:StyleID="ce1"><Data ss:Type="String">COMMUNE DE FAA\'A</Data></Cell></Row>';
+$stringData = '<Row ss:Height="12.8952"><Cell ss:MergeAcross="11" ss:StyleID="ce1"><Data ss:Type="String">COMMUNE DE FAA\'A</Data></Cell></Row>';
 fwrite($fh, $stringData);
 
 #separation
@@ -41,13 +41,13 @@ $stringData = '<Row ss:Height="12.8952"><Cell /></Row>';
 fwrite($fh, $stringData);
 
 #title
-$stringData = '<Row ss:Height="12.8952"><Cell ss:MergeAcross="8" ss:StyleID="ce1"><Data ss:Type="String">';
+$stringData = '<Row ss:Height="12.8952"><Cell ss:MergeAcross="11" ss:StyleID="ce1"><Data ss:Type="String">';
 fwrite($fh, $stringData);
 $stringData = 'ETAT NOMINATIF DES RECETTES PERCUES par imputation – PERIODE DU '.$db.' au '.$df;
 fwrite($fh, $stringData);
 $stringData = '</Data></Cell></Row>';
 fwrite($fh, $stringData);
-$stringData = '<Row ss:Height="12.8952"><Cell ss:MergeAcross="8" ss:StyleID="ce1"><Data ss:Type="String">';
+$stringData = '<Row ss:Height="12.8952"><Cell ss:MergeAcross="11" ss:StyleID="ce1"><Data ss:Type="String">';
 fwrite($fh, $stringData);
 $stringData = 'IMPUTATION : 7067 251 Redevance Sce Péri-SCOLAIRE';
 fwrite($fh, $stringData);
@@ -82,6 +82,8 @@ fwrite($fh, $stringData);
 $stringData = '<Cell ss:StyleID="ce2"><Data ss:Type="String">N. CHEQUE</Data></Cell>';
 fwrite($fh, $stringData);
 $stringData = '<Cell ss:StyleID="ce2"><Data ss:Type="String">OBS.</Data></Cell>';
+fwrite($fh, $stringData);
+$stringData = '<Cell ss:StyleID="ce2"><Data ss:Type="String">ROL</Data></Cell>';
 fwrite($fh, $stringData);
 $stringData = '</Row>';
 fwrite($fh, $stringData);
@@ -244,9 +246,11 @@ die();
 function get_all($sql_db,$sql_df){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);      
         $query = "SELECT DISTINCT `paiements`.`idpaiement`,`paiements`.`idfacture`,`paiements`.`date_paiement`,`paiements`.`montantcfp`,".
-        "`paiements`.`payeur`,`paiements`.`numero_cheque`,`paiements`.`mode`,`paiements`.`obs`".
+        #"`paiements`.`payeur`,`paiements`.`numero_cheque`,`paiements`.`mode`,`paiements`.`obs`,`factures_cantine`.`rol` ".
+        "`paiements`.`payeur`,`paiements`.`numero_cheque`,`paiements`.`mode`,`paiements`.`obs`, (SELECT `numrol` FROM `rol` WHERE `idrol`=`factures_cantine`.`rol`) AS `numrol`".
         "FROM `paiements` ".
-        "RIGHT JOIN `factures_cantine_details` ON `paiements`.`idfacture` = `factures_cantine_details`.`idfacture` ".
+        ##"RIGHT JOIN `factures_cantine_details` ON `paiements`.`idfacture` = `factures_cantine_details`.`idfacture` ".
+        "RIGHT JOIN `factures_cantine` ON `paiements`.`idfacture` = `factures_cantine`.`idfacture` ".
         "WHERE `paiements`.`date_paiement` ".
         "BETWEEN '$sql_db' AND '$sql_df'";
         
@@ -265,9 +269,9 @@ function get_all($sql_db,$sql_df){
                 $enfant = get_enfants($value["idfacture"]);
                 if($value["mode"]=='anl'){$value["montantcfp"]=0;}
                 $output .= '<Row ss:Height="12.8952">';
-                $output .= '<Cell><Data ss:Type="String">CANTECO</Data></Cell>';
+                $output .= '<Cell><Data ss:Type="String">'.$value["idpaiement"].'</Data></Cell>';
 		$output .= '<Cell><Data ss:Type="String">'.reversedate($value["date_paiement"]).'</Data></Cell>';
-                $output .= '<Cell><Data ss:Type="String">'.html_entity_decode($enfant,ENT_QUOTES, "UTF-8").'</Data></Cell>';
+                $output .= '<Cell><Data ss:Type="String">'.htmlentities($enfant,ENT_QUOTES, "UTF-8").'</Data></Cell>';
                 $output .= '<Cell><Data ss:Type="String">-</Data></Cell>';
                 $output .= '<Cell><Data ss:Type="String">'.$year.'</Data></Cell>';
                 $output .= '<Cell><Data ss:Type="String">Redevance Sce Péri-SCOLAIRE</Data></Cell>';
@@ -276,6 +280,7 @@ function get_all($sql_db,$sql_df){
                 $output .= '<Cell><Data ss:Type="String">'.$value["mode"].'</Data></Cell>';
                 $output .= '<Cell><Data ss:Type="String">'.$value["numero_cheque"].'</Data></Cell>';
                 $output .= '<Cell><Data ss:Type="String">'.htmlentities($value["obs"],ENT_QUOTES, "UTF-8").'</Data></Cell>';
+                $output .= '<Cell><Data ss:Type="String">'.$value["numrol"].'</Data></Cell>';
                 $output .= '</Row>';
                 $total += $value["montantcfp"];
         }

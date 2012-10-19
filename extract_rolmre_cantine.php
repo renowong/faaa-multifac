@@ -11,7 +11,7 @@ $today = date("m.d.y");
 $file = "extract/rolmre_cant_".$rol."_".$today.".txt";
 
 $data = get_all($sql_db,$sql_df,$rol);
-$rol_id = insert_rol("rolmre_cantine",$sql_db,$sql_df,$file);
+$rol_id = insert_rol("rolmre_cantine",$sql_db,$sql_df,$file,$rol);
 update_rol($sql_db,$sql_df,$rol_id);
 
 
@@ -247,10 +247,10 @@ function get_all($sql_db,$sql_df,$rol){
 return $stringData;
 }
 
-function insert_rol($type,$sql_db,$sql_df,$filename){
+function insert_rol($type,$sql_db,$sql_df,$filename,$numrol){
     $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);      
         
-    $query = "INSERT INTO `rol` (`type`,`from`,`to`,`filename`) VALUES ('$type','$sql_db','$sql_df','$filename')";
+    $query = "INSERT INTO `rol` (`numrol`,`type`,`from`,`to`,`filename`) VALUES ('$numrol','$type','$sql_db','$sql_df','$filename')";
     
     $mysqli->query($query);
     $lastid = $mysqli->insert_id;
