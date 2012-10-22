@@ -159,6 +159,48 @@ switch($typefacture){
 		
 		$result->close();
 	break;
+
+	case "amarrage":
+		$titlefacture = "Facturation d'Amarrage";
+		$delib = "La présente facture est conforme à la délibération n°46/2011 du 02 septembre 2011 fixant le tarif des amarrages.";
+		
+		//first get information of facture
+		$query = "SELECT DATE_FORMAT(`factures_amarrage`.`datefacture`, '%d/%m/%Y') AS `datefacture`, ".
+			"DATE_FORMAT(DATE_ADD(`factures_amarrage`.`datefacture`, INTERVAL 31 DAY), '%d/%m/%Y') AS `datelimite`, ".
+			"`factures_amarrage`.`validation`, `factures_amarrage`.`communeid`, `factures_amarrage`.`idclient`, `factures_amarrage`.`obs` AS `periode`, ".
+			"`mandataires`.`mandataireprefix`, `mandataires`.`mandataireRS`, ".
+			"`mandataires`.`mandatairenom`, `mandataires`.`mandataireprenom`, ".
+			"`mandataires`.`mandatairebp`, `mandataires`.`mandatairecp`, `mandataires`.`mandataireville`, `mandataires`.`mandatairecommune`, ".
+			"`mandataires`.`mandatairepays`, `mandataires`.`mandatairetelephone`, `mandataires`.`mandatairetelephone2`, `mandataires`.`mandataireemail` ".
+			"FROM `factures_amarrage` INNER JOIN `mandataires` ON `factures_amarrage`.`idclient`=`mandataires`.`mandataireid` ".
+			"WHERE `factures_amarrage`.`idfacture` = $idfacture";
+
+		$result = $mysqli->query($query);
+			while($row = $result->fetch_array(MYSQLI_ASSOC)){
+				$datefacture = $row['datefacture'];
+				$nofacture = $row['communeid'];
+				$periode = $row['periode'];
+				$facturevalidation = $row['validation'];
+				$client = $row['mandatairenom']." ".$row['mandataireprenom'];
+				$bp = "BP : ".$row['mandatairebp']." - ".$row['mandatairecp']." ".$row['mandataireville'];
+				$email = "E-mail : ".$row['mandataireemail'];
+				$telephone = "Téléphone : ".$row['mandatairetelephone'];
+				$fax = "Vini : ".$row['mandatairetelephone2'];
+				$datelimite = $row['datelimite'];
+				$idclient = $row['idclient'];
+				$rs = $row['mandataireprefix']." ".$row['mandataireRS'];
+				}
+		$result->close();
+		
+		//next get information on details of facture
+		$query = "SELECT `factures_amarrage_details`.`quant`, `tarifs_amarrage`.`Type`, `tarifs_amarrage`.`MontantFCP`, `tarifs_amarrage`.`MontantEURO`, `tarifs_amarrage`.`Unite`, `tarifs_amarrage`.`Delib`, `tarifs_amarrage`.`Datedelib` FROM `factures_amarrage_details` LEFT JOIN `tarifs_amarrage` ON `factures_amarrage_details`.`idtarif` = `tarifs_amarrage`.`IDtarif` WHERE `factures_amarrage_details`.`idfacture` = $idfacture";
+		
+		$result = $mysqli->query($query);
+				while($row = $result->fetch_array(MYSQLI_ASSOC)){
+				array_push($details_array, $row);
+				}
+		$result->close();
+	break;
 }
 
 
@@ -290,6 +332,7 @@ switch($typefacture){
 	switch($typefacture){
 		case "cantine":
 		case "etal":
+		case "amarrage":	
 			$pdf->Cell(186,10,utf8_decode($titlefacture." / Période : ").html_entity_decode($periode),0,1,'C');
 		break;
 		default:
