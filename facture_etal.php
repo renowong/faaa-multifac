@@ -24,6 +24,7 @@ require_once('facture_etal_top.php');
 		var arMontantFCP = new Array(<?php echo $jsarMontantFCP ?>);
 		var arMontantEURO = new Array(<?php echo $jsarMontantEURO ?>);
 		var arUnite = new Array(<?php echo $jsarUnite ?>);
+		var clientid = <?php echo $arCompte[1]?>;
 		var success = gup("success");
 		
 	
