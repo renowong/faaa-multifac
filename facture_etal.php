@@ -24,14 +24,6 @@ require_once('facture_etal_top.php');
 		var arMontantFCP = new Array(<?php echo $jsarMontantFCP ?>);
 		var arMontantEURO = new Array(<?php echo $jsarMontantEURO ?>);
 		var arUnite = new Array(<?php echo $jsarUnite ?>);
-		var clientid = <?php echo $arCompte[1]?>;
-		var arIDEnfant = new Array(<?php echo $jsarID_Enfant ?>);
-		var arNomEnfant = new Array(<?php echo $jsarNom_Enfant ?>);
-		var arPrenomEnfant = new Array(<?php echo $jsarPrenom_Enfant ?>);
-		var arEcoleID_Enfant = new Array(<?php echo $jsarEcoleID_Enfant ?>);
-		var arEcole_Enfant = new Array(<?php echo $jsarEcole_Enfant ?>);
-		var arClasse_Enfant = new Array(<?php echo $jsarClasse_Enfant ?>);
-		var arStatus_Enfant = new Array(<?php echo $jsarStatus_Enfant ?>);
 		var success = gup("success");
 		
 	
