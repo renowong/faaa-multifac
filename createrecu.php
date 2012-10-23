@@ -25,6 +25,9 @@ function getinfo($id,$initiales,$typefacture){
         case "etal":
         $query = "SELECT *,`paiements`.`obs` AS `observations` FROM `paiements` JOIN `factures_etal` ON `paiements`.`idfacture`=`factures_etal`.`idfacture` WHERE `idpaiement`= $id";    
         break;
+	case "amarrage":
+        $query = "SELECT *,`paiements`.`obs` AS `observations` FROM `paiements` JOIN `factures_amarrage` ON `paiements`.`idfacture`=`factures_amarrage`.`idfacture` WHERE `idpaiement`= $id";    
+        break;
     }
 	$result = $Mysqli->query($query);
 	$row = $result->fetch_array(MYSQLI_ASSOC);

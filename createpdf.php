@@ -168,30 +168,28 @@ switch($typefacture){
 		$query = "SELECT DATE_FORMAT(`factures_amarrage`.`datefacture`, '%d/%m/%Y') AS `datefacture`, ".
 			"DATE_FORMAT(DATE_ADD(`factures_amarrage`.`datefacture`, INTERVAL 31 DAY), '%d/%m/%Y') AS `datelimite`, ".
 			"`factures_amarrage`.`validation`, `factures_amarrage`.`communeid`, `factures_amarrage`.`idclient`, `factures_amarrage`.`obs` AS `periode`, ".
-			"`mandataires`.`mandataireprefix`, `mandataires`.`mandataireRS`, ".
-			"`mandataires`.`mandatairenom`, `mandataires`.`mandataireprenom`, ".
-			"`mandataires`.`mandatairebp`, `mandataires`.`mandatairecp`, `mandataires`.`mandataireville`, `mandataires`.`mandatairecommune`, ".
-			"`mandataires`.`mandatairepays`, `mandataires`.`mandatairetelephone`, `mandataires`.`mandatairetelephone2`, `mandataires`.`mandataireemail` ".
-			"FROM `factures_amarrage` INNER JOIN `mandataires` ON `factures_amarrage`.`idclient`=`mandataires`.`mandataireid` ".
+			"`clients`.`clientcivilite`, ".
+			"`clients`.`clientnom`, `clients`.`clientnommarital`, `clients`.`clientprenom`, `clients`.`clientprenom2`, ".
+			"`clients`.`clientbp`, `clients`.`clientcp`, `clients`.`clientville`, `clients`.`clientcommune`, ".
+			"`clients`.`clientpays`, `clients`.`clienttelephone`, `clients`.`clientfax`, `clients`.`clientemail` ".
+			"FROM `factures_amarrage` INNER JOIN `clients` ON `factures_amarrage`.`idclient`=`clients`.`clientid` ".
 			"WHERE `factures_amarrage`.`idfacture` = $idfacture";
-
 		$result = $mysqli->query($query);
 			while($row = $result->fetch_array(MYSQLI_ASSOC)){
 				$datefacture = $row['datefacture'];
 				$nofacture = $row['communeid'];
 				$periode = $row['periode'];
 				$facturevalidation = $row['validation'];
-				$client = $row['mandatairenom']." ".$row['mandataireprenom'];
-				$bp = "BP : ".$row['mandatairebp']." - ".$row['mandatairecp']." ".$row['mandataireville'];
-				$email = "E-mail : ".$row['mandataireemail'];
-				$telephone = "Téléphone : ".$row['mandatairetelephone'];
-				$fax = "Vini : ".$row['mandatairetelephone2'];
+				$client = html_entity_decode($row['clientnom']." ".$row['clientprenom'],ENT_QUOTES, "UTF-8");
+				$bp = "BP : ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
+				$email = "E-mail : ".$row['clientemail'];
+				$telephone = "Téléphone : ".$row['clienttelephone'];
+				$fax = "Fax : ".$row['clientfax'];
 				$datelimite = $row['datelimite'];
 				$idclient = $row['idclient'];
-				$rs = $row['mandataireprefix']." ".$row['mandataireRS'];
 				}
 		$result->close();
-		
+				
 		//next get information on details of facture
 		$query = "SELECT `factures_amarrage_details`.`quant`, `tarifs_amarrage`.`Type`, `tarifs_amarrage`.`MontantFCP`, `tarifs_amarrage`.`MontantEURO`, `tarifs_amarrage`.`Unite`, `tarifs_amarrage`.`Delib`, `tarifs_amarrage`.`Datedelib` FROM `factures_amarrage_details` LEFT JOIN `tarifs_amarrage` ON `factures_amarrage_details`.`idtarif` = `tarifs_amarrage`.`IDtarif` WHERE `factures_amarrage_details`.`idfacture` = $idfacture";
 		
@@ -199,6 +197,7 @@ switch($typefacture){
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
 				array_push($details_array, $row);
 				}
+		
 		$result->close();
 	break;
 }
@@ -310,7 +309,7 @@ switch($typefacture){
 	$pdf->Cell(55,10,$rs);
 	$pdf->SetXY(139+$xreg,50+$yreg);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(55,10,"Attn:".strtoupper($client));
+	$pdf->Cell(55,10,"Attn : ".strtoupper($client));
 	$pdf->SetXY(139+$xreg,54.2+$yreg);
 	$pdf->SetFont('Arial','',10);
 	$pdf->Cell(55,10,utf8_decode($bp));

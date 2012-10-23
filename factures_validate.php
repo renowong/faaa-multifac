@@ -15,6 +15,9 @@ switch($type){
     case "etal":
         $query = "UPDATE `".DB."`.`factures_etal` SET `validation`='1', `acceptation`= '$acceptation', `comment`='$comment', `date_validation`='$date' WHERE `factures_etal`.`idfacture`=$factureid";
     break;
+    case "amarrage":
+        $query = "UPDATE `".DB."`.`factures_amarrage` SET `validation`='1', `acceptation`= '$acceptation', `comment`='$comment', `date_validation`='$date' WHERE `factures_amarrage`.`idfacture`=$factureid";
+    break;
 }
 $mysqli->query($query);
 $mysqli->close();

@@ -41,6 +41,15 @@ function getInfo(){
                 "Reste &agrave; r&eacute;gler ".trispace($row['restearegler'])." FCP<input type='hidden' id='montantmax' value='".$row['restearegler']."'/>";
                 $output[1] = "PLACE ET ETAL";
             break;
+	    case "amarrage":
+                $query = "SELECT `datefacture`,`communeid`,`montantfcp`,`montanteuro`,`restearegler` FROM `".DB."`.`factures_amarrage` WHERE `idfacture` = $id";
+        
+                $result = $Mysqli->query($query);
+                $row = $result->fetch_array(MYSQLI_ASSOC);
+                $output[0] = "<b>Facture Amarrage ".$row['communeid']." du ".standarddateformat($row['datefacture'])." montant ".trispace($row['montantfcp'])."FCP (".$row['montanteuro']."&euro;)</b><br/>".
+                "Reste &agrave; r&eacute;gler ".trispace($row['restearegler'])." FCP<input type='hidden' id='montantmax' value='".$row['restearegler']."'/>";
+                $output[1] = "AMARRAGE";
+            break;
         }
 
 		$Mysqli->close();
@@ -66,6 +75,15 @@ function getAmount() {
         
             case "etal":
                 $query = "SELECT `montantfcp`,`montanteuro`,`restearegler` FROM `".DB."`.`factures_etal` WHERE `idfacture` = $id";
+        
+                $result = $Mysqli->query($query);
+                while($row = $result->fetch_array(MYSQLI_ASSOC)){
+                        //$output = "&montantcfp=".$row['montantfcp']."&montanteuro=".$row['montanteuro']."&restearegler=".$row['restearegler'];
+                        $output = $row;
+                }
+            break;
+	    case "amarrage":
+                $query = "SELECT `montantfcp`,`montanteuro`,`restearegler` FROM `".DB."`.`factures_amarrage` WHERE `idfacture` = $id";
         
                 $result = $Mysqli->query($query);
                 while($row = $result->fetch_array(MYSQLI_ASSOC)){

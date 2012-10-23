@@ -89,6 +89,7 @@ if($list){$stitle="Factures en attente";}else{$stitle="Module de validation des 
 			<option value="all">Tout</option>
 			<option value="cantine">Cantine et Repas</option>
 			<option value="etal">Place et Etal</option>
+			<option value="amarrage">Amarrage</option>
 		</select><br/><br/>
 		<div id="list_validation" name="list_validation" style="height:600px;"></div>
 		
