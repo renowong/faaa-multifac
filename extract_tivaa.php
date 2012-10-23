@@ -47,12 +47,6 @@ $stringData = 'ETAT NOMINATIF DES RECETTES PERCUES par imputation – PERIODE DU
 fwrite($fh, $stringData);
 $stringData = '</Data></Cell></Row>';
 fwrite($fh, $stringData);
-$stringData = '<Row ss:Height="12.8952"><Cell ss:MergeAcross="11" ss:StyleID="ce1"><Data ss:Type="String">';
-fwrite($fh, $stringData);
-$stringData = 'IMPUTATION : 7067 251 Redevance Sce Péri-SCOLAIRE';
-fwrite($fh, $stringData);
-$stringData = '</Data></Cell></Row>';
-fwrite($fh, $stringData);
 
 #separation
 $stringData = '<Row ss:Height="12.8952"><Cell /></Row>';
@@ -245,12 +239,8 @@ die();
 
 function get_all($sql_db,$sql_df){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);      
-        $query = "SELECT DISTINCT `paiements`.`idpaiement`,`paiements`.`idfacture`,`paiements`.`date_paiement`,`paiements`.`montantcfp`,".
-        #"`paiements`.`payeur`,`paiements`.`numero_cheque`,`paiements`.`mode`,`paiements`.`obs`,`factures_cantine`.`rol` ".
-        "`paiements`.`payeur`,`paiements`.`numero_cheque`,`paiements`.`mode`,`paiements`.`obs`, (SELECT `numrol` FROM `rol` WHERE `idrol`=`factures_cantine`.`rol`) AS `numrol`".
+        $query = "SELECT DISTINCT * ".
         "FROM `paiements` ".
-        ##"RIGHT JOIN `factures_cantine_details` ON `paiements`.`idfacture` = `factures_cantine_details`.`idfacture` ".
-        "RIGHT JOIN `factures_cantine` ON `paiements`.`idfacture` = `factures_cantine`.`idfacture` ".
         "WHERE `paiements`.`date_paiement` ".
         "BETWEEN '$sql_db' AND '$sql_df'";
         
@@ -265,28 +255,81 @@ function get_all($sql_db,$sql_df){
         
         $total = 0;
         foreach($result_array as $value){
+            switch($value["type"]){
+                case "CANTINE":
+                    $numrol = get_rol($value["idfacture"],'factures_cantine');
+                    $redevable = get_enfants($value["idfacture"]);
+                break;
+                case "AMARRAGE":
+                    $numrol = get_rol($value["idfacture"],'factures_amarrage');
+                    $redevable = get_client($value["idfacture"],'factures_amarrage');
+                break;
+                case "PLACE ET ETAL":
+                    $numrol = get_rol($value["idfacture"],'factures_etal');
+                    $redevable = get_mandataire($value["idfacture"],'factures_etal');
+                break;
+            }
+            
+            
                 $year = substr($value["date_paiement"],0,4);
-                $enfant = get_enfants($value["idfacture"]);
                 if($value["mode"]=='anl'){$value["montantcfp"]=0;}
                 $output .= '<Row ss:Height="12.8952">';
                 $output .= '<Cell><Data ss:Type="String">'.$value["idpaiement"].'</Data></Cell>';
 		$output .= '<Cell><Data ss:Type="String">'.reversedate($value["date_paiement"]).'</Data></Cell>';
-                $output .= '<Cell><Data ss:Type="String">'.htmlentities($enfant,ENT_QUOTES, "UTF-8").'</Data></Cell>';
+                $output .= '<Cell><Data ss:Type="String">'.htmlentities($redevable,ENT_QUOTES, "UTF-8").'</Data></Cell>';
                 $output .= '<Cell><Data ss:Type="String">-</Data></Cell>';
                 $output .= '<Cell><Data ss:Type="String">'.$year.'</Data></Cell>';
-                $output .= '<Cell><Data ss:Type="String">Redevance Sce Péri-SCOLAIRE</Data></Cell>';
+                $output .= '<Cell><Data ss:Type="String">'.$value["type"].'</Data></Cell>';
                 $output .= '<Cell><Data ss:Type="String">'.$value["payeur"].'</Data></Cell>';
                 $output .= '<Cell><Data ss:Type="String">'.$value["montantcfp"].'</Data></Cell>';
                 $output .= '<Cell><Data ss:Type="String">'.$value["mode"].'</Data></Cell>';
                 $output .= '<Cell><Data ss:Type="String">'.$value["numero_cheque"].'</Data></Cell>';
                 $output .= '<Cell><Data ss:Type="String">'.htmlentities($value["obs"],ENT_QUOTES, "UTF-8").'</Data></Cell>';
-                $output .= '<Cell><Data ss:Type="String">'.$value["numrol"].'</Data></Cell>';
+                $output .= '<Cell><Data ss:Type="String">'.$numrol.'</Data></Cell>';
                 $output .= '</Row>';
                 $total += $value["montantcfp"];
         }
         //print_r($result_array);
        
 	return array($output,$total);
+}
+
+function get_rol($idfacture,$table){
+        $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+        $query = "SELECT `rol` FROM `$table` WHERE `idfacture`='$idfacture'";
+        $result = $mysqli->query($query);
+
+        $row = $result->fetch_array(MYSQLI_ASSOC);
+        $output = $row['rol'];
+        $mysqli->close();
+
+        return $output;
+}
+
+function get_mandataire($idfacture,$table){
+        $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+        $query = "SELECT `mandataires`.`mandatairenom`,`mandataires`.`mandataireprenom` ".
+        "FROM `mandataires` JOIN `$table` ON `$table`.`idclient`=`mandataires`.`mandataireid` WHERE `$table`.`idfacture`='$idfacture'";
+        $result = $mysqli->query($query);
+
+        $row = $result->fetch_array(MYSQLI_ASSOC);
+        $output = $row['mandatairenom']." ".$row['mandataireprenom'];
+        $mysqli->close();
+
+        return $output;
+}
+
+function get_client($idfacture,$table){
+        $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+        $query = "SELECT `clients`.`clientnom`,`clients`.`clientprenom` ".
+        "FROM `clients` JOIN `$table` ON `$table`.`idclient`=`clients`.`clientid` WHERE `$table`.`idfacture`='$idfacture'";
+        $result = $mysqli->query($query);
+
+        $row = $result->fetch_array(MYSQLI_ASSOC);
+        $output = $row['clientnom']." ".$row['clientprenom'];
+        $mysqli->close();
+
+        return $output;
 }
 
 function get_enfants($idfacture){

@@ -114,7 +114,7 @@ switch ($type) {
 					if(db=='' || df==''){
 						message("Veuillez entrer une date de d\351but et de fin!")
 					}else{
-						$("#submitbt").prop("disabled",true);
+						if(gup('type')!=='tivaa') $("#submitbt").prop("disabled",true);
 						window.location="extract_<?php print $_GET['type']; ?>.php?sql_db="+sql_db+"&sql_df="+sql_df+"&db="+db+"&df="+df+"&rol="+rol;
 					}
 				}
