@@ -5,16 +5,30 @@ $cat = $_POST['cat'];
 
 switch($cat){
     case "validation":
-        print getinfo("SELECT * FROM `factures_cantine` WHERE `factures_cantine`.`validation` = '0'");
+	$count = 0;
+	$count += getinfo("SELECT * FROM `factures_cantine` WHERE `validation` = '0'");
+	$count += getinfo("SELECT * FROM `factures_etal` WHERE `validation` = '0'");
+	$count += getinfo("SELECT * FROM `factures_amarrage` WHERE `validation` = '0'");
+        print "{\"num\":\"$count\"}";
     break;
     case "facture":
-        print getinfo("SELECT * FROM `factures_cantine` WHERE `factures_cantine`.`reglement` = '0' AND `factures_cantine`.`acceptation` = '1'");
+	$count = 0;
+	$count += getinfo("SELECT * FROM `factures_cantine` WHERE `reglement` = '0' AND `acceptation` = '1'");
+	$count += getinfo("SELECT * FROM `factures_etal` WHERE `reglement` = '0' AND `acceptation` = '1'");
+	$count += getinfo("SELECT * FROM `factures_amarrage` WHERE `reglement` = '0' AND `acceptation` = '1'");
+        print "{\"num\":\"$count\"}";
     break;
     case "client":
-        print getinfo("SELECT * FROM `clients` WHERE `clientstatus` = '1'");
+	$count = 0;
+	$count += getinfo("SELECT * FROM `clients` WHERE `clientstatus` = '1'");
+
+        print "{\"num\":\"$count\"}";
     break;
     case "enfant":
-        print getinfo("SELECT * FROM `enfants` WHERE `active` = '1'");
+	$count = 0;
+	$count += getinfo("SELECT * FROM `enfants` WHERE `active` = '1'");
+	
+        print "{\"num\":\"$count\"}";
     break;
     case "saint":
         print getsaint("01/01");
@@ -30,7 +44,7 @@ function getinfo($query){
     $num_rows = mysqli_num_rows($result);
     $mysqli->close();
     
-    return "{\"num\":\"$num_rows\"}";
+    return $num_rows;
 }
 
 function getsaint(){
