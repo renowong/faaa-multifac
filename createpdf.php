@@ -162,7 +162,7 @@ switch($typefacture){
 
 	case "amarrage":
 		$titlefacture = "Facturation d'Amarrage";
-		$delib = "La présente facture est conforme à la délibération n°46/2011 du 02 septembre 2011 fixant le tarif des amarrages.";
+		$delib = "La présente facture est conforme à la délibération n°46/2011 du 30 aout 2011 adoptant les modalités d'organisation et de fonctionnement de la marina de Vaitupa.";
 		
 		//first get information of facture
 		$query = "SELECT DATE_FORMAT(`factures_amarrage`.`datefacture`, '%d/%m/%Y') AS `datefacture`, ".
