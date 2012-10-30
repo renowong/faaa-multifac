@@ -296,11 +296,11 @@ function get_all($sql_db,$sql_df){
 
 function get_rol($idfacture,$table){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $query = "SELECT `rol` FROM `$table` WHERE `idfacture`='$idfacture'";
+        $query = "SELECT `rol`.`numrol` FROM `rol` JOIN `$table` ON `$table`.`rol`=`rol`.`idrol` WHERE `$table`.`idfacture`='$idfacture'";
         $result = $mysqli->query($query);
 
         $row = $result->fetch_array(MYSQLI_ASSOC);
-        $output = $row['rol'];
+        $output = $row['numrol'];
         $mysqli->close();
 
         return $output;
