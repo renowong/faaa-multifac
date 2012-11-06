@@ -273,7 +273,7 @@ if (isset($_GET['edit']) && $_GET['edit'] > 0) {
 				'			<td colspan="2"><div name="list_enfants" id="list_enfants"></div></td>'.
 				'		</tr>'.
 				'	</tbody>'.
-				'</table><form></td>';
+				'</table></form></td>';
 //	'</tr>'.
 //	'</table>';
 
