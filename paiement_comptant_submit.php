@@ -22,7 +22,7 @@ $montantech = $_GET['montantech'];
 $restearegler = $_GET['restearegler'];
 $mode = $_GET['mode'];
 $echelonnage = $_GET['echelonnage'];
-$obs = $_GET['obs'];
+$obs = str_replace("'","\'",$_GET['obs']);
 $id = $_GET['id'];
 
 if ($echelonnage=='0'){
