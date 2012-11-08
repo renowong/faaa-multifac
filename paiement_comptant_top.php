@@ -18,12 +18,15 @@ $info = getInfo();
 
 function getInfo(){
 		$id = $_GET['id'];
-        $type = $_GET['type'];
+		$type = $_GET['type'];
 		$Mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
         
         switch($type){
+            case "repas":
+		$output[0] = "<b>Encaissement au comptant (Ticket Repas)</b><br/>";
+                $output[1] = strtoupper($type);
+            break;		
             case "cantine":
-            case "repas":   
                 $query = "SELECT `datefacture`,`communeid`,`montantfcp`,`montanteuro`,`restearegler` FROM `".DB."`.`factures_cantine` WHERE `idfacture` = $id";
                 
                 $result = $Mysqli->query($query);

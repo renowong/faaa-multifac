@@ -25,9 +25,18 @@ require_once('paiement_comptant_top.php');
 				$("#tsr").hide();
 				$("#tpe").hide();
 				$("#ech").hide();
+				if (gup("type")=="repas"){
+					$("#chk_echelon").prop("disabled",true);
+					$("#box_Mode").empty();
+					$("#box_Mode").append('<option value="num">Num&eacute;raire</option>');
+					$("#box_Mode").append('<option value="chq">Ch&egrave;que</option>');
+				}else{
+					$("#mt").hide();
+					$("#txt_payeur").val('<?php print $arCompte[0] ?>');
+				}
+				
 				$( "#dialog-confirm" ).hide();
 				
-				$("#txt_payeur").val('<?php print $arCompte[0] ?>');
 				//////jqueryui buttons/////
 				$( "input:submit,input:button,button" ).button();
 			});
@@ -54,6 +63,7 @@ require_once('paiement_comptant_top.php');
 			
 			
 			function submit_form(){
+				
 				var table = gup('type');
 				var payeur = $("#txt_payeur").val();
 				var type = $("#hid_type").val();
@@ -69,11 +79,17 @@ require_once('paiement_comptant_top.php');
 				var montantmax = $("#montantmax").val()*1;
 				var tpe = $("#txt_tpe").val();
 				var id = gup('id');
-				<? print "var details = ".json_encode(getAmount()).";\n"; ?>
-				var montantfcp = details['montantfcp'];
-				var montanteuro = details['montanteuro'];
-				var restearegler = details['restearegler'];
 				
+				if (table=="repas"){
+					var montantfcp = $("#txt_encaissement").val();
+					var montanteuro = eval(montantfcp/119.332);
+					var restearegler = montantfcp;
+				}else{
+					<? print "var details = ".json_encode(getAmount()).";\n"; ?>
+					var montantfcp = details['montantfcp'];
+					var montanteuro = details['montanteuro'];
+					var restearegler = details['restearegler'];
+				}
 				
 				if(echelonnage && montantech=='') {
 					message("Montant de l'\351chelon vide");
@@ -99,7 +115,7 @@ require_once('paiement_comptant_top.php');
 					message("Veuillez entrer une information TPE");
 					return false;
 				}
-				//alert(mode);
+			
 				if(montantech>montantmax){
 					message("Montant de l'\351chelon supp\351rieur au montant \340 r\351gler!");
 					return false;
@@ -263,11 +279,18 @@ require_once('paiement_comptant_top.php');
 									<input type="text" name="txt_echelon" id="txt_echelon" value="" size="10" maxlength="8" /> FCP
 								</td>
 							</tr>
+							<tr id="mt">
+								<td colspan="2">
+									<!--Echelonnage-->
+									<label for="txt_encaissement">Montant de l'encaissement</label><br />
+									<input type="text" name="txt_encaissement" id="txt_encaissement" value="" size="10" maxlength="8" /> FCP
+								</td>
+							</tr>
 							<tr>
 								<td colspan="2">
 									<!--OBS-->
 									<label for="txt_obs">Observations</label><br />
-									<input type="text" id="txt_obs" name="txt_obs" size="50" maxlength="50" />									</td>
+									<input type="text" id="txt_obs" name="txt_obs" size="50" maxlength="50" class="uppercase" />									</td>
 								</td>
 							</tr>
 							<tr> 

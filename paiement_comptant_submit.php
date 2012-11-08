@@ -8,7 +8,7 @@ session_start();
 require_once ('config.php');
 $date_paiement = date("Y-m-d");
 $table = $_GET['table'];
-$payeur = $_GET['payeur'];
+$payeur = strtoupper($_GET['payeur']);
 $type = $_GET['type'];
 $numero_cheque = $_GET['numero_cheque'];
 $organisme = $_GET['organisme'];
@@ -22,7 +22,7 @@ $montantech = $_GET['montantech'];
 $restearegler = $_GET['restearegler'];
 $mode = $_GET['mode'];
 $echelonnage = $_GET['echelonnage'];
-$obs = str_replace("'","\'",$_GET['obs']);
+$obs = strtoupper(str_replace("'","\'",$_GET['obs']));
 $id = $_GET['id'];
 
 if ($echelonnage=='0'){
