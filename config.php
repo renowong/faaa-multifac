@@ -29,9 +29,9 @@ $ar_f_c = array(
                 "link" => "cantine"
               ),
            1 => array(
-                "table" => "factures_cantine",
-                "title" => "repas",
-                "link" => "repas"
+                "table" => "factures_amarrage",
+                "title" => "amarrage",
+                "link" => "amarrage"
               ),
            
            );

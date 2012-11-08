@@ -9,7 +9,6 @@ $date =  date("Y-m-d");
 $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
 switch($type){
     case "cantine":
-    case "repas":   
         $query = "UPDATE `".DB."`.`factures_cantine` SET `validation`='1', `acceptation`= '$acceptation', `comment`='$comment', `date_validation`='$date' WHERE `factures_cantine`.`idfacture`=$factureid";
     break;
     case "etal":

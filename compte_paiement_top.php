@@ -24,7 +24,7 @@ function getAllFactures($id,$type){
 				//echo $query;
 				$result = $mysqli->query($query);
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
-					if($row["repas"]=='1'){$typef="repas";}else{$typef="cantine";}
+				$typef="cantine";
 				$output .= "<tr><td>$typef</td>";
 				$output .= "<td>Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)";
 				if($row["restearegler"]!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : ".$row["restearegler"]." FCP";}
@@ -73,13 +73,13 @@ function getPaidFactures($id,$type){
 
 	switch($type){
 		case "client":
-			$query = "SELECT `factures_cantine`.`idfacture`, `factures_cantine`.`datefacture`, `factures_cantine`.`communeid`, `factures_cantine`.`montantfcp`, `factures_cantine`.`montanteuro`, `factures_cantine`.`repas`".
+			$query = "SELECT `factures_cantine`.`idfacture`, `factures_cantine`.`datefacture`, `factures_cantine`.`communeid`, `factures_cantine`.`montantfcp`, `factures_cantine`.`montanteuro`".
 			", `paiements`.`date_paiement`, `paiements`.`payeur`, `paiements`.`mode`, `paiements`.`montantcfp`, `paiements`.`idpaiement`, `paiements`.`obs` FROM `".DB."`.`factures_cantine` ".
 			" JOIN `".DB."`.`paiements` ON `factures_cantine`.`idfacture`=`paiements`.`idfacture` WHERE `factures_cantine`.`reglement` = 1 AND `factures_cantine`.`acceptation` = 1 AND `factures_cantine`.`idclient` = $id ORDER BY `paiements`.`idpaiement` DESC LIMIT 10";
 			//echo $query;
 			$result = $mysqli->query($query);
 			while($row = $result->fetch_array(MYSQLI_ASSOC)){
-			if($row["repas"]=="1"){$typef="repas";}else{$typef="cantine";}
+			$typef="cantine";
 			$output .= "<tr><td>$typef</td>".
 			"<td>Facture ".$row["communeid"]." du ".standarddateformat($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)<br/>".
 			"- R&eacute;gl&eacute;e la somme de <b>".trispace($row["montantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".standarddateformat($row["date_paiement"]).")<br/>".

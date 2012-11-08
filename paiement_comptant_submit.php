@@ -65,7 +65,7 @@ function enterdata($id,$date_paiement,$payeur,$type,$numero_cheque,$organisme,$d
 	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
 	$mysqli->set_charset("utf8");
     
-    if($table=="repas")$table="cantine";
+    //if($table=="repas")$table="cantine";
 	
 	switch($mode) {
 		case "num":

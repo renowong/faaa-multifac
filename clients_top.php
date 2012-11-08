@@ -328,17 +328,9 @@ function buildFacturesEnCoursTable($id,$ar_tables){
 	$output = "<table class=\"tblform\"><tbody><th>Type de Facture</th><th>Facture</th><th>Status</th><th>Commentaire</th></tbody>";
 
 foreach( $ar_tables as &$val ){
-		switch($val['link']){
-				case "repas":
-				$query = "SELECT * FROM `".$val['table']."` WHERE `idclient` = $id AND `repas` = '1' ORDER BY datefacture DESC, idfacture DESC limit 30";	
-				break;
-				case "cantine":
-				$query = "SELECT * FROM `".$val['table']."` WHERE `idclient` = $id AND `repas` = '0' ORDER BY datefacture DESC, idfacture DESC limit 30";	
-				break;
-				default:
-				$query = "SELECT * FROM `".$val['table']."` WHERE `idclient` = $id ORDER BY datefacture DESC, idfacture DESC limit 30";
-				break;
-		}
+
+	$query = "SELECT * FROM `".$val['table']."` WHERE `idclient` = $id ORDER BY datefacture DESC, idfacture DESC limit 30";
+
         
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){

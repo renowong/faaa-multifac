@@ -19,7 +19,6 @@ function getinfo($id,$initiales,$typefacture){
     
     switch($typefacture){
         case "cantine":
-        case "repas":
         $query = "SELECT *,`paiements`.`obs` AS `observations` FROM `paiements` JOIN `factures_cantine` ON `paiements`.`idfacture`=`factures_cantine`.`idfacture` WHERE `idpaiement`= $id";
         break;
         case "etal":

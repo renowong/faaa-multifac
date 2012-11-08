@@ -103,7 +103,7 @@ function buildOptionsPeriod() {
 
 function buildFacturesEnAttente($idclient) {
 	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$query = "SELECT * FROM `".DB."`.`factures_cantine` WHERE `idclient`=$idclient AND `validation`='0' AND `repas`='0'";
+	$query = "SELECT * FROM `".DB."`.`factures_cantine` WHERE `idclient`=$idclient AND `validation`='0'";
 	$result = $mysqli->query($query);
 	if($mysqli->affected_rows>0) {
 		$list = "<br><b>Factures en attente de validation -- actuellement imprimable en tant que devis</b>";

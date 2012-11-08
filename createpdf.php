@@ -67,47 +67,6 @@ switch($typefacture){
 		
 	break;
 
-	case "repas":
-		$titlefacture = "Facturation Repas";
-		$delib = "La présente facture est conforme à la délibération n°160/2010 du 28 août 2012 fixant le tarif des repas de cantine scolaire.";
-
-		//first get information of facture
-		$query = "SELECT DATE_FORMAT(`factures_cantine`.`datefacture`, '%d/%m/%Y') AS `datefacture`, ".
-			"DATE_FORMAT(DATE_ADD(`factures_cantine`.`datefacture`, INTERVAL 31 DAY), '%d/%m/%Y') AS `datelimite`, ".
-			"`factures_cantine`.`validation`, `factures_cantine`.`communeid`, `factures_cantine`.`idclient`, `factures_cantine`.`obs` AS `periode`, ".
-			"`clients`.`clientcivilite`, ".
-			"`clients`.`clientnom`, `clients`.`clientnommarital`, `clients`.`clientprenom`, `clients`.`clientprenom2`, ".
-			"`clients`.`clientbp`, `clients`.`clientcp`, `clients`.`clientville`, `clients`.`clientcommune`, ".
-			"`clients`.`clientpays`, `clients`.`clienttelephone`, `clients`.`clientfax`, `clients`.`clientemail` ".
-			"FROM `factures_cantine` INNER JOIN `clients` ON `factures_cantine`.`idclient`=`clients`.`clientid` ".
-			"WHERE `factures_cantine`.`idfacture` = $idfacture";
-		$result = $mysqli->query($query);
-			while($row = $result->fetch_array(MYSQLI_ASSOC)){
-				$datefacture = $row['datefacture'];
-				$nofacture = $row['communeid'];
-				$periode = $row['periode'];
-				$facturevalidation = $row['validation'];
-				$client = html_entity_decode($row['clientnom']." ".$row['clientprenom'],ENT_QUOTES, "UTF-8");
-				$bp = "BP : ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
-				$email = "E-mail : ".$row['clientemail'];
-				$telephone = "Téléphone : ".$row['clienttelephone'];
-				$fax = "Fax : ".$row['clientfax'];
-				$datelimite = $row['datelimite'];
-				$idclient = $row['idclient'];
-				}
-		$result->close();
-				
-		//next get information on details of facture
-		$query = "SELECT `factures_cantine_details`.`quant`, `status_cantine`.`status` AS `Type`, `status_cantine`.`MontantFCP`, `status_cantine`.`MontantEURO`, `status_cantine`.`Unite`, `status_cantine`.`Delib`, `status_cantine`.`Datedelib` FROM `factures_cantine_details` LEFT JOIN `status_cantine` ON `factures_cantine_details`.`idtarif` = `status_cantine`.`idstatus` WHERE `factures_cantine_details`.`idfacture` = $idfacture";
-		
-		$result = $mysqli->query($query);
-				while($row = $result->fetch_array(MYSQLI_ASSOC)){
-				array_push($details_array, $row);
-				}
-		
-		$result->close();
-	break;
-
 	case "etal":
 		$titlefacture = "Facturation Place et Etal";
 			

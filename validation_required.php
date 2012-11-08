@@ -87,7 +87,7 @@ if($list){$stitle="Factures en attente";}else{$stitle="Module de validation des 
 		
 		Filtre : <select id="slt_filter" onchange="javascript:filter(this.value);">
 			<option value="all">Tout</option>
-			<option value="cantine">Cantine et Repas</option>
+			<option value="cantine">Cantine</option>
 			<option value="etal">Place et Etal</option>
 			<option value="amarrage">Amarrage</option>
 		</select><br/><br/>

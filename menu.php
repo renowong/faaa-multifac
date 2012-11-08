@@ -56,7 +56,6 @@ $menu .= "<div id='dropmenu2' class='dropmenudiv' style='width: 150px;'>".
 //<!--3rd drop down menu -->
 $menu .= "<div id='dropmenu3' class='dropmenudiv' style='width: 150px;'>";
 if ($arCompte[2]=="client") $menu .= "<a href='facture_cantine.php'>Cantine</a>";
-if ($arCompte[2]=="client") $menu .= "<a href='facture_repas.php'>Repas Ens/Emp</a>";
 if ($arCompte[2]=="mandataire") $menu .= "<a href='facture_etal.php'>Place et Etal</a>";
 if ($arCompte[2]=="client") $menu .= "<a href='facture_amarrage.php'>Amarrage</a>";
 $menu .= "</div>";

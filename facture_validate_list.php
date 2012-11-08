@@ -84,7 +84,7 @@ function getamarragevalidate(){
         $query = "SELECT * FROM `".DB."`.`factures_amarrage` INNER JOIN `clients` ON `factures_amarrage`.`idclient` = `clients`.`clientid` WHERE `factures_amarrage`.`validation` = '0'";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-                if($row['repas']=='1'){$type='repas';}else{$type='amarrage';}
+                $type='amarrage';
                 $output .= "<tr><td>$type</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
                 "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Devis ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
                 $output .= trispace($row["montantfcp"]);
@@ -101,7 +101,7 @@ function getamarragelist(){
         $query = "SELECT * FROM `".DB."`.`factures_amarrage` INNER JOIN `clients` ON `factures_amarrage`.`idclient` = `clients`.`clientid` WHERE `factures_amarrage`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0'";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-                if($row['repas']=='1'){$type='repas';}else{$type='amarrage';}
+                $type='amarrage';
                 $output .= "<tr><td>$type</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
                 "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
                 $output .= trispace($row["montantfcp"]);
@@ -115,7 +115,7 @@ function getcantinevalidate(){
         $query = "SELECT * FROM `".DB."`.`factures_cantine` INNER JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` WHERE `factures_cantine`.`validation` = '0'";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-                if($row['repas']=='1'){$type='repas';}else{$type='cantine';}
+                $type='cantine';
                 $output .= "<tr><td>$type</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
                 "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Devis ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
                 $output .= trispace($row["montantfcp"]);
@@ -132,7 +132,7 @@ function getcantinelist(){
         $query = "SELECT * FROM `".DB."`.`factures_cantine` INNER JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` WHERE `factures_cantine`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0'";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-                if($row['repas']=='1'){$type='repas';}else{$type='cantine';}
+                $type='cantine';
                 $output .= "<tr><td>$type</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
                 "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
                 $output .= trispace($row["montantfcp"]);
