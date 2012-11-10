@@ -1,0 +1,43 @@
+<?php
+require_once('headers.php');
+require_once('global_functions.php');
+require_once('checksession.php');
+
+if (!empty($_SESSION['client'])) {
+		$arCompte = getCompteDisplay();
+		$arCompte = preg_split("/,/", $arCompte);
+	}
+	
+	
+$cUser = unserialize($_SESSION['user']);
+$admin = $cUser->userisadmin();
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+	<head>
+	<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$jquery.$jqueryui.$message_div.$compte_div ?>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			showCompte(<?php echo '"' . $arCompte[0] . '", "' . $arCompte[1] . '", "' . $arCompte[2] . '"' ?>);
+		});
+
+	</script>
+
+	</head>
+	<body>
+		<? include_once('menu.php'); ?>
+		<div name="message" id="message" ></div>
+		<div name="compte_div" id="compte_div" ></div>
+		<div name="version" id="version">version <?php echo VERSION ?></div>
+		<h1>Module d'importation des CF CPS</h1>
+		
+		<form target="_blank" action="upload_cps_cf.php" method="post" enctype="multipart/form-data">
+		<label for="file">Fichier :</label>
+		<input type="file" name="file" id="file" /> 
+		<br />
+		<input type="submit" name="submit" value="Submit" />
+		</form>
+	</body>
+</html>
+
