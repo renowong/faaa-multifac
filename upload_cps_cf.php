@@ -1,4 +1,6 @@
 <?php
+include_once('config.php');
+require('global_functions.php');
 require('chifrenlettre.php');
 
 $allowedExts = array("csv");
@@ -39,6 +41,8 @@ else
   
   
 function update_data($f){
+    reset_status_cantine();
+    
     $new_f = str_replace(".csv","_FAAA.csv",$f);
     //echo ($new_f)."<br>";
     $fr = fopen($f, 'r');
@@ -68,8 +72,13 @@ function update_data($f){
             $ar_l[16]=$ar_l[11];
             $total += $ar_l[16];
             $touteslettres = chifre_en_lettre($total);
-            $l = join(";",$ar_l);
+            $l = join(";",$ar_l)."\n";
             fwrite($fw, $l);
+	    
+	    $cps = $ar_l[1];
+	    if($ar_l[5]=="100"){$status=1;}else{$status=2;}
+	    
+	    update_enfant($cps,$status,$fin);
         } else {
             if(substr($l,0,3)==";;;"){ //end
                 $l = str_replace("Total;;","Total;$total;",$l);
@@ -90,6 +99,14 @@ function update_data($f){
     output_file($new_f,substr($new_f,4),"csv");
   }
   
+function update_enfant($cps,$status,$date){
+  	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);      
+        $query = "UPDATE `enfants` SET `status`='$status', `status_expires`='$date' ".
+        "WHERE `cps`='$cps'";
+        $mysqli->query($query);
+	$mysqli->close();
+}
+
 function mysqldateformat($input){
 		$arr = explode('/', $input);
 		return $arr[2].'-'.$arr[1].'-'.$arr[0];
@@ -201,4 +218,6 @@ function output_file($file, $name, $mime_type='')
  
 die();
 }
+
+
 ?>

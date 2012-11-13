@@ -19,4 +19,13 @@ function trispace($n){
 	return number_format($n, 0, ',', ' ');
 }
 
+function reset_status_cantine(){
+	$today = date("Y-m-d");
+	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);      
+        $query = "UPDATE `enfants` SET `status`='6', `status_expires`='1997-01-01' ".
+        "WHERE `status_expires`<'$today'";
+        $mysqli->query($query);
+	$mysqli->close();
+}
+
 ?>
