@@ -5,7 +5,7 @@ require('chifrenlettre.php');
 
 $allowedExts = array("csv");
 $extension = end(explode(".", $_FILES["file"]["name"]));
-if ((($_FILES["file"]["type"] == "text/csv"))
+if ((($_FILES["file"]["type"] == "text/csv")||($_FILES["file"]["type"] == "application/vnd.ms-excel"))
 && ($_FILES["file"]["size"] < 100000)
 && in_array($extension, $allowedExts))
   {
