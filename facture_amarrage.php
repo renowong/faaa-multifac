@@ -180,7 +180,7 @@ require_once('facture_amarrage_top.php');
 					</td>
 					<td colspan="2">
 						<!--Lieu-->
-						<label for="txt_lieu">Lieu</label>
+						<label for="txt_lieu">Emplacement</label>
 						<input class="uppercase" type="text" maxlength="20" name="txt_lieu" id="txt_lieu" />
 					</td>
 				</tr>
