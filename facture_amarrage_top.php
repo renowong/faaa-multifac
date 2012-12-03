@@ -64,7 +64,7 @@ function buildOptionsPeriod() {
     $thismonth = date("n");
     $lastyear = $year-1;
     $nextyear = $year+1;
-	$months = array("Janvier","F&eacute;vrier","Mars","Avril","Mai","Juin","Juillet","Ao&ucirc;t","Septembre","Octobre","Novembre","D&eacute;cembre");
+	$months = array("Janvier","F&eacute;vrier","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","D&eacute;cembre");
 	for($i=0;$i<count($months);$i++){
 		$list .= "<option value='".htmlentities($months[$i])." ".$lastyear."'>".$months[$i]." ".$lastyear."</option>";
 	}

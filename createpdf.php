@@ -127,6 +127,7 @@ switch($typefacture){
 		$query = "SELECT DATE_FORMAT(`factures_amarrage`.`datefacture`, '%d/%m/%Y') AS `datefacture`, ".
 			"DATE_FORMAT(DATE_ADD(`factures_amarrage`.`datefacture`, INTERVAL 31 DAY), '%d/%m/%Y') AS `datelimite`, ".
 			"`factures_amarrage`.`validation`, `factures_amarrage`.`communeid`, `factures_amarrage`.`idclient`, `factures_amarrage`.`obs` AS `periode`, ".
+			"`factures_amarrage`.`PY`, `factures_amarrage`.`lieu`, ".
 			"`clients`.`clientcivilite`, ".
 			"`clients`.`clientnom`, `clients`.`clientnommarital`, `clients`.`clientprenom`, `clients`.`clientprenom2`, ".
 			"`clients`.`clientbp`, `clients`.`clientcp`, `clients`.`clientville`, `clients`.`clientcommune`, ".
@@ -146,6 +147,8 @@ switch($typefacture){
 				$fax = "Fax : ".$row['clientfax'];
 				$datelimite = $row['datelimite'];
 				$idclient = $row['idclient'];
+				$py = $row['PY'];
+				$lieu = $row['lieu'];
 				}
 		$result->close();
 				
@@ -163,12 +166,12 @@ switch($typefacture){
 
 
 
-genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$bp,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs);
+genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$bp,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu);
 
 $mysqli->close();
 
 
-function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$bp,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs){
+function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$bp,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu){
 	$xreg=-1.5;
 	$yreg=3.5;
 
@@ -262,6 +265,26 @@ switch($typefacture){
 	$pdf->Rect(12+$xreg,48+$yreg,62,27);
 	break;
 
+	case "amarrage":
+	$pdf->SetXY(139+$xreg,46+$yreg);
+	$pdf->SetFont('Arial','B',10);
+	$pdf->Cell(55,10,"PY $py - $lieu");
+	$pdf->SetXY(139+$xreg,50+$yreg);
+	$pdf->SetFont('Arial','',10);
+	$pdf->Cell(55,10,"Attn : ".strtoupper($client));
+	$pdf->SetXY(139+$xreg,54.2+$yreg);
+	$pdf->SetFont('Arial','',10);
+	$pdf->Cell(55,10,utf8_decode($bp));
+	$pdf->SetXY(139+$xreg,58.5+$yreg);
+	$pdf->Cell(55,10,utf8_decode($email));
+	$pdf->SetXY(139+$xreg,62.8+$yreg);
+	$pdf->Cell(55,10,utf8_decode($telephone));
+	$pdf->SetXY(139+$xreg,67.1+$yreg);
+	$pdf->Cell(55,10,utf8_decode($fax));
+	$pdf->SetLineWidth(0.4);
+	$pdf->Rect(138+$xreg,48+$yreg,62,27);
+	break;
+
 	default:
 	$pdf->SetXY(139+$xreg,46+$yreg);
 	$pdf->SetFont('Arial','B',10);
@@ -281,20 +304,22 @@ switch($typefacture){
 	$pdf->SetLineWidth(0.4);
 	$pdf->Rect(138+$xreg,48+$yreg,62,27);
 	break;
+
 }
 
 	///////////////////////////////////fin colonne droite////////////////////////////
 	///////////////////////////////////type de facture//////////////////////////////
 	$pdf->SetXY(12+$xreg,82+$yreg);
 	$pdf->SetFont('Arialb','U',13);
+	$periode = str_replace("&eacute;","\351",$periode);
 	switch($typefacture){
 		case "cantine":
 		case "etal":
 		case "amarrage":	
-			$pdf->Cell(186,10,utf8_decode($titlefacture." / Période : ").html_entity_decode($periode),0,1,'C');
+			$pdf->Cell(186,10,utf8_decode($titlefacture." / Période : ").$periode,0,1,'C');
 		break;
 		default:
-			$pdf->Cell(186,10,utf8_decode($titlefacture).html_entity_decode($periode),0,1,'C');
+			$pdf->Cell(186,10,utf8_decode($titlefacture).$periode,0,1,'C');
 		break;
 	}
 

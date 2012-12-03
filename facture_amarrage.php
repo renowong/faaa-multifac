@@ -15,6 +15,9 @@ require_once('facture_amarrage_top.php');
 			$('#txt_quantite').keypress(function(event) {
 				return /[0-9]/.test(String.fromCharCode(event.which));
 			});
+			$('#txt_PY').keypress(function(event) {
+				return /[0-9]/.test(String.fromCharCode(event.which));
+			});
 
 			$( "#dialog-confirm" ).hide();
 		});
@@ -119,8 +122,10 @@ require_once('facture_amarrage_top.php');
 		
 		function submit_facture(fdata,clientid){
 		var period = $("#box_periode").val();
+		var py = $("#txt_PY").val();
+		var lieu = $("#txt_lieu").val();
 		//alert (period);
-		$.get("facture_amarrage_submit.php",{fdata:fdata,clientid:clientid,period:period},
+		$.get("facture_amarrage_submit.php",{fdata:fdata,clientid:clientid,period:period,py:py,lieu:lieu},
 		      function(data){
 			readResponse(data);
 		      },"xml");
@@ -165,6 +170,18 @@ require_once('facture_amarrage_top.php');
                                                 <select name="box_periode" id="box_periode">
                                                         <?php echo $PeriodeList ?>
                                                 </select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<!--PY-->
+						<label for="txt_PY">PY</label>
+						<input type="text" maxlength="10" name="txt_PY" id="txt_PY" />
+					</td>
+					<td colspan="2">
+						<!--Lieu-->
+						<label for="txt_lieu">Lieu</label>
+						<input class="uppercase" type="text" maxlength="20" name="txt_lieu" id="txt_lieu" />
 					</td>
 				</tr>
 				<tr>
