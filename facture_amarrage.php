@@ -124,8 +124,9 @@ require_once('facture_amarrage_top.php');
 		var period = $("#box_periode").val();
 		var py = $("#txt_PY").val();
 		var lieu = $("#txt_lieu").val();
+		var nav = $("#txt_nav").val();
 		//alert (period);
-		$.get("facture_amarrage_submit.php",{fdata:fdata,clientid:clientid,period:period,py:py,lieu:lieu},
+		$.get("facture_amarrage_submit.php",{fdata:fdata,clientid:clientid,period:period,py:py,lieu:lieu,nav:nav},
 		      function(data){
 			readResponse(data);
 		      },"xml");
@@ -164,12 +165,17 @@ require_once('facture_amarrage_top.php');
 		<table name="tblcantine" id="tblcantine" class="tblform">
 			<tbody>
 				<tr>
-					<td colspan="3">
+					<td>
 						<!--Periode-->
                                                 <label for="box_periode">P&eacute;riode</label>
                                                 <select name="box_periode" id="box_periode">
                                                         <?php echo $PeriodeList ?>
                                                 </select>
+					</td>
+					<td colspan="2">
+						<!--Navire-->
+						<label for="txt_nav">Navire</label>
+						<input class="uppercase" type="text" maxlength="20" name="txt_nav" id="txt_nav" />
 					</td>
 				</tr>
 				<tr>
@@ -181,7 +187,7 @@ require_once('facture_amarrage_top.php');
 					<td colspan="2">
 						<!--Lieu-->
 						<label for="txt_lieu">Emplacement</label>
-						<input class="uppercase" type="text" maxlength="20" name="txt_lieu" id="txt_lieu" />
+						<input class="uppercase" type="text" maxlength="10" name="txt_lieu" id="txt_lieu" />
 					</td>
 				</tr>
 				<tr>

@@ -9,8 +9,9 @@ $clientid = $_GET['clientid'];
 $period = $_GET['period'];
 $py = $_GET['py'];
 $lieu = strtoupper($_GET['lieu']);
+$nav = strtoupper($_GET['nav']);
 
-$communefactureid = enterdata($fdata,$clientid,$period,$py,$lieu);
+$communefactureid = enterdata($fdata,$clientid,$period,$py,$lieu,$nav);
 
 	$response = "<?xml version='1.0' encoding='UTF-8' standalone='yes'?>".
 			"<response>".
@@ -25,7 +26,7 @@ $communefactureid = enterdata($fdata,$clientid,$period,$py,$lieu);
 ///////////////////////////functions////////////////////////////////////////////
 
 //////duplicate at ecole_global_search_function.php///////////
-function enterdata($fdata,$clientid,$period,$py,$lieu){
+function enterdata($fdata,$clientid,$period,$py,$lieu,$nav){
 $totalfcp = 0;
 for($counter=0;$counter<count($fdata);$counter+=1){
 	$detail = explode("#",$fdata[$counter]);
@@ -45,8 +46,8 @@ $today = date("Y-m-d");
 		$mysqli->query($query);
 	
 		$query = "INSERT INTO `".DB."`.`factures_amarrage` (`idfacture`, `idclient`,".
-				 " `datefacture`, `communeid`, `montantfcp`, `montanteuro`, `restearegler`,`obs`,`PY`,`lieu`)".
-				 " VALUES (NULL, '".$clientid."', '".$today."', '".$chrono."', '".$totalfcp."', '".$totaleuro."', '".$totalfcp."', '".$period."', '".$py."', '".$lieu."')";
+				 " `datefacture`, `communeid`, `montantfcp`, `montanteuro`, `restearegler`,`obs`,`PY`,`lieu`,`navire`)".
+				 " VALUES (NULL, '".$clientid."', '".$today."', '".$chrono."', '".$totalfcp."', '".$totaleuro."', '".$totalfcp."', '".$period."', '".$py."', '".$lieu."', '".$nav."')";
 	//return $query;
 	$mysqli->query($query);
 	$lastid = $mysqli->insert_id; //use it to insert the details.
