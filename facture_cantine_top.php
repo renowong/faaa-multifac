@@ -10,7 +10,7 @@ if (!empty($_SESSION['client'])) {
 
 //###############################variables######################################
 $legend = 'Cr&eacute;ation d&apos;une facture cantine';
-$deliblink = '160-2012';
+$deliblink = '182-2012';
 $fact = buildArray("tarifs_cantines"); //details de la facture
 $jsarType = buildJSArray($fact, 'status');
 $jsarMontantFCP = buildJSArray($fact, 'MontantFCP');
