@@ -68,7 +68,7 @@ function buildArray($table,$clientid=0){
 
 function buildOptionsType($selectedOption, $f) {
 	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$query = 'SELECT * FROM `'.DB.'`.`status_cantine` LIMIT 6';
+	$query = 'SELECT * FROM `'.DB.'`.`status_cantine` LIMIT 7,7';
 	$result = $mysqli->query($query);
 	while($row = $result->fetch_array(MYSQLI_ASSOC)){
 			echo '<option value="' .$row["idstatus"]. '">' .$row["status"]. '</option>';
