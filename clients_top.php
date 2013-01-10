@@ -311,7 +311,7 @@ function buildOptionsClasses(){
 
 function buildStatusCantine($s){
 	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$query = 'SELECT * FROM `'.DB.'`.`status_cantine` LIMIT 6';
+	$query = 'SELECT * FROM `'.DB.'`.`status_cantine`';
 	$result = $mysqli->query($query);
 	while($row = $result->fetch_array(MYSQLI_ASSOC)){
 		if($row["idstatus"]==$s){$select=" selected";}else{$select="";}
