@@ -13,7 +13,6 @@ $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
 switch($typefacture){
 	case "cantine":
 		$titlefacture = "Facturation de la Cantine";
-		$delib = "La présente facture est conforme à la délibération n°160/2010 du 28 août 2012 fixant le tarif des repas de cantine scolaire.";
 
 		//first get information of facture
 		$query = "SELECT DATE_FORMAT(`factures_cantine`.`datefacture`, '%d/%m/%Y') AS `datefacture`, ".
@@ -62,6 +61,17 @@ switch($typefacture){
 				$ecole = $row['nomecole'];
 				$classe = $row['classe'];
 				}
+				
+		$d=$details_array[0]['Delib'];
+		switch($d){
+			case "160-2012":
+				$delib = "La présente facture est conforme à la délibération n°160/2012 du 28 août 2012 fixant le tarif des repas de cantine scolaire.";
+				break;
+			case "182-2012":
+				$delib = "La présente facture est conforme à la délibération n°182/2012 du 24 octobre 2012 fixant le tarif des repas de cantine scolaire.";
+				break;
+		}
+		
 		$result->close();
 				
 		
