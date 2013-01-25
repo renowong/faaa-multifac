@@ -72,7 +72,7 @@ function update_data($f){
             $ar_l[16]=$ar_l[11];
             $total += $ar_l[16];
             $touteslettres = chifre_en_lettre($total);
-            $l = join(";",$ar_l)."\n";
+            $l = join(";",$ar_l);
             fwrite($fw, $l);
 	    
 	    $cps = $ar_l[1];
