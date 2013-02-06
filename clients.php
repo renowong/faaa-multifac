@@ -23,8 +23,10 @@ require_once('clients_top.php');
 			showCompte(<?php echo '"' . $arCompte[0] . '", "' . $arCompte[1] . '", "' . $arCompte[2] . '"' ?>);
 				
 				var edit = gup('edit');
+				$("#opaquediv").hide();
 				$('.reject').hide();
 				$('#historique').hide();
+				$('#avoirs').hide();
 				$('#showreject').hide();
 				if (edit>0){$('#divhistorique').show();}else{$('#divhistorique').hide();$('#accounttoggle').hide();}
 				
@@ -46,7 +48,18 @@ require_once('clients_top.php');
 						$('#togglehistory').button('option','label','Afficher');
 						$('#showreject').hide();
 					}
+					scrolldown();
                                 });
+				
+				$('#toggleavoirs').click( function() {
+					$('#avoirs').slideToggle();
+					if ($('#toggleavoirs').text()=='Afficher'){
+						$('#toggleavoirs').button('option','label','Cacher');
+					}else{
+						$('#toggleavoirs').button('option','label','Afficher');
+					}
+					scrolldown();
+                                })
 			
 				$('#toggleaccount').click( function() {
 					$('#compte').slideToggle();
@@ -245,6 +258,21 @@ require_once('clients_top.php');
 		function resetenfant(){
 				var edit = gup("edit");
 				window.location = "clients.php?edit="+edit+"&reset=1";
+		}
+		
+		function scrolldown(){
+			var n = $(document).height();
+			$('html, body').animate({ scrollTop: n },'50');
+		}
+		
+		function div_avoir(){
+			$("#div_avoir").load("avoirs.php");
+			$("#opaquediv").show();
+		}
+		
+		function div_avoir_close(){
+			$("#div_avoir").empty();
+			$("#opaquediv").hide();
 		}
 		</script>
 	</head>
@@ -470,7 +498,19 @@ require_once('clients_top.php');
 				 ?>
 			<br/>
 			</div>
-		</div>	
+		</div>
+		<div id="divavoirs">
+			<h1>Avoirs</h1> <button href="#" id="toggleavoirs">Afficher</button> <button onclick="div_avoir();">Ajouter</button>	
+			<div id="avoirs">
+				<?php 
+				if (isset($_GET['edit'])) echo buildFacturesEnCoursTable($_GET['edit'],$ar_f_c);
+				 ?>
+			<br/>
+			</div>
+		</div>
+		<div id="opaquediv" name="opaquediv" style="position:absolute;top:0px;width:100%;height:100%;z-index:20;">
+			<div style="background-color:white;" id="div_avoir" name="div_avoir" />
+		</div>
 	</body>
 </html>
 

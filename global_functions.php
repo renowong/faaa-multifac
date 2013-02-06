@@ -28,4 +28,9 @@ function reset_status_cantine(){
 	$mysqli->close();
 }
 
+function reverse_date_to_normal($d){
+        $d = explode("-",$d);
+        return $d[2]."/".$d[1]."/".$d[0];
+        }
+
 ?>
