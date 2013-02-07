@@ -91,7 +91,7 @@ function get_child_data($id){
 
 function load($ecole,$classe){
     $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-    $query = "SELECT `nom`,`prenom`,`enfantid`,`clientid` FROM `enfants` WHERE `ecole`='$ecole' AND `classe`='$classe' ORDER BY `nom`";
+    $query = "SELECT `nom`,`prenom`,`enfantid`,`clientid` FROM `enfants` WHERE `ecole`='$ecole' AND `classe`='$classe' AND `active`='1' ORDER BY `nom`";
     $result = $mysqli->query($query);
         $output = "<table id=\"tbl_results\"><tr>";
         $i = 0;
