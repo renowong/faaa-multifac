@@ -39,6 +39,28 @@ require_once('paiement_comptant_top.php');
 				
 				//////jqueryui buttons/////
 				$( "input:submit,input:button,button" ).button();
+				
+				//////key checks//////
+				
+				$('#txt_num_cheque').keypress(function(event) {
+					if(event.which=='0'||event.which=='8') return true;
+					return /^[0-9]+$/.test(String.fromCharCode(event.which));
+				});
+				
+				$('#txt_echelon').keypress(function(event) {
+					if(event.which=='0'||event.which=='8') return true;
+					return /^[0-9]+$/.test(String.fromCharCode(event.which));
+				});
+				
+				$('#txt_payeur').keypress(function(event) {
+					if(event.which=='0'||event.which=='8') return true;
+					return /^[a-zA-Z\-\ ]+$/.test(String.fromCharCode(event.which));
+				});
+				
+				$('#txt_obs').keypress(function(event) {
+					if(event.which=='0'||event.which=='8') return true;
+					return /^[0-9a-zA-Z\-\ ]+$/.test(String.fromCharCode(event.which));
+				});
 			});
 			
 			function fconfirm(){
@@ -162,18 +184,18 @@ require_once('paiement_comptant_top.php');
 				}
 			}
 			
-			function is_num(curinput, fieldID){
-				if (notnumber(curinput)) {
-					curinput = curinput.substring(0, curinput.length -1)
-					$("#"+fieldID).val(curinput);
-				}
-			}
+			//function is_num(curinput, fieldID){
+			//	if (notnumber(curinput)) {
+			//		curinput = curinput.substring(0, curinput.length -1)
+			//		$("#"+fieldID).val(curinput);
+			//	}
+			//}
 			
-			function notnumber(input){
-				var the_length=input.length;
-				var last_char=input.charAt(the_length-1);
-				return isNaN(last_char);
-			}
+			//function notnumber(input){
+			//	var the_length=input.length;
+			//	var last_char=input.charAt(the_length-1);
+			//	return isNaN(last_char);
+			//}
 
 		</script>
 	</head>
@@ -230,7 +252,7 @@ require_once('paiement_comptant_top.php');
 								<td>
 									<!--num cheque-->
 									<label for="txt_num_cheque">Num&eacute;ro du Ch&egrave;que</label><br />
-									<input type="text" name="txt_num_cheque" id="txt_num_cheque" value="" size="10" maxlength="8" onkeyup="is_num(this.value, this.id);" />
+									<input type="text" name="txt_num_cheque" id="txt_num_cheque" value="" size="10" maxlength="8" />
 								</td>
 								<td>
 									<!--Organisme-->
