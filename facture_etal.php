@@ -115,7 +115,7 @@ require_once('facture_etal_top.php');
 		}
 		
 		function submit_facture(fdata,clientid){
-        var period = $("#box_periode").val();
+		var period = $("#box_periode").val();
 		$.get("facture_etal_submit.php",{fdata:fdata,clientid:clientid,period:period},
 		      function(data){
 			readResponse(data);
