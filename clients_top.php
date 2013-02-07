@@ -338,11 +338,33 @@ foreach( $ar_tables as &$val ){
 		}else{
 			if($row["acceptation"]==0){$status="Refus&eacute;e";$reject="reject";}else{$status="Valid&eacute;e";$reject="";}
 		}
-                $output .= "<tbody class=\"$reject\"><td>".$val['title']."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">Facture du ".$row["datefacture"]." montant de ";
+                $output .= "<tbody class=\"$reject\"><td>".$val['title']."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">Facture du ".french_date($row["datefacture"])." montant de ";
 		$output .= trispace($row["montantfcp"]);
 		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a></td><td>$status</td><td>".$row["comment"]."</td></tbody>";
         }
     }  
+
+	$output .= "</table>";
+    $mysqli->close();
+    return $output;
+
+}
+
+function buildAvoirsTable($id){
+    
+    $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+	$output = "<table class=\"tblform\"><tbody><th>Montant</th><th>Reste</th><th>Status</th><th>Liaison</th><th>Date</th><th>Obs</th></tbody>";
+	$query = "SELECT `avoirs`.`montant`,`avoirs`.`reste`,`avoirs`.`validation`,`avoirs`.`idfacture`,`avoirs`.`date`,`avoirs`.`obs`,`factures_cantine`.`datefacture`,`factures_cantine`.`datefacture`,`factures_cantine`.`montantfcp`,`factures_cantine`.`montanteuro` FROM `avoirs` INNER JOIN `factures_cantine` ON `avoirs`.`idfacture`=`factures_cantine`.`idfacture` WHERE `avoirs`.`idclient` = $id ORDER BY date DESC, `idavoir` DESC limit 5";
+        $result = $mysqli->query($query);
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+		if($row["validation"]==0) {$status="En cours de validation";$reject="";
+		}else{
+			if($row["acceptation"]==0){$status="Refus&eacute;e";$reject="reject";}else{$status="Valid&eacute;e";$reject="";}
+		}
+                $output .= "<tbody class=\"$reject\"><td>".trispace($row['montant'])." FCP</td><td>".trispace($row['reste'])." FCP</td><td>$status</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=cantine\" target=\"_blank\">Facture du ".french_date($row["datefacture"])." montant de ";
+		$output .= trispace($row["montantfcp"]);
+		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a></td><td>".french_date($row["date"])."</td><td>".$row["obs"]."</td></tbody>";
+        }
 
 	$output .= "</table>";
     $mysqli->close();
@@ -367,5 +389,9 @@ function getAllKids($id){
 	$count = $result->num_rows;
         $mysqli->close();
         return $count;
+}
+
+function french_date($timestamp){
+	return date("d/m/Y",strtotime($timestamp));
 }
 ?>

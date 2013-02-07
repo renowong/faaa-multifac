@@ -265,7 +265,12 @@ require_once('clients_top.php');
 			$('html, body').animate({ scrollTop: n },'50');
 		}
 		
+		function scrollup(){
+			window.scrollTo(0, 0);
+		}
+		
 		function div_avoir(){
+			scrollup();
 			$("#div_avoir").load("avoirs.php");
 			$("#opaquediv").show();
 		}
@@ -503,7 +508,7 @@ require_once('clients_top.php');
 			<h1>Avoirs</h1> <button href="#" id="toggleavoirs">Afficher</button> <button onclick="div_avoir();">Ajouter</button>	
 			<div id="avoirs">
 				<?php 
-				if (isset($_GET['edit'])) echo buildFacturesEnCoursTable($_GET['edit'],$ar_f_c);
+				if (isset($_GET['edit'])) echo buildAvoirsTable($_GET['edit']);
 				 ?>
 			<br/>
 			</div>
