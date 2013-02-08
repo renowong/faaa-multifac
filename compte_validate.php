@@ -48,7 +48,7 @@ function enterdata(){
 	} else {
 		$query = "INSERT INTO `".DB."`.`user` (`userfirstname`, `userlastname`, `userlogin`, `userservice`, `userpassword`, `userisadmin`, `userisactive`, `userisvalidator`)".
 				" VALUES ('".$_POST['txt_Prenom']."', '".$_POST['txt_Nom']."', '".strtolower($_POST['txt_Login']).
-				"', '".strtoupper($_POST['box_Service'])."', '".MD5($_POST['txt_Password'])."', ".$_POST['chk_Admin'].", ".$_POST['chk_Validator'].")";
+				"', '".strtoupper($_POST['box_Service'])."', '".MD5($_POST['txt_Password'])."', ".$_POST['chk_Admin'].", ".$_POST['chk_Active'].", ".$_POST['chk_Validator'].")";
 		$update = 0;
 		$userid = getlastuser();
 	}
