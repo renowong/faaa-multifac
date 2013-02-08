@@ -33,7 +33,8 @@ $menu .="<li><a href='#' rel='dropmenu4'>R&egrave;glement</a></li>".
 //<!--0st drop down menu -->
 $menu .= "<div id='dropmenu0' class='dropmenudiv' style='width: 210px;'>";
 if ($svc=="FTR"||$admin) $menu .= "<a href='validation_required.php?validlist=1'>Liste des factures en attente</a>";
-if ($validator||$admin) $menu .= "<a href='validation_required.php'>Liste des validations</a>";
+if ($validator||$admin) $menu .= "<a href='validation_required.php'>Liste des validations factures</a>";
+if ($validator||$admin) $menu .= "<a href='validation_required_avoirs.php'>Liste des validations avoirs</a>";
 $menu .= "<a href='main.php'>Accueil</a>".
 "<a href='index.php'>Quitter</a>".
 "</div>";
