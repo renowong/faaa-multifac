@@ -329,7 +329,7 @@ function buildFacturesEnCoursTable($id,$ar_tables){
 
 foreach( $ar_tables as &$val ){
 
-	$query = "SELECT * FROM `".$val['table']."` WHERE `idclient` = $id ORDER BY datefacture DESC, idfacture DESC limit 30";
+	$query = "SELECT * FROM `".$val['table']."` WHERE `idclient` = '$id' ORDER BY datefacture DESC, idfacture DESC limit 30";
 
         
         $result = $mysqli->query($query);
@@ -353,17 +353,22 @@ foreach( $ar_tables as &$val ){
 function buildAvoirsTable($id){
     
     $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$output = "<table class=\"tblform\"><tbody><th>Montant</th><th>Reste</th><th>Status</th><th>Liaison</th><th>Date</th><th>Obs</th></tbody>";
-	$query = "SELECT `avoirs`.`montant`,`avoirs`.`reste`,`avoirs`.`validation`,`avoirs`.`idfacture`,`avoirs`.`date`,`avoirs`.`obs`,`factures_cantine`.`datefacture`,`factures_cantine`.`datefacture`,`factures_cantine`.`montantfcp`,`factures_cantine`.`montanteuro` FROM `avoirs` INNER JOIN `factures_cantine` ON `avoirs`.`idfacture`=`factures_cantine`.`idfacture` WHERE `avoirs`.`idclient` = $id ORDER BY date DESC, `idavoir` DESC limit 5";
+	$output = "<table class=\"tblform\"><tbody><th>Montant</th><th>Reste</th><th>Status</th><th>Liaison</th>".
+	"<th>Date</th><th>Obs</th><th>Valideur</th><th>Obs valideur</th></tbody>";
+	$query = "SELECT `avoirs`.`montant`,`avoirs`.`reste`,`avoirs`.`validation`,`avoirs`.`idfacture`,`avoirs`.`date`,".
+	"`avoirs`.`obs`,`avoirs`.`obs_valideur`,`factures_cantine`.`datefacture`,`factures_cantine`.`datefacture`,".
+	"`factures_cantine`.`montantfcp`,`factures_cantine`.`montanteuro`, `user`.`userlogin` FROM `avoirs` INNER JOIN `factures_cantine`".
+	"ON `avoirs`.`idfacture`=`factures_cantine`.`idfacture` RIGHT JOIN `user` ON `avoirs`.`valideur_id`= `user`.`userid` ".
+	"WHERE `avoirs`.`idclient` = '$id' ORDER BY date DESC, `idavoir` DESC limit 5";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-		if($row["validation"]==0) {$status="En cours de validation";$reject="";
+		if($row["validation"]=='0') {$status="En cours de validation";$reject="";
 		}else{
-			if($row["acceptation"]==0){$status="Refus&eacute;e";$reject="reject";}else{$status="Valid&eacute;e";$reject="";}
+			if($row["acceptation"]=='0'){$status="Refus&eacute;e";$reject="reject";}else{$status="Valid&eacute;e";$reject="";}
 		}
                 $output .= "<tbody class=\"$reject\"><td>".trispace($row['montant'])." FCP</td><td>".trispace($row['reste'])." FCP</td><td>$status</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=cantine\" target=\"_blank\">Facture du ".french_date($row["datefacture"])." montant de ";
 		$output .= trispace($row["montantfcp"]);
-		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a></td><td>".french_date($row["date"])."</td><td>".$row["obs"]."</td></tbody>";
+		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a></td><td>".french_date($row["date"])."</td><td>".$row["obs"]."</td><td>".$row["userlogin"]."</td><td>".$row["obs_valideur"]."</td></tbody>";
         }
 
 	$output .= "</table>";
@@ -374,7 +379,7 @@ function buildAvoirsTable($id){
 
 function getAllFactures($id){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$query = "SELECT * FROM `".DB."`.`factures_cantine` WHERE `factures_cantine`.`reglement` = 0 AND `factures_cantine`.`acceptation` = 1 AND `factures_cantine`.`idclient` = $id";
+	$query = "SELECT * FROM `".DB."`.`factures_cantine` WHERE `factures_cantine`.`reglement` = 0 AND `factures_cantine`.`acceptation` = 1 AND `factures_cantine`.`idclient` = '$id'";
 	//echo $query;
         $result = $mysqli->query($query);
 	$count = $result->num_rows;

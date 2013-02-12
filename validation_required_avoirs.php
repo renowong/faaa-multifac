@@ -3,7 +3,6 @@ require_once('headers.php');
 require_once('global_functions.php');
 require_once('validation_required_top.php');
 $cUser = unserialize($_SESSION['user']);
-$userlogin = $cUser->userlogin();
 $userid = $cUser->userid();
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -49,7 +48,7 @@ $userid = $cUser->userid();
 	
 	function validate(avoirid,valid){
 		if(valid) {
-			validateavoir(avoirid,1,'Validation par <? print $userlogin; ?>');
+			validateavoir(avoirid,1,'Valid&eacute;');
 		}else{
 			fconfirm("Veuillez entrer un commentaire (obligatoire).",avoirid);
 		}
