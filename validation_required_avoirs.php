@@ -2,7 +2,9 @@
 require_once('headers.php');
 require_once('global_functions.php');
 require_once('validation_required_top.php');
-
+$cUser = unserialize($_SESSION['user']);
+$userlogin = $cUser->userlogin();
+$userid = $cUser->userid();
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
@@ -19,7 +21,7 @@ require_once('validation_required_top.php');
 	$( "#dialog-form" ).hide();
 	});
 	
-	function fconfirm(type,text,fid){
+	function fconfirm(text,avoirid){
 	
 	$( "#dialog:ui-dialog" ).dialog( "destroy" );
 	
@@ -32,7 +34,7 @@ require_once('validation_required_top.php');
 				if($("#commentaire").val()==''){
 					message("Erreur, vous n'avez pas entr\351 de commentaire");
 				}else{
-					validatefacture(type,fid,0,$("#commentaire").val());
+					validateavoir(avoirid,0,$("#commentaire").val());
 					$("#commentaire").val('');
 					$( this ).dialog( "close" );
 				}
@@ -45,30 +47,25 @@ require_once('validation_required_top.php');
 		});
 	}
 	
-	function validate(type,factureid,valid){
+	function validate(avoirid,valid){
 		if(valid) {
-			validatefacture(type,factureid,1,'En attente de r&egrave;glement');
+			validateavoir(avoirid,1,'Validation par <? print $userlogin; ?>');
 		}else{
-			fconfirm(type,"Veuillez entrer un commentaire (obligatoire).",factureid);
+			fconfirm("Veuillez entrer un commentaire (obligatoire).",avoirid);
 		}
 		$("#list_validation").empty();
-		$("#list_validation").load("facture_validate_list.php");
+		$("#list_validation").load("avoir_validate_list.php");
 	}
 	
-	function validatefacture(type,factureid, acceptation, comment){
-	    $.post('factures_validate.php',{type:type,factureid:factureid,acceptation:acceptation,comment:comment},
+	function validateavoir(avoirid, acceptation, comment){
+		var userid = '<? print $userid; ?>';
+	    $.post('avoirs_validate.php',{avoirid:avoirid,acceptation:acceptation,comment:comment,userid:userid},
 		   function(data){
 			$("#list_validation").empty();
-			$("#list_validation").load("facture_validate_list.php");
+			$("#list_validation").load("avoir_validate_list.php");
 		   });
 	}
 	
-	function filter(type){
-		var validated = gup("validlist");
-		$("#list_validation").empty();
-		$("#list_validation").load("facture_validate_list.php?validlist="+validated+"&type="+type);
-	}
-
 	function init(){
 		showCompte(<?php echo '"' . $arCompte[0] . '", "' . $arCompte[1] . '", "' . $arCompte[2] . '"' ?>);
 	}
@@ -87,7 +84,7 @@ require_once('validation_required_top.php');
 		<div id="list_validation" name="list_validation" style="height:600px;"></div>
 		
 		
-<div id="dialog-form" title="Rejeter la facture">
+<div id="dialog-form" title="Rejeter l'avoir">
 	<p class="validateTips">Le commentaire est obligatoire.</p>
 
 	<form>
