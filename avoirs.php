@@ -47,25 +47,22 @@ function buildFacturesPayeesTable($id){
                 });
                 
                 $("#form_avoir").submit(function(){
-                        if($("#txt_montant").val()=="" || $("#obs").val()==""){
-                            alert("Veuillez compl\351ter le formulaire.");
                             return false;
-                        }else{
-                            
-                            return false;
-                        }
                     })
 
 		function submit_avoir(){
+		if($("#txt_montant").val()=="" || $("#obs").val()=="" || $("#slt_facture").val()==null){
+			alert("Veuillez compl\351ter le formulaire.");	
+		}else{
 		var userid = $("#cuser").val();
 		var facturecode = $("#slt_facture").val();
 		var montant = $("#txt_montant").val();
 		var obs = $("#obs").val();
                 var client = <?php echo $arCompte[1] ?>;
-		             
+		      
 		$.post("avoir_submit.php",{userid:userid,facturecode:facturecode,montant:montant,obs:obs,client:client});
-                window.location = "clients.php?hideerrors=1&success=1&edit="+client;
-
+                window.location = "clients.php?hideerrors=1&success=1&edit="+client;	
+		}
 		}
 	    
 	</script>

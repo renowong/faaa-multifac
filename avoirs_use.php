@@ -53,6 +53,10 @@ function buildFacturesEnCoursTable($id){
                     })
 
 		function apply_avoir(){
+				
+		if($("#txt_montant").val()=="" || $("#obs").val()=="" || $("#slt_facture").val()==null){
+			alert("Pas d'application possible.");	
+		}else{
 		var avoirid = $("#idavoir").val();
 		var facturecode = $("#slt_facture").val();
 		var montant = <?php echo $avoir ?>;
@@ -60,7 +64,7 @@ function buildFacturesEnCoursTable($id){
 		
 		$.post("avoir_apply.php",{avoirid:avoirid,facturecode:facturecode,montant:montant});
                 window.location = "clients.php?hideerrors=1&success=1&edit="+client;
-
+		}
 		}
 	    
 	</script>
