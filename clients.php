@@ -269,9 +269,9 @@ require_once('clients_top.php');
 			window.scrollTo(0, 0);
 		}
 		
-		function div_avoir(){
+		function div_avoir(p){
 			scrollup();
-			$("#div_avoir").load("avoirs.php");
+			$("#div_avoir").load(p);
 			$("#opaquediv").show();
 		}
 		
@@ -505,7 +505,7 @@ require_once('clients_top.php');
 			</div>
 		</div>
 		<div id="divavoirs">
-			<h1>Avoirs</h1> <button href="#" id="toggleavoirs">Afficher</button> <button onclick="div_avoir();">Ajouter</button>	
+			<h1>Avoirs</h1> <button href="#" id="toggleavoirs">Afficher</button> <button onclick="div_avoir('avoirs.php');">Ajouter</button>	
 			<div id="avoirs">
 				<?php 
 				if (isset($_GET['edit'])) echo buildAvoirsTable($_GET['edit']);
