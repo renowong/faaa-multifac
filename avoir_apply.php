@@ -23,11 +23,12 @@ function updatedata($avoirid,$typefacture,$factureid,$avoir,$restearegler){
 	if($difference<0){
 		$avoirleft = $avoir - $restearegler;
 		$appliedavoir = $restearegler;
+		$difference = 0;
 	}else{
 		$avoirleft = 0;
 		$appliedavoir = $avoir;
 	}
-	$query = "UPDATE `factures_cantine` SET  `avoir` =  '$appliedavoir' WHERE  `idfacture` = '$factureid'";
+	$query = "UPDATE `factures_cantine` SET  `avoir` =  '$appliedavoir', `restearegler` = '$difference' WHERE  `idfacture` = '$factureid'";
 	$mysqli->query($query);
 	
 	$query = "UPDATE `avoirs` SET  `reste` =  '$avoirleft' WHERE  `idavoir` = '$avoirid'";

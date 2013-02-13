@@ -18,7 +18,7 @@ switch($typefacture){
 		$query = "SELECT DATE_FORMAT(`factures_cantine`.`datefacture`, '%d/%m/%Y') AS `datefacture`, ".
 			"DATE_FORMAT(DATE_ADD(`factures_cantine`.`datefacture`, INTERVAL 31 DAY), '%d/%m/%Y') AS `datelimite`, ".
 			"`factures_cantine`.`validation`, `factures_cantine`.`communeid`, `factures_cantine`.`idclient`, `factures_cantine`.`obs` AS `periode`, ".
-			"`clients`.`clientcivilite`, ".
+			"`factures_cantine`.`avoir`, `clients`.`clientcivilite`, ".
 			"`clients`.`clientnom`, `clients`.`clientnommarital`, `clients`.`clientprenom`, `clients`.`clientprenom2`, ".
 			"`clients`.`clientbp`, `clients`.`clientcp`, `clients`.`clientville`, `clients`.`clientcommune`, ".
 			"`clients`.`clientpays`, `clients`.`clienttelephone`, `clients`.`clientfax`, `clients`.`clientemail` ".
@@ -37,6 +37,7 @@ switch($typefacture){
 				$fax = "Fax : ".$row['clientfax'];
 				$datelimite = $row['datelimite'];
 				$idclient = $row['idclient'];
+				$avoir = $row['avoir'];
 				}
 		$result->close();
 		
@@ -177,12 +178,12 @@ switch($typefacture){
 
 
 
-genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$bp,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav);
+genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$bp,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir);
 
 $mysqli->close();
 
 
-function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$bp,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav){
+function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$bp,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir){
 	$xreg=-1.5;
 	$yreg=3.5;
 
@@ -361,7 +362,8 @@ switch($typefacture){
 	case "cantine":
 	for($count=0;$count<count($details_array);$count++){
 		$pdf->SetXY(12+$xreg,104.5+$yreg+$ydet);
-		$pdf->Cell(89,5, $details_array[$count]['status']." (".$details_array[$count]['prenom'].")",0,1);
+//		$pdf->Cell(89,5, $details_array[$count]['status']." (".$details_array[$count]['prenom'].")",0,1);
+		$pdf->Cell(89,5, $details_array[$count]['status'],0,1);
 		$pdf->SetXY(101+$xreg,104.5+$yreg+$ydet);
 		$pdf->Cell(17,5, $details_array[$count]['Unite'],0,1,'C');
 		$pdf->SetXY(118+$xreg,104.5+$yreg+$ydet);
@@ -371,7 +373,17 @@ switch($typefacture){
 		$pdf->SetXY(166+$xreg,104.5+$yreg+$ydet);
 		$soustotal = $details_array[$count]['quant']*$details_array[$count]['MontantFCP'];
 		$pdf->Cell(32,5, trispace($soustotal)." F",0,1,'R');
+		
+		if($avoir>0){
+		$ydet+=5.5;
+		$pdf->SetXY(12+$xreg,104.5+$yreg+$ydet);
+		$pdf->Cell(89,5, "Avoir",0,1);
+		$pdf->SetXY(166+$xreg,104.5+$yreg+$ydet);
+		$pdf->Cell(32,5, "-".trispace($avoir)." F",0,1,'R');
+		}
+		
 		$stotal+=$soustotal;
+		$stotal-=$avoir;
 		$ydet+=5.5;
 	}
 	break;

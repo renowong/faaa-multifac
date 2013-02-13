@@ -355,6 +355,23 @@ function buildAvoirsTable($id){
     $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
 	$output = "<table class=\"tblform\"><tbody><th>Montant</th><th>Reste</th><th>Status</th><th>Liaison</th>".
 	"<th>Date</th><th>Obs</th><th>Valideur</th><th>Obs valideur</th><th>Action</th></tbody>";
+	
+	$query = "SELECT `avoirs`.`idavoir`,`avoirs`.`montant`,`avoirs`.`reste`,`avoirs`.`validation`,`avoirs`.`acceptation`,`avoirs`.`idfacture`,`avoirs`.`date`,".
+	"`avoirs`.`obs`,`avoirs`.`obs_valideur`,`factures_cantine`.`datefacture`,`factures_cantine`.`datefacture`,".
+	"`factures_cantine`.`montantfcp`,`factures_cantine`.`montanteuro` FROM `avoirs` INNER JOIN `factures_cantine`".
+	"ON `avoirs`.`idfacture`=`factures_cantine`.`idfacture` ".
+	"WHERE `avoirs`.`idclient` = '$id' AND `avoirs`.`validation` = '0' ORDER BY date DESC, `idavoir` DESC limit 10";
+        $result = $mysqli->query($query);
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+		$status="En cours de validation";
+                $output .= "<tbody><td>".trispace($row['montant'])." FCP</td>";
+		$output .= "<td>".trispace($row["reste"])." FCP</td><td>$status</td>";
+		$output .= "<td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=cantine\" target=\"_blank\">Facture du ".french_date($row["datefacture"])." - ";
+		$output .= trispace($row["montantfcp"]);
+		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a></td><td>".french_date($row["date"])."</td>";
+		$output .= "<td>".$row["obs"]."</td><td>".$row["userlogin"]."</td><td>".$row["obs_valideur"]."</td><td></td></tbody>";
+        }
+	
 	$query = "SELECT `avoirs`.`idavoir`,`avoirs`.`montant`,`avoirs`.`reste`,`avoirs`.`validation`,`avoirs`.`acceptation`,`avoirs`.`idfacture`,`avoirs`.`date`,".
 	"`avoirs`.`obs`,`avoirs`.`obs_valideur`,`factures_cantine`.`datefacture`,`factures_cantine`.`datefacture`,".
 	"`factures_cantine`.`montantfcp`,`factures_cantine`.`montanteuro`, `user`.`userlogin` FROM `avoirs` INNER JOIN `factures_cantine`".
@@ -362,10 +379,7 @@ function buildAvoirsTable($id){
 	"WHERE `avoirs`.`idclient` = '$id' ORDER BY date DESC, `idavoir` DESC limit 10";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-		if($row["validation"]=='0') {$status="En cours de validation";
-		}else{
-			if($row["acceptation"]=='0'){$status="Refus&eacute;e";}else{$status="Valid&eacute;e";$reject="";}
-		}
+		if($row["acceptation"]=='0'){$status="Refus&eacute;e";}else{$status="Valid&eacute;e";$reject="";}
 		if($row["reste"]>'0' && $row["acceptation"]=='1'){$use="<button onclick=\"div_avoir('avoirs_use.php?idavoir=".$row["idavoir"]."&avoir=".$row["reste"]."');\">Utiliser</button>";}else{$use='';}
                 $output .= "<tbody><td>".trispace($row['montant'])." FCP</td>";
 		$output .= "<td>".trispace($row["reste"])." FCP</td><td>$status</td>";
@@ -374,7 +388,6 @@ function buildAvoirsTable($id){
 		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a></td><td>".french_date($row["date"])."</td>";
 		$output .= "<td>".$row["obs"]."</td><td>".$row["userlogin"]."</td><td>".$row["obs_valideur"]."</td><td>$use</td></tbody>";
         }
-
 	$output .= "</table>";
     $mysqli->close();
     return $output;
