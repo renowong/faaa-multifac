@@ -10,7 +10,7 @@ if (!empty($_SESSION['client'])) {
 	
 	
 $cUser = unserialize($_SESSION['user']);
-$admin = $cUser->userisadmin();
+
 
 ############functions###############
 function buildFacturesPayeesTable($id){
@@ -34,7 +34,7 @@ function buildFacturesPayeesTable($id){
 
 <html>
 	<head>
-	<?php echo $jquery.$jqueryui.$compte_div ?>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
                 //////key checks//////

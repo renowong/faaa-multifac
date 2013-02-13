@@ -9,18 +9,17 @@ $clientid = $_POST['client'];
 $typefacture = substr($facturecode,0,4);
 $factureid= substr($facturecode,4);
 if($typefacture=="CANT"){$enfantid = getenfantid($factureid);}
-$code_auth = mt_rand(100000,999999);
 
-$avoirid = enterdata($clientid,$enfantid,$typefacture,$factureid,$code_auth,$montant,$userid,$obs);
+$avoirid = enterdata($clientid,$enfantid,$typefacture,$factureid,$montant,$userid,$obs);
 
-	$response = "<?xml version='1.0' encoding='UTF-8' standalone='yes'?>".
+	/*$response = "<?xml version='1.0' encoding='UTF-8' standalone='yes'?>".
 			"<response>".
 				"<avoirid>$avoirid</avoirid>".
 			"</response>";
 	if(ob_get_length()) ob_clean();
 	header('Content-Type: text/xml');
 	
-	echo $response;
+	echo $response;*/
 
 
 ///////////////////////////functions////////////////////////////////////////////
@@ -37,15 +36,16 @@ function getenfantid($factureid){
 }
 
 
-function enterdata($clientid,$enfantid,$typefacture,$factureid,$code_auth,$montant,$userid,$obs){
+function enterdata($clientid,$enfantid,$typefacture,$factureid,$montant,$userid,$obs){
 
 	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
 		$query = "INSERT INTO `".DB."`.`avoirs` ".
-                "(`idavoir`, `idclient`, `idenfant`, `idfacture`, `type_facture`, `code_auth`, `validation`, `acceptation`, `montant`, `reste`, `date`, `agent_id`, `valideur_id`, `obs`)".
-                "VALUES (NULL, '$clientid', '$enfantid', '$factureid', '$typefacture', '$code_auth', '0', '0', '$montant', '$montant', CURRENT_TIMESTAMP, '$userid', '0', '$obs');";
+                "(`idavoir`, `idclient`, `idenfant`, `idfacture`, `type_facture`, `validation`, `acceptation`, `montant`, `reste`, `date`, `agent_id`, `valideur_id`, `obs`)".
+                "VALUES (NULL, '$clientid', '$enfantid', '$factureid', '$typefacture', '0', '0', '$montant', '$montant', CURRENT_TIMESTAMP, '$userid', '0', '$obs');";
 
 	$mysqli->query($query);
 	$lastid = $mysqli->insert_id;
+	$mysqli->close();
 	return $lastid;
 }
 

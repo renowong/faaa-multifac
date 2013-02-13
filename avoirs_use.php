@@ -11,12 +11,12 @@ if (!empty($_SESSION['client'])) {
 	
 $idavoir = $_GET["idavoir"];
 $avoir = $_GET["avoir"];
-
+$cUser = unserialize($_SESSION['user']);
 
 ############functions###############
 function buildFacturesEnCoursTable($id){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$query = "SELECT * FROM `".DB."`.`factures_cantine` WHERE `factures_cantine`.`acceptation` = '1' AND `factures_cantine`.`reglement` = '0' AND `factures_cantine`.`idclient` = $id ORDER BY `idfacture` DESC LIMIT 5";
+	$query = "SELECT * FROM `factures_cantine` WHERE `acceptation` = '1' AND `reglement` = '0' AND `avoir` = '0' AND `idclient` = $id ORDER BY `idfacture` DESC LIMIT 5";
 	//echo $query;
         $result = $mysqli->query($query);
         $list = "<select id='slt_facture' name='slt_facture'>";
@@ -31,13 +31,12 @@ function buildFacturesEnCoursTable($id){
 }
 
 
-
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 <html>
 	<head>
-	<?php echo $jquery.$jqueryui.$compte_div ?>
+	
 	<script type="text/javascript">
 		$(document).ready(function() {
                 //////key checks//////
@@ -50,23 +49,16 @@ function buildFacturesEnCoursTable($id){
                 });
                 
                 $("#form_avoir").submit(function(){
-                        if($("#txt_montant").val()=="" || $("#obs").val()==""){
-                            alert("Veuillez compl\351ter le formulaire.");
                             return false;
-                        }else{
-                            
-                            return false;
-                        }
                     })
 
-		function submit_avoir(){
-		var userid = $("#cuser").val();
+		function apply_avoir(){
+		var avoirid = $("#idavoir").val();
 		var facturecode = $("#slt_facture").val();
-		var montant = $("#txt_montant").val();
-		var obs = $("#obs").val();
-                var client = <?php echo $arCompte[1] ?>;
-		             
-		$.post("avoir_submit.php",{userid:userid,facturecode:facturecode,montant:montant,obs:obs,client:client});
+		var montant = <?php echo $avoir ?>;
+		var client = <?php echo $arCompte[1] ?>;
+		
+		$.post("avoir_apply.php",{avoirid:avoirid,facturecode:facturecode,montant:montant});
                 window.location = "clients.php?hideerrors=1&success=1&edit="+client;
 
 		}
@@ -85,6 +77,7 @@ function buildFacturesEnCoursTable($id){
 		    echo buildFacturesEnCoursTable($arCompte[1]);
 		?>
 		<br /><br />
+		<input type="hidden" id="idavoir" name="idavoir" value="<?php echo $idavoir; ?>" />
 		<input type="reset" onclick="div_avoir_close();" value="Annuler" /> <button onclick="apply_avoir();">Valider</button>
 		</form>
                 

@@ -366,9 +366,9 @@ function buildAvoirsTable($id){
 		}else{
 			if($row["acceptation"]=='0'){$status="Refus&eacute;e";}else{$status="Valid&eacute;e";$reject="";}
 		}
-		if($row['reste']>'0'&&$row["acceptation"]=='1'){$use="<button onclick=\"div_avoir('avoirs_apply.php?idavoir=".$row["idavoir"]."&avoir=".$row['reste']."');\">Utiliser</button>";}
+		if($row["reste"]>'0' && $row["acceptation"]=='1'){$use="<button onclick=\"div_avoir('avoirs_use.php?idavoir=".$row["idavoir"]."&avoir=".$row["reste"]."');\">Utiliser</button>";}else{$use='';}
                 $output .= "<tbody><td>".trispace($row['montant'])." FCP</td>";
-		$output .= "<td>".trispace($row['reste'])." FCP</td><td>$status</td>";
+		$output .= "<td>".trispace($row["reste"])." FCP</td><td>$status</td>";
 		$output .= "<td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=cantine\" target=\"_blank\">Facture du ".french_date($row["datefacture"])." - ";
 		$output .= trispace($row["montantfcp"]);
 		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a></td><td>".french_date($row["date"])."</td>";
