@@ -8,10 +8,12 @@ $fdata = explode("$",$rawdata);
 $clientid = $_GET['clientid'];
 $period = $_GET['period'];
 $py = $_GET['py'];
+$edt = $_GET['edt'];
+$eau = $_GET['eau'];
 $lieu = strtoupper($_GET['lieu']);
 $nav = strtoupper($_GET['nav']);
 
-$communefactureid = enterdata($fdata,$clientid,$period,$py,$lieu,$nav);
+$communefactureid = enterdata($fdata,$clientid,$period,$py,$lieu,$nav,$edt,$eau);
 
 	$response = "<?xml version='1.0' encoding='UTF-8' standalone='yes'?>".
 			"<response>".
@@ -26,12 +28,14 @@ $communefactureid = enterdata($fdata,$clientid,$period,$py,$lieu,$nav);
 ///////////////////////////functions////////////////////////////////////////////
 
 //////duplicate at ecole_global_search_function.php///////////
-function enterdata($fdata,$clientid,$period,$py,$lieu,$nav){
+function enterdata($fdata,$clientid,$period,$py,$lieu,$nav,$edt,$eau){
 $totalfcp = 0;
 for($counter=0;$counter<count($fdata);$counter+=1){
 	$detail = explode("#",$fdata[$counter]);
 	$totalfcp += ($detail[1]*$detail[2]);
 }
+$totalfcp += $edt;
+$totalfcp += $eau;
 $totaleuro = $totalfcp/120;
 $totaleuro = round($totaleuro, 2);
 $today = date("Y-m-d");
@@ -46,8 +50,8 @@ $today = date("Y-m-d");
 		$mysqli->query($query);
 	
 		$query = "INSERT INTO `".DB."`.`factures_amarrage` (`idfacture`, `idclient`,".
-				 " `datefacture`, `communeid`, `montantfcp`, `montanteuro`, `restearegler`,`obs`,`PY`,`lieu`,`navire`)".
-				 " VALUES (NULL, '".$clientid."', '".$today."', '".$chrono."', '".$totalfcp."', '".$totaleuro."', '".$totalfcp."', '".$period."', '".$py."', '".$lieu."', '".$nav."')";
+				 " `datefacture`, `communeid`, `montantfcp`, `montanteuro`, `restearegler`,`obs`,`PY`,`lieu`,`navire`,`edt`,`eau`)".
+				 " VALUES (NULL, '".$clientid."', '".$today."', '".$chrono."', '".$totalfcp."', '".$totaleuro."', '".$totalfcp."', '".$period."', '".$py."', '".$lieu."', '".$nav."', '".$edt."', '".$eau."')";
 	//return $query;
 	$mysqli->query($query);
 	$lastid = $mysqli->insert_id; //use it to insert the details.

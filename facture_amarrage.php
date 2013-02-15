@@ -18,6 +18,12 @@ require_once('facture_amarrage_top.php');
 			$('#txt_PY').keypress(function(event) {
 				return /[0-9]/.test(String.fromCharCode(event.which));
 			});
+			$('#txt_EDT').keypress(function(event) {
+				return /[0-9]/.test(String.fromCharCode(event.which));
+			});
+			$('#txt_eau').keypress(function(event) {
+				return /[0-9]/.test(String.fromCharCode(event.which));
+			});
 
 			$( "#dialog-confirm" ).hide();
 		});
@@ -64,6 +70,9 @@ require_once('facture_amarrage_top.php');
 			var total;
 			var gtotal=0;
 			var split;
+			var edt=$("#txt_EDT").val();
+			var eau=$("#txt_eau").val();
+			
 			content = "<table><tr><th>D&eacute;signation</th><th>Prix</th><th>Quantit&eacute;</th><th>Total</th><th>Validation</th></tr>";
 			for (i=0;i<fdata.length;i++) {
 				split=fdata[i].split('#');
@@ -75,6 +84,8 @@ require_once('facture_amarrage_top.php');
 				gtotal += total;
 				content += "<tr><td>"+designation+"</td><td>"+price+" FCP</td><td class='right'>"+quant+"</td><td class='right'>"+total+" FCP</td><td class='center'><a href='javascript:suppdetail("+i+");'><img src='img/error_button.png' alt='supprimer' width='16' height='16' border='0'/></a></td></tr>";
 			}
+			if(edt!="") {content += "<tr><td colspan=3>EDT</td><td>"+edt+" FCP</td><td></td></tr>";gtotal += eval(edt);};
+			if(eau!="") {content += "<tr><td colspan=3>Eau</td><td>"+eau+" FCP</td><td></td></tr>";gtotal += eval(eau);};
 			content += "<tr><td colspan=3></td><td>"+gtotal+" FCP</td><td class='center'><a href='javascript:fconfirm();'><img src='img/checked.png' alt='valider' width='16' height='16' border='0'/></a></td></tr>";
 			content += "</table>";
 			$("#details").html(content);
@@ -123,10 +134,12 @@ require_once('facture_amarrage_top.php');
 		function submit_facture(fdata,clientid){
 		var period = $("#box_periode").val();
 		var py = $("#txt_PY").val();
+		var edt = $("#txt_EDT").val();
+		var eau = $("#txt_eau").val();
 		var lieu = $("#txt_lieu").val();
 		var nav = $("#txt_nav").val();
 		//alert (period);
-		$.get("facture_amarrage_submit.php",{fdata:fdata,clientid:clientid,period:period,py:py,lieu:lieu,nav:nav},
+		$.get("facture_amarrage_submit.php",{fdata:fdata,clientid:clientid,period:period,py:py,lieu:lieu,nav:nav,edt:edt,eau:eau},
 		      function(data){
 			readResponse(data);
 		      },"xml");
@@ -160,7 +173,7 @@ require_once('facture_amarrage_top.php');
 		
 		<br/><br/>
 		<!-- Form -->
-		<h1><?php echo $legend ?> <a href="delibs/<?php echo $deliblink ?>.pdf" target="_blank">(D&eacute;lib&eacute;ration <?php echo $deliblink ?>)</a></h1>
+		<h1><?php echo $legend ?> <a href="delibs/<?php echo $deliblink2 ?>.pdf" target="_blank">(D&eacute;lib&eacute;ration <?php echo $deliblink2 ?>)</a> et <a href="delibs/<?php echo $deliblink ?>.pdf" target="_blank">(D&eacute;lib&eacute;ration <?php echo $deliblink ?>)</a></h1>
 
 		<table name="tblcantine" id="tblcantine" class="tblform">
 			<tbody>
@@ -188,6 +201,18 @@ require_once('facture_amarrage_top.php');
 						<!--Lieu-->
 						<label for="txt_lieu">Emplacement</label>
 						<input class="uppercase" type="text" maxlength="10" name="txt_lieu" id="txt_lieu" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<!--EDT-->
+						<label for="txt_EDT">EDT</label>
+						<input type="text" maxlength="10" name="txt_EDT" id="txt_EDT" />
+					</td>
+					<td colspan="2">
+						<!--EAU-->
+						<label for="txt_eau">Eau</label>
+						<input class="uppercase" type="text" maxlength="10" name="txt_eau" id="txt_eau" />
 					</td>
 				</tr>
 				<tr>

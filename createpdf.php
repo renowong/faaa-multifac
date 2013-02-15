@@ -132,13 +132,13 @@ switch($typefacture){
 
 	case "amarrage":
 		$titlefacture = "Facturation d'Amarrage";
-		$delib = "La présente facture est conforme à la délibération n°46/2011 du 30 août 2011 adoptant les modalités d'organisation et de fonctionnement de la marina de Vaitupa.";
+		$delib = "La présente facture est conforme à la délibération n°83/2010 du 16 décembre 2010 et n°46/2011 du 30 août 2011 adoptant les modalités d'organisation et de fonctionnement de la marina de Vaitupa.";
 		
 		//first get information of facture
 		$query = "SELECT DATE_FORMAT(`factures_amarrage`.`datefacture`, '%d/%m/%Y') AS `datefacture`, ".
 			"DATE_FORMAT(DATE_ADD(`factures_amarrage`.`datefacture`, INTERVAL 31 DAY), '%d/%m/%Y') AS `datelimite`, ".
 			"`factures_amarrage`.`validation`, `factures_amarrage`.`communeid`, `factures_amarrage`.`idclient`, `factures_amarrage`.`obs` AS `periode`, ".
-			"`factures_amarrage`.`PY`, `factures_amarrage`.`lieu`, `factures_amarrage`.`navire`, ".
+			"`factures_amarrage`.`PY`, `factures_amarrage`.`lieu`, `factures_amarrage`.`navire`,  `factures_amarrage`.`edt`,  `factures_amarrage`.`eau`, ".
 			"`clients`.`clientcivilite`, ".
 			"`clients`.`clientnom`, `clients`.`clientnommarital`, `clients`.`clientprenom`, `clients`.`clientprenom2`, ".
 			"`clients`.`clientbp`, `clients`.`clientcp`, `clients`.`clientville`, `clients`.`clientcommune`, ".
@@ -161,6 +161,8 @@ switch($typefacture){
 				$py = $row['PY'];
 				$lieu = $row['lieu'];
 				$nav = $row['navire'];
+				$edt = $row['edt'];
+				$eau = $row['eau'];
 				}
 		$result->close();
 				
@@ -178,12 +180,12 @@ switch($typefacture){
 
 
 
-genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$bp,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir);
+genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$bp,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$edt,$eau);
 
 $mysqli->close();
 
 
-function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$bp,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir){
+function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$bp,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$edt,$eau){
 	$xreg=-1.5;
 	$yreg=3.5;
 
@@ -384,6 +386,42 @@ switch($typefacture){
 		
 		$stotal+=$soustotal;
 		$stotal-=$avoir;
+		$ydet+=5.5;
+	}
+	break;
+	case "amarrage":
+	for($count=0;$count<count($details_array);$count++){
+		$pdf->SetXY(12+$xreg,104.5+$yreg+$ydet);
+		$pdf->Cell(89,5, html_entity_decode($details_array[$count]['Type']),0,1);
+		$pdf->SetXY(101+$xreg,104.5+$yreg+$ydet);
+		$pdf->Cell(17,5, $details_array[$count]['Unite'],0,1,'C');
+		$pdf->SetXY(118+$xreg,104.5+$yreg+$ydet);
+		$pdf->Cell(17,5, $details_array[$count]['quant'],0,1,'C');
+		$pdf->SetXY(136+$xreg,104.5+$yreg+$ydet);
+		$pdf->Cell(30,5, trispace($details_array[$count]['MontantFCP'])." F",0,1,'C');
+		$pdf->SetXY(166+$xreg,104.5+$yreg+$ydet);
+		$soustotal = $details_array[$count]['quant']*$details_array[$count]['MontantFCP'];
+		$pdf->Cell(32,5, trispace($soustotal)." F",0,1,'R');
+		
+		if($edt>0){
+		$ydet+=5.5;
+		$pdf->SetXY(12+$xreg,104.5+$yreg+$ydet);
+		$pdf->Cell(89,5, "Electricit\351",0,1);
+		$pdf->SetXY(166+$xreg,104.5+$yreg+$ydet);
+		$pdf->Cell(32,5,trispace($edt)." F",0,1,'R');
+		$soustotal+=$edt;
+		}
+		
+		if($eau>0){
+		$ydet+=5.5;
+		$pdf->SetXY(12+$xreg,104.5+$yreg+$ydet);
+		$pdf->Cell(89,5, "Eau",0,1);
+		$pdf->SetXY(166+$xreg,104.5+$yreg+$ydet);
+		$pdf->Cell(32,5,trispace($eau)." F",0,1,'R');
+		$soustotal+=$eau;
+		}
+		
+		$stotal+=$soustotal;
 		$ydet+=5.5;
 	}
 	break;

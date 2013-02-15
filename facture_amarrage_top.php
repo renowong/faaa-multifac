@@ -11,6 +11,7 @@ if (!empty($_SESSION['client'])) {
 //###############################variables######################################
 $legend = 'Cr&eacute;ation d&apos;une facture d&apos;amarrage';
 $deliblink = '46-2011';
+$deliblink2 = '83-2010';
 $fact = buildArray(); //details de la facture
 $jsarType = buildJSArray($fact, 'Type');
 $jsarMontantFCP = buildJSArray($fact, 'MontantFCP');
