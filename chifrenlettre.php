@@ -1,7 +1,7 @@
 <?php 
 function chifre_en_lettre($montant, $devise1='', $devise2='')
 {
-	if(empty($devise1)) $dev1='Francs FCP';
+	if(empty($devise1)) $dev1=' Francs FCP';
 	else $dev1=$devise1;
 	if(empty($devise2)) $dev2='Centimes';
 	else $dev2=$devise2;

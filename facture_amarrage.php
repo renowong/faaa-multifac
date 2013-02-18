@@ -3,6 +3,7 @@ require_once('headers.php');
 require_once('global_functions.php');
 require_once('facture_amarrage_top.php');
 
+$comptetype = getCompteType();
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
@@ -138,8 +139,9 @@ require_once('facture_amarrage_top.php');
 		var eau = $("#txt_eau").val();
 		var lieu = $("#txt_lieu").val();
 		var nav = $("#txt_nav").val();
+		var comptetype = "<? print $comptetype; ?>";
 		//alert (period);
-		$.get("facture_amarrage_submit.php",{fdata:fdata,clientid:clientid,period:period,py:py,lieu:lieu,nav:nav,edt:edt,eau:eau},
+		$.get("facture_amarrage_submit.php",{fdata:fdata,clientid:clientid,period:period,py:py,lieu:lieu,nav:nav,edt:edt,eau:eau,comptetype:comptetype},
 		      function(data){
 			readResponse(data);
 		      },"xml");

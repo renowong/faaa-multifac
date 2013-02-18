@@ -81,7 +81,7 @@ function getetallist(){
 
 function getamarragevalidate(){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $query = "SELECT * FROM `".DB."`.`factures_amarrage` INNER JOIN `clients` ON `factures_amarrage`.`idclient` = `clients`.`clientid` WHERE `factures_amarrage`.`validation` = '0'";
+        $query = "SELECT * FROM `".DB."`.`factures_amarrage` INNER JOIN `clients` ON `factures_amarrage`.`idclient` = `clients`.`clientid` WHERE `factures_amarrage`.`validation` = '0' AND `factures_amarrage`.`type_client` = 'C'";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $type='amarrage';
@@ -93,6 +93,20 @@ function getamarragevalidate(){
                 "<img src=\"img/checked.png\" height=\"32\" style=\"border:0px\"></a> / <a href=\"javascript:validate('$type','".$row["idfacture"]."',false)\">".
                 "<img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
         }
+        
+        $query = "SELECT * FROM `".DB."`.`factures_amarrage` INNER JOIN `mandataires` ON `factures_amarrage`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_amarrage`.`validation` = '0' AND `factures_amarrage`.`type_client` = 'M'";
+        $result = $mysqli->query($query);
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+                $type='amarrage';
+                $output .= "<tr><td>$type</td><td><a href='mandataires.php?edit=".$row["mandataireid"]."&hideerrors=1'>".$row["mandataireprefix"]." ".$row["mandataireRS"]." ".strtoupper(htmlentities($row["mandatairenom"]))." ".strtoupper(htmlentities($row["mandataireprenom"]))."</a></td>".
+                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Devis ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
+                $output .= trispace($row["montantfcp"]);
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td>".
+                "<td style=\"text-align:center\"><a href=\"javascript:validate('$type','".$row["idfacture"]."',true)\">".
+                "<img src=\"img/checked.png\" height=\"32\" style=\"border:0px\"></a> / <a href=\"javascript:validate('$type','".$row["idfacture"]."',false)\">".
+                "<img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
+        }
+        
         return $output;
 }
 

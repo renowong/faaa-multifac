@@ -12,8 +12,9 @@ $edt = $_GET['edt'];
 $eau = $_GET['eau'];
 $lieu = strtoupper($_GET['lieu']);
 $nav = strtoupper($_GET['nav']);
+$comptetype = $_GET['comptetype'];
 
-$communefactureid = enterdata($fdata,$clientid,$period,$py,$lieu,$nav,$edt,$eau);
+$communefactureid = enterdata($fdata,$clientid,$period,$py,$lieu,$nav,$edt,$eau,$comptetype);
 
 	$response = "<?xml version='1.0' encoding='UTF-8' standalone='yes'?>".
 			"<response>".
@@ -28,7 +29,7 @@ $communefactureid = enterdata($fdata,$clientid,$period,$py,$lieu,$nav,$edt,$eau)
 ///////////////////////////functions////////////////////////////////////////////
 
 //////duplicate at ecole_global_search_function.php///////////
-function enterdata($fdata,$clientid,$period,$py,$lieu,$nav,$edt,$eau){
+function enterdata($fdata,$clientid,$period,$py,$lieu,$nav,$edt,$eau,$comptetype){
 $totalfcp = 0;
 for($counter=0;$counter<count($fdata);$counter+=1){
 	$detail = explode("#",$fdata[$counter]);
@@ -49,9 +50,9 @@ $today = date("Y-m-d");
 		$query = "INSERT INTO `".DB."`.`chrono` (`chrono`) VALUES ('".$chrono."')";
 		$mysqli->query($query);
 	
-		$query = "INSERT INTO `".DB."`.`factures_amarrage` (`idfacture`, `idclient`,".
+		$query = "INSERT INTO `".DB."`.`factures_amarrage` (`idfacture`, `idclient`, `type_client`,".
 				 " `datefacture`, `communeid`, `montantfcp`, `montanteuro`, `restearegler`,`obs`,`PY`,`lieu`,`navire`,`edt`,`eau`)".
-				 " VALUES (NULL, '".$clientid."', '".$today."', '".$chrono."', '".$totalfcp."', '".$totaleuro."', '".$totalfcp."', '".$period."', '".$py."', '".$lieu."', '".$nav."', '".$edt."', '".$eau."')";
+				 " VALUES (NULL, '".$clientid."', '".$comptetype."', '".$today."', '".$chrono."', '".$totalfcp."', '".$totaleuro."', '".$totalfcp."', '".$period."', '".$py."', '".$lieu."', '".$nav."', '".$edt."', '".$eau."')";
 	//return $query;
 	$mysqli->query($query);
 	$lastid = $mysqli->insert_id; //use it to insert the details.

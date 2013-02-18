@@ -133,7 +133,10 @@ switch($typefacture){
 	case "amarrage":
 		$titlefacture = "Facturation d'Amarrage";
 		$delib = "La présente facture est conforme à la délibération n°83/2010 du 16 décembre 2010 et n°46/2011 du 30 août 2011 adoptant les modalités d'organisation et de fonctionnement de la marina de Vaitupa.";
+		$typeclient = get_typeclient($idfacture);
 		
+		
+		if($typeclient=="C"){
 		//first get information of facture
 		$query = "SELECT DATE_FORMAT(`factures_amarrage`.`datefacture`, '%d/%m/%Y') AS `datefacture`, ".
 			"DATE_FORMAT(DATE_ADD(`factures_amarrage`.`datefacture`, INTERVAL 31 DAY), '%d/%m/%Y') AS `datelimite`, ".
@@ -165,6 +168,44 @@ switch($typefacture){
 				$eau = $row['eau'];
 				}
 		$result->close();
+		}else{
+		//first get information of facture
+		$query = "SELECT DATE_FORMAT(`factures_amarrage`.`datefacture`, '%d/%m/%Y') AS `datefacture`, ".
+			"DATE_FORMAT(DATE_ADD(`factures_amarrage`.`datefacture`, INTERVAL 31 DAY), '%d/%m/%Y') AS `datelimite`, ".
+			"`factures_amarrage`.`validation`, `factures_amarrage`.`communeid`, `factures_amarrage`.`idclient`, `factures_amarrage`.`obs` AS `periode`, ".
+			"`factures_amarrage`.`PY`, `factures_amarrage`.`lieu`, `factures_amarrage`.`navire`,  `factures_amarrage`.`edt`,  `factures_amarrage`.`eau`, ".
+			"`mandataires`.`mandataireprefix`, `mandataires`.`mandataireRS`, ".
+			"`mandataires`.`mandatairenom`,`mandataires`.`mandataireprenom`, ".
+			"`mandataires`.`mandatairebp`, `mandataires`.`mandatairecp`, `mandataires`.`mandataireville`, `mandataires`.`mandatairecommune`, ".
+			"`mandataires`.`mandatairepays`, `mandataires`.`mandatairetelephone`, `mandataires`.`mandatairetelephone2`, `mandataires`.`mandatairefax`, `mandataires`.`mandataireemail` ".
+			"FROM `factures_amarrage` INNER JOIN `mandataires` ON `factures_amarrage`.`idclient`=`mandataires`.`mandataireid` ".
+			"WHERE `factures_amarrage`.`idfacture` = $idfacture";
+		$result = $mysqli->query($query);
+			while($row = $result->fetch_array(MYSQLI_ASSOC)){
+				$datefacture = $row['datefacture'];
+				$nofacture = $row['communeid'];
+				$periode = $row['periode'];
+				$facturevalidation = $row['validation'];
+				$client = html_entity_decode($row['mandatairenom']." ".$row['mandataireprenom'],ENT_QUOTES, "UTF-8");
+				$bp = "BP : ".$row['mandatairebp']." - ".$row['mandatairecp']." ".$row['mandataireville'];
+				$email = "E-mail : ".$row['mandataireemail'];
+				if($row['mandatairetelephone']!==""){
+					$telephone = "Téléphone : ".$row['mandatairetelephone'];
+				}else{
+					$telephone = "Téléphone : ".$row['mandatairetelephone2'];
+				}
+				$fax = "Fax : ".$row['mandatairefax'];
+				$datelimite = $row['datelimite'];
+				$idclient = $row['idclient'];
+				$py = $row['PY'];
+				$lieu = $row['lieu'];
+				$nav = $row['navire'];
+				$edt = $row['edt'];
+				$eau = $row['eau'];
+				}
+		$result->close();
+		}
+
 				
 		//next get information on details of facture
 		$query = "SELECT `factures_amarrage_details`.`quant`, `tarifs_amarrage`.`Type`, `tarifs_amarrage`.`MontantFCP`, `tarifs_amarrage`.`MontantEURO`, `tarifs_amarrage`.`Unite`, `tarifs_amarrage`.`Delib`, `tarifs_amarrage`.`Datedelib` FROM `factures_amarrage_details` LEFT JOIN `tarifs_amarrage` ON `factures_amarrage_details`.`idtarif` = `tarifs_amarrage`.`IDtarif` WHERE `factures_amarrage_details`.`idfacture` = $idfacture";
@@ -515,4 +556,15 @@ switch($typefacture){
 	}
 }
 
+
+function get_typeclient($idfacture){
+	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+        $result = $mysqli->query("SELECT `type_client` FROM `factures_amarrage` WHERE `idfacture`='$idfacture'");
+        $row = $result->fetch_row();
+        $type = $row[0];
+
+	$mysqli->close();
+
+        return $type;
+}
 ?>
