@@ -28,7 +28,7 @@ require_once('clients_top.php');
 				$('#historique').hide();
 				$('#avoirs').hide();
 				$('#showreject').hide();
-				if (edit>0){$('#divhistorique').show();}else{$('#divhistorique').hide();$('#accounttoggle').hide();}
+				if (edit>0){$('#divhistorique').show();$('#divavoirs').show();}else{$('#divhistorique').hide();$('#divavoirs').hide();$('#accounttoggle').hide();}
 				
 				$('#showreject').click( function() {
 					$('.reject').toggle();
