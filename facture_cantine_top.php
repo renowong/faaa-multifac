@@ -31,7 +31,6 @@ $jsarStatus_Enfant = buildJSArray($enf, 'status');
 //#################################building forms################################
 $InValidationList = buildFacturesEnAttente($arCompte[1]);
 $KidsList = buildOptionsKids($enf);
-$PeriodeList = buildOptionsPeriod();
 
 //#################################functions#####################################
 
@@ -83,7 +82,7 @@ function buildOptionsKids($enf) {
 	return $list;
 }
 
-function buildOptionsPeriod() {
+function buildOptionsPeriod($setthismonth) {
     $year = date("Y");
     $thismonth = date("n");
     $lastyear = $year-1;
@@ -93,7 +92,7 @@ function buildOptionsPeriod() {
 		$list .= "<option value='".htmlentities($months[$i])." ".$lastyear."'>".$months[$i]." ".$lastyear."</option>";
 	}
     for($i=0;$i<count($months);$i++){
-        if(($i+1)==$thismonth){$s=" SELECTED";}else{$s="";}
+        if(($i+1)==$thismonth && $setthismonth){$s=" SELECTED";}else{$s="";}
 		$list .= "<option value='".htmlentities($months[$i])." ".$year."'$s>".$months[$i]." ".$year."</option>";
 	}
     for($i=0;$i<count($months);$i++){
