@@ -4,6 +4,11 @@ require_once('global_functions.php');
 require_once('validation_required_top.php');
 $list = $_GET['validlist'];
 if($list){$stitle="Factures en attente";}else{$stitle="Module de validation des factures";}
+
+$cUser = unserialize($_SESSION['user']);
+$login = $cUser->userlogin();
+//print $login;
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
@@ -20,7 +25,7 @@ if($list){$stitle="Factures en attente";}else{$stitle="Module de validation des 
 	$( "#dialog-form" ).hide();
 	});
 	
-	function fconfirm(type,text,fid){
+	function fconfirm(type,text,fid,validlist){
 	
 	$( "#dialog:ui-dialog" ).dialog( "destroy" );
 	
@@ -33,7 +38,7 @@ if($list){$stitle="Factures en attente";}else{$stitle="Module de validation des 
 				if($("#commentaire").val()==''){
 					message("Erreur, vous n'avez pas entr\351 de commentaire");
 				}else{
-					validatefacture(type,fid,0,$("#commentaire").val());
+					validatefacture(type,fid,0,$("#commentaire").val(),validlist);
 					$("#commentaire").val('');
 					$( this ).dialog( "close" );
 				}
@@ -46,21 +51,31 @@ if($list){$stitle="Factures en attente";}else{$stitle="Module de validation des 
 		});
 	}
 	
+	function devalidate(type,factureid){
+		fconfirm(type,"Veuillez entrer un commentaire (obligatoire).",factureid,1);
+		//filter('all');
+	}
+	
 	function validate(type,factureid,valid){
 		if(valid) {
 			validatefacture(type,factureid,1,'En attente de r&egrave;glement');
 		}else{
-			fconfirm(type,"Veuillez entrer un commentaire (obligatoire).",factureid);
+			fconfirm(type,"Veuillez entrer un commentaire (obligatoire).",factureid,0);
 		}
-		$("#list_validation").empty();
-		$("#list_validation").load("facture_validate_list.php");
+		//$("#list_validation").empty();
+		//$("#list_validation").load("facture_validate_list.php");
 	}
 	
-	function validatefacture(type,factureid, acceptation, comment){
+	function validatefacture(type,factureid, acceptation, comment,validlist){
+		comment += " - <? print $login; ?>"
 	    $.post('factures_validate.php',{type:type,factureid:factureid,acceptation:acceptation,comment:comment},
 		   function(data){
 			$("#list_validation").empty();
-			$("#list_validation").load("facture_validate_list.php");
+			if(validlist){
+				$("#list_validation").load("facture_validate_list.php?validlist=1");
+			}else{
+				$("#list_validation").load("facture_validate_list.php");
+			}
 		   });
 	}
 	
@@ -100,7 +115,7 @@ if($list){$stitle="Factures en attente";}else{$stitle="Module de validation des 
 	<form>
 	<fieldset>
 		<label for="commentaire">Commentaire</label>
-		<input type="text" name="commentaire" id="commentaire" size="50" />
+		<input type="text" name="commentaire" id="commentaire" maxlength="80" size="50" />
 	</fieldset>
 	</form>
 </div>

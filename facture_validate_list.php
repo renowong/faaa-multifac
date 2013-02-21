@@ -6,7 +6,7 @@ $list = $_GET['validlist'];
 $type = $_GET['type'];
 
 if($list){
-        $output = "<div style='display: inline-block; height:inherit; overflow:auto;margin: 0px auto;'><table><tr><th>Type de Facture</th><th>Client</th><th width=500px>Facture</th></tr>";
+        $output = "<div style='display: inline-block; height:inherit; overflow:auto;margin: 0px auto;'><table><tr><th>Type de Facture</th><th>Client</th><th width=500px>Facture</th><th>D&eacute;validation</th></tr>";
         switch($type){
                 case "cantine":
                         $output .= getcantinelist();
@@ -71,10 +71,11 @@ function getetallist(){
         $query = "SELECT * FROM `".DB."`.`factures_etal` INNER JOIN `mandataires` ON `factures_etal`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_etal`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0'";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
+                $type='etal';
                 $output .= "<tr><td>place et &eacute;tal</td><td><a href='mandataires.php?edit=".$row["mandataireid"]."&hideerrors=1'>".$row["mandataireprefix"]." ".$row["mandataireRS"]." / ".htmlentities($row["mandatairenom"])." ".htmlentities($row["mandataireprenom"])."</a></td>".
-                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=etal' target='_blank'>Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
+                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
                 $output .= trispace($row["montantfcp"]);
-                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td></tr>";
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td><td class='center'><a href=\"javascript:devalidate('$type','".$row["idfacture"]."')\"><img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
         }
         return $output;
 }
@@ -119,7 +120,7 @@ function getamarragelist(){
                 $output .= "<tr><td>$type</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
                 "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
                 $output .= trispace($row["montantfcp"]);
-                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td></tr>";
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td><td class='center'><a href=\"javascript:devalidate('$type','".$row["idfacture"]."')\"><img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
         }
         return $output;
 }
@@ -150,7 +151,8 @@ function getcantinelist(){
                 $output .= "<tr><td>$type</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
                 "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
                 $output .= trispace($row["montantfcp"]);
-                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td></tr>";
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td>".
+                "<td class='center'><a href=\"javascript:devalidate('$type','".$row["idfacture"]."')\"><img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
         }
         return $output;
 }
