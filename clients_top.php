@@ -199,6 +199,8 @@ function getLieu($type){
 		($row['lieuprincipal']==1 ? $home="<img src='img/home.png' title='R&eacute;sidence principale' /> " : $home="");
 		$output .= $home."<a $class href='lieux.php?edit=".$row['lieuid']."&hideerrors=1'>".$row['Type']." &agrave; ".$row['Rue']." ".$row['Quartier']."</a><br/><br/>";
 	}
+	
+	if($output=="") $output="<a href='lieux.php?reset=1'>Ajouter une r&eacute;sidence</a>";
 
 	$mysqli->close();
 	return $output;
