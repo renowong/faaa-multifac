@@ -31,6 +31,7 @@ switch($typefacture){
 				$periode = $row['periode'];
 				$facturevalidation = $row['validation'];
 				$client = html_entity_decode($row['clientnom']." ".$row['clientprenom'],ENT_QUOTES, "UTF-8");
+				$client = strtoupper($client);
 				if($row['clientbp']==''){
 					$contact = get_geo($row['idclient']);
 				}else{
@@ -103,6 +104,7 @@ switch($typefacture){
 				$periode = $row['periode'];
 				$facturevalidation = $row['validation'];
 				$client = $row['mandatairenom']." ".$row['mandataireprenom'];
+				$client = strtoupper($client);
 				$contact = "BP : ".$row['mandatairebp']." - ".$row['mandatairecp']." ".$row['mandataireville'];
 				$email = "E-mail : ".$row['mandataireemail'];
 				$telephone = "Téléphone : ".$row['mandatairetelephone'];
@@ -159,7 +161,7 @@ switch($typefacture){
 				$periode = $row['periode'];
 				$facturevalidation = $row['validation'];
 				$client = html_entity_decode($row['clientnom']." ".$row['clientprenom'],ENT_QUOTES, "UTF-8");
-				
+				$client = strtoupper($client);
 				if($row['clientbp']==''){
 					$contact = get_geo($row['idclient']);
 				}else{
@@ -197,6 +199,7 @@ switch($typefacture){
 				$periode = $row['periode'];
 				$facturevalidation = $row['validation'];
 				$client = html_entity_decode($row['mandatairenom']." ".$row['mandataireprenom'],ENT_QUOTES, "UTF-8");
+				$client = strtoupper($client);
 				$contact = "BP : ".$row['mandatairebp']." - ".$row['mandatairecp']." ".$row['mandataireville'];
 				$email = "E-mail : ".$row['mandataireemail'];
 				if($row['mandatairetelephone']!==""){

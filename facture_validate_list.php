@@ -86,7 +86,7 @@ function getamarragevalidate(){
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $type='amarrage';
-                $output .= "<tr><td>$type</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
+                $output .= "<tr><td>$type<br/>".$row["navire"]."</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
                 "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Devis ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td>".
@@ -117,7 +117,7 @@ function getamarragelist(){
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $type='amarrage';
-                $output .= "<tr><td>$type</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
+                $output .= "<tr><td>$type<br/>".$row["navire"]."</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
                 "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td><td class='center'><a href=\"javascript:devalidate('$type','".$row["idfacture"]."')\"><img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
