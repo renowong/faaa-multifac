@@ -159,7 +159,13 @@ switch($typefacture){
 				$periode = $row['periode'];
 				$facturevalidation = $row['validation'];
 				$client = html_entity_decode($row['clientnom']." ".$row['clientprenom'],ENT_QUOTES, "UTF-8");
-				$contact = "BP : ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
+				
+				if($row['clientbp']==''){
+					$contact = get_geo($row['idclient']);
+				}else{
+					$contact = "BP : ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
+				}
+				
 				$email = "E-mail : ".$row['clientemail'];
 				$telephone = "Téléphone : ".$row['clienttelephone'];
 				$fax = "Fax : ".$row['clientfax'];
