@@ -65,15 +65,15 @@ function enterdata($edit){
 				 "', `lieuedt`='".strtoupper($_POST['txt_EDT'])."', `lieuobservations`='".$_POST['txt_Observations']."'".
 				 " WHERE `lieuid`='". $edit."'";
 	}
-	echo $query;
-	//$Mysqli->query($query);
-	//if ($Mysqli->affected_rows > 0){
-	//reinitialize();
-	//header("Location:lieux.php?edit=$edit&success=1");
-	//} else {
-	//header("Location:lieux.php?edit=$edit&success=0");
-	//}
-	//$Mysqli->close();
+	//echo $query;
+	$Mysqli->query($query);
+	if ($Mysqli->affected_rows > 0){
+	reinitialize();
+	header("Location:lieux.php?edit=$edit&success=1");
+	} else {
+	header("Location:lieux.php?edit=$edit&success=0");
+	}
+	$Mysqli->close();
 }
 
 function reinitialize(){
