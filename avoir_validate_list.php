@@ -20,6 +20,7 @@ function getavoirlist(){
         "`avoirs`.`obs`,`factures_cantine`.`datefacture`,`factures_cantine`.`datefacture`,`factures_cantine`.`montantfcp`,".
         "`factures_cantine`.`montanteuro` FROM `avoirs` INNER JOIN `factures_cantine` ON `avoirs`.`idfacture`=`factures_cantine`.`idfacture`".
         "WHERE `avoirs`.`validation` = '0' ORDER BY date ASC, `idavoir`";
+        $type = "cantine";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $output .= "<tr><td>".trispace($row["montant"])." FCP</td><td>".trispace($row["reste"])." FCP</td>".
