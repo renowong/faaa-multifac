@@ -24,7 +24,7 @@ function getavoirlist(){
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $output .= "<tr><td>".trispace($row["montant"])." FCP</td><td>".trispace($row["reste"])." FCP</td>".
                 "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>".
-                "Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
+                "Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td><td>".french_date($row['date'])."</td>".
                 "<td>".$row['obs']."</td><td style=\"text-align:center\"><a href=\"javascript:validate('".$row["idavoir"]."',true)\">".
@@ -33,9 +33,5 @@ function getavoirlist(){
         }
         return $output;
 }
-
-//function french_date($timestamp){
-//	return date("d/m/Y",strtotime($timestamp));
-//}
 
 ?>

@@ -25,7 +25,8 @@ function getAllFactures($id,$type){
 				$result = $mysqli->query($query);
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
 				$typef="cantine";
-				$output .= "<tr><td>$typef</td>";
+				$enfant_prenom = "<br/>".getEnfantPrenom($row['idfacture']);
+				$output .= "<tr><td>$typef$enfant_prenom</td>";
 				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)";
 				if($row["restearegler"]!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : ".$row["restearegler"]." FCP";}
 				$output .= "<br/>Obs : ".$row["obs"];
@@ -82,6 +83,17 @@ function getAllFactures($id,$type){
 	return $output;
 }
 
+function getEnfantPrenom($idfacture){
+    $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+    $query = "SELECT `enfants`.`prenom` FROM `factures_cantine_details` INNER JOIN `enfants` ".
+            " ON `factures_cantine_details`.`idenfant`=`enfants`.`enfantid` WHERE `factures_cantine_details`.`idfacture`='$idfacture'";
+    $result = $mysqli->query($query);
+    $row = $result->fetch_array(MYSQLI_ASSOC);
+    $output = $row["prenom"];
+    $mysqli->close();
+    return $output;
+}
+
 function getPaidFactures($id,$type){
     $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
 
@@ -94,7 +106,8 @@ function getPaidFactures($id,$type){
 			$result = $mysqli->query($query);
 			while($row = $result->fetch_array(MYSQLI_ASSOC)){
 			$typef="cantine";
-			$output .= "<tr><td>$typef</td>".
+			$enfant_prenom = "<br/>".getEnfantPrenom($row['idfacture']);
+			$output .= "<tr><td>$typef$enfant_prenom</td>".
 			"<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)<br/>".
 			"- R&eacute;gl&eacute;e la somme de <b>".trispace($row["montantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".french_date($row["date_paiement"]).")<br/>".
 			"- Obs: ".$row["obs"]."</td>".
