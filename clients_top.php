@@ -415,8 +415,4 @@ function getAllKids($id){
         $mysqli->close();
         return $count;
 }
-
-function french_date($timestamp){
-	return date("d/m/Y",strtotime($timestamp));
-}
 ?>

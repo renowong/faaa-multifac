@@ -56,7 +56,7 @@ function getetalvalidate(){
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $output .= "<tr><td>place et &eacute;tal</td><td><a href='mandataires.php?edit=".$row["mandataireid"]."&hideerrors=1'>".$row["mandataireprefix"]." ".$row["mandataireRS"]." / ".htmlentities($row["mandatairenom"])." ".htmlentities($row["mandataireprenom"])."</a></td>".
-                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=etal' target='_blank'>Devis ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
+                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=etal' target='_blank'>Devis ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td>".
                 "<td style=\"text-align:center\"><a href=\"javascript:validate('etal','".$row["idfacture"]."',true)\">".
@@ -73,7 +73,7 @@ function getetallist(){
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $type='etal';
                 $output .= "<tr><td>place et &eacute;tal</td><td><a href='mandataires.php?edit=".$row["mandataireid"]."&hideerrors=1'>".$row["mandataireprefix"]." ".$row["mandataireRS"]." / ".htmlentities($row["mandatairenom"])." ".htmlentities($row["mandataireprenom"])."</a></td>".
-                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
+                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td><td class='center'><a href=\"javascript:devalidate('$type','".$row["idfacture"]."')\"><img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
         }
@@ -87,7 +87,7 @@ function getamarragevalidate(){
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $type='amarrage';
                 $output .= "<tr><td>$type</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
-                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Devis ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
+                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Devis ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td>".
                 "<td style=\"text-align:center\"><a href=\"javascript:validate('$type','".$row["idfacture"]."',true)\">".
@@ -100,7 +100,7 @@ function getamarragevalidate(){
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $type='amarrage';
                 $output .= "<tr><td>$type</td><td><a href='mandataires.php?edit=".$row["mandataireid"]."&hideerrors=1'>".$row["mandataireprefix"]." ".$row["mandataireRS"]." ".strtoupper(htmlentities($row["mandatairenom"]))." ".strtoupper(htmlentities($row["mandataireprenom"]))."</a></td>".
-                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Devis ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
+                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Devis ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td>".
                 "<td style=\"text-align:center\"><a href=\"javascript:validate('$type','".$row["idfacture"]."',true)\">".
@@ -118,7 +118,7 @@ function getamarragelist(){
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $type='amarrage';
                 $output .= "<tr><td>$type</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
-                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
+                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td><td class='center'><a href=\"javascript:devalidate('$type','".$row["idfacture"]."')\"><img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
         }
@@ -132,7 +132,7 @@ function getcantinevalidate(){
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $type='cantine';
                 $output .= "<tr><td>$type</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
-                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Devis ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
+                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Devis ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td>".
                 "<td style=\"text-align:center\"><a href=\"javascript:validate('$type','".$row["idfacture"]."',true)\">".
@@ -149,14 +149,13 @@ function getcantinelist(){
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $type='cantine';
                 $output .= "<tr><td>$type</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
-                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ";
+                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td>".
                 "<td class='center'><a href=\"javascript:devalidate('$type','".$row["idfacture"]."')\"><img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
         }
         return $output;
 }
-
 
 
 ?>

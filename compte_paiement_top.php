@@ -26,7 +26,7 @@ function getAllFactures($id,$type){
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
 				$typef="cantine";
 				$output .= "<tr><td>$typef</td>";
-				$output .= "<td>Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)";
+				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)";
 				if($row["restearegler"]!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : ".$row["restearegler"]." FCP";}
 				$output .= "<br/>Obs : ".$row["obs"];
 				$output .= "</td><td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=$typef\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
@@ -39,7 +39,7 @@ function getAllFactures($id,$type){
 				$result = $mysqli->query($query);
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
 				$output .= "<tr><td>amarrage</td>";
-				$output .= "<td>Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)";
+				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)";
 				if($row["restearegler"]!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : ".$row["restearegler"]." FCP";}
 				$output .= "<br/>Obs : ".$row["obs"];
 				$output .= "</td><td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=amarrage\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
@@ -54,7 +54,7 @@ function getAllFactures($id,$type){
 				$result = $mysqli->query($query);
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
 				$output .= "<tr><td>place et &eacute;tal</td>";
-				$output .= "<td>Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)";
+				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)";
 				if($row["restearegler"]!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : ".$row["restearegler"]." FCP";}
 				$output .= "<br/>Obs : ".$row["obs"];
 				$output .= "</td><td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=etal\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
@@ -68,7 +68,7 @@ function getAllFactures($id,$type){
 				$result = $mysqli->query($query);
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
 				$output .= "<tr><td>amarrage</td>";
-				$output .= "<td>Facture ".$row["communeid"]." du ".$row["datefacture"]." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)";
+				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)";
 				if($row["restearegler"]!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : ".$row["restearegler"]." FCP";}
 				$output .= "<br/>Obs : ".$row["obs"];
 				$output .= "</td><td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=amarrage\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
@@ -95,8 +95,8 @@ function getPaidFactures($id,$type){
 			while($row = $result->fetch_array(MYSQLI_ASSOC)){
 			$typef="cantine";
 			$output .= "<tr><td>$typef</td>".
-			"<td>Facture ".$row["communeid"]." du ".standarddateformat($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)<br/>".
-			"- R&eacute;gl&eacute;e la somme de <b>".trispace($row["montantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".standarddateformat($row["date_paiement"]).")<br/>".
+			"<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)<br/>".
+			"- R&eacute;gl&eacute;e la somme de <b>".trispace($row["montantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".french_date($row["date_paiement"]).")<br/>".
 			"- Obs: ".$row["obs"]."</td>".
 			"<td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=$typef\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>".
 			"<td style=\"text-align:center\"><a href=\"createrecu.php?id=".$row['idpaiement']."&type=$typef\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
@@ -110,8 +110,8 @@ function getPaidFactures($id,$type){
 			$result = $mysqli->query($query);
 			while($row = $result->fetch_array(MYSQLI_ASSOC)){
 			$output .= "<tr><td>amarrage</td>".
-			"<td>Facture ".$row["communeid"]." du ".standarddateformat($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)<br/>".
-			"- R&eacute;gl&eacute;e la somme de <b>".trispace($row["montantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".standarddateformat($row["date_paiement"]).")<br/>".
+			"<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)<br/>".
+			"- R&eacute;gl&eacute;e la somme de <b>".trispace($row["montantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".french_date($row["date_paiement"]).")<br/>".
 			"- Obs: ".$row["obs"]."</td>".
 			"<td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=amarrage\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>".
 			"<td style=\"text-align:center\"><a href=\"createrecu.php?id=".$row['idpaiement']."&type=amarrage\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
@@ -127,8 +127,8 @@ function getPaidFactures($id,$type){
 			$result = $mysqli->query($query);
 			while($row = $result->fetch_array(MYSQLI_ASSOC)){
 			$output .= "<tr><td>place et &eacute;tal</td>".
-			"<td>Facture ".$row["communeid"]." du ".standarddateformat($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)<br/>".
-			"- R&eacute;gl&eacute;e la somme de <b>".trispace($row["montantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".standarddateformat($row["date_paiement"]).")<br/>".
+			"<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)<br/>".
+			"- R&eacute;gl&eacute;e la somme de <b>".trispace($row["montantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".french_date($row["date_paiement"]).")<br/>".
 			"- Obs: ".$row["obs"]."</td>".
 			"<td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=etal\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>".
 			"<td style=\"text-align:center\"><a href=\"createrecu.php?id=".$row['idpaiement']."&type=etal\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
@@ -142,8 +142,8 @@ function getPaidFactures($id,$type){
 			$result = $mysqli->query($query);
 			while($row = $result->fetch_array(MYSQLI_ASSOC)){
 			$output .= "<tr><td>amarrage</td>".
-			"<td>Facture ".$row["communeid"]." du ".standarddateformat($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)<br/>".
-			"- R&eacute;gl&eacute;e la somme de <b>".trispace($row["montantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".standarddateformat($row["date_paiement"]).")<br/>".
+			"<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)<br/>".
+			"- R&eacute;gl&eacute;e la somme de <b>".trispace($row["montantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".french_date($row["date_paiement"]).")<br/>".
 			"- Obs: ".$row["obs"]."</td>".
 			"<td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=amarrage\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>".
 			"<td style=\"text-align:center\"><a href=\"createrecu.php?id=".$row['idpaiement']."&type=amarrage\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
@@ -153,11 +153,6 @@ function getPaidFactures($id,$type){
 	}
 	$mysqli->close();
 	return $output;		
-}
-
-function standarddateformat($input){
-		$arr = explode('-', $input);
-		return $arr[2].'-'.$arr[1].'-'.$arr[0];
 }
 
 function translatemode($input){

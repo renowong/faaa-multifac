@@ -32,5 +32,8 @@ function reverse_date_to_normal($d){
         $d = explode("-",$d);
         return $d[2]."/".$d[1]."/".$d[0];
         }
-
+	
+function french_date($timestamp){
+	return date("d/m/Y",strtotime($timestamp));
+}
 ?>
