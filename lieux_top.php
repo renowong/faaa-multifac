@@ -114,6 +114,7 @@ function getData($id){
 	$result = $Mysqli->query($query);
 	while($row = $result->fetch_array(MYSQLI_ASSOC)){
 		$_SESSION['values']['chk_status'] = $row['lieustatus'];
+		$_SESSION['values']['chk_principal'] = $row['lieuprincipal'];
 		$_SESSION['values']['box_Proprietaire'] = $row['lieuproprietaire'];
 		$_SESSION['values']['box_Mandataire'] = $row['lieumandataire'];
 		$_SESSION['values']['box_Locataire'] = $row['lieulocataire'];
@@ -150,6 +151,7 @@ function reseterrors(){
 
 function resetvalues(){
 	$_SESSION['values']['chk_status'] = '1';
+	$_SESSION['values']['chk_principal'] = '1';
 	$_SESSION['values']['box_Proprietaire'] = '';
 	$_SESSION['values']['box_Mandataire'] = '';
 	$_SESSION['values']['box_Locataire'] = '';

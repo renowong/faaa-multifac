@@ -119,10 +119,14 @@ require_once('lieux_top.php');
 						<table name="tbllieu" id="tbllieu" class="tblform">
 							<tbody>
 								<tr>
-									<td colspan="2">
+									<td>
 										<!--Status-->
 										<label for="chk_status">Lieu Actif</label>
 										<input class="input" type="checkbox" name="chk_status" id="chk_status" value="1" <? if($_SESSION['values']['chk_status']) echo 'checked="checked"'; ?> />
+									</td>
+									<td>
+										<label for="chk_principal">R&eacute;sidence Principale</label>
+										<input class="input" type="checkbox" name="chk_principal" id="chk_principal" value="1" <? if($_SESSION['values']['chk_principal']) echo 'checked="checked"'; ?> />
 									</td>
 								</tr>
 								<tr>

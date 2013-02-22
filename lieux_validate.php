@@ -33,14 +33,23 @@ if ($validationType == 'php') {
 
 function enterdata($edit){
 	//echo "entering data";
-
-	$_POST['chk_status'] = (isset($_POST['chk_status']) ? 1 : 0);
-
+	//$_POST['chk_status'] = (isset($_POST['chk_status']) ? 1 : 0);
+	//$_POST['chk_principal'] = (isset($_POST['chk_principal']) ? 1 : 0);
+		
+	if($_POST['chk_principal']){
+		unsetPrimaryHome($_POST['box_Proprietaire']);
+	    }else{
+		$primary_home_count = checkPrimaryHome($_POST['box_Proprietaire'],$edit);
+		//echo $primary_home_count;
+		if($primary_home_count==0) $_POST['chk_principal'] = 1;
+	    }
+	
 	//$status='TRUE';
-	$Mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
 	if($edit==0) { //new insert
+
 	$query = "INSERT INTO `".DB."`.`lieux` (".
-			 "`lieuid` , `lieustatus` ,".
+			 "`lieuid` , `lieustatus` , `lieuprincipal` ,".
 			 "`lieuproprietaire` , `lieumandataire` ,".
 			 "`lieulocataire` , `lieucategorie` ,".
 			 "`lieunomlieu` , `lieusurface` ,".
@@ -48,14 +57,14 @@ function enterdata($edit){
 			 "`lieuquartier` ,`lieufacturer` ,".
 			 "`lieuedt` ,`lieucompteur` ,".
 			 "`lieuobservations`)".
-			 " VALUES (NULL, '".$_POST['chk_status']."', '".$_POST['box_Proprietaire'].
+			 " VALUES (NULL, '".$_POST['chk_status']."', '".$_POST['chk_principal']."', '".$_POST['box_Proprietaire'].
 			 "', '".$_POST['box_Mandataire']."', '".$_POST['box_Locataire'].
 			 "', '".$_POST['box_Categorie']."', '".ucwords($_POST['txt_Nomlieu']).
 			 "', '".$_POST['txt_Surface']."', '".$_POST['txt_Nmaison'].
 			 "', '".$_POST['box_Servitude']."', '".$_POST['box_Quartier']."', '".$_POST['box_Facturer'].
 			 "', '".strtoupper($_POST['txt_Compteur'])."', '".strtoupper($_POST['txt_EDT'])."', '".$_POST['txt_Observations']."')";
 	} else { //update
-		$query = "UPDATE `".DB."`.`lieux` SET `lieustatus`='".$_POST['chk_status'].
+		$query = "UPDATE `".DB."`.`lieux` SET `lieustatus`='".$_POST['chk_status']."', `lieuprincipal`='".$_POST['chk_principal'].
 				 "', `lieuproprietaire`='".$_POST['box_Proprietaire']."', `lieumandataire`='".$_POST['box_Mandataire'].
 				 "', `lieulocataire`='".$_POST['box_Locataire']."', `lieucategorie`='".$_POST['box_Categorie'].
 				 "',`lieunomlieu`='".ucwords($_POST['txt_Nomlieu']).
@@ -66,14 +75,33 @@ function enterdata($edit){
 				 " WHERE `lieuid`='". $edit."'";
 	}
 	//echo $query;
-	$Mysqli->query($query);
-	if ($Mysqli->affected_rows > 0){
+	$mysqli->query($query);
+	$affectedrows = $mysqli->affected_rows;
+	$mysqli->close();
+	
+	if ($affectedrows > 0){
 	reinitialize();
 	header("Location:lieux.php?edit=$edit&success=1");
 	} else {
 	header("Location:lieux.php?edit=$edit&success=0");
 	}
-	$Mysqli->close();
+	
+}
+
+function checkPrimaryHome($clientid,$currentedit){
+    $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+    $query = "SELECT * FROM `lieux` WHERE `lieuproprietaire`='$clientid' AND `lieuprincipal`='1' AND NOT `lieuid`='$currentedit'";
+    $result = $mysqli->query($query);
+    $count = $result->num_rows;
+    $mysqli->close();
+    return $count;
+}
+
+function unsetPrimaryHome($clientid){
+    $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+    $query = "UPDATE `lieux` SET `lieuprincipal`='0' WHERE `lieuproprietaire`='$clientid'";
+    $mysqli->query($query);
+    $mysqli->close();
 }
 
 function reinitialize(){

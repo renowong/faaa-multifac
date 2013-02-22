@@ -183,7 +183,7 @@ function resetvalues(){
 function getLieu($type){
 	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD);
 
-	$query = "SELECT `".DB."`.`lieux`.`lieuid`, `".DB."`.`lieux`.`lieustatus`, `".DB."`.`tarifs_ramassage_om`.`Type`,".
+	$query = "SELECT `".DB."`.`lieux`.`lieuid`, `".DB."`.`lieux`.`lieustatus`, `".DB."`.`lieux`.`lieuprincipal`, `".DB."`.`tarifs_ramassage_om`.`Type`,".
 			 " `".DBRUES."`.`rues`.`Rue`, `".DBRUES.
 			 "`.`quartiers`.`Quartier` FROM `".DB."`.`lieux` INNER JOIN `".DBRUES.
 			 "`.`rues` ON `lieux`.`lieuservitude` = `rues`.`IDRue` ".
@@ -196,7 +196,8 @@ function getLieu($type){
 
 	while($row = $result->fetch_array(MYSQLI_ASSOC)){
 		($row['lieustatus']==0 ? $class="class='crossed'" : $class="");
-		$output .= "<a $class href='lieux.php?edit=".$row['lieuid']."&hideerrors=1'>".$row['Type']." &agrave; ".$row['Rue']." ".$row['Quartier']."</a><br/><br/>";
+		($row['lieuprincipal']==1 ? $home="<img src='img/home.png' title='R&eacute;sidence principale' /> " : $home="");
+		$output .= $home."<a $class href='lieux.php?edit=".$row['lieuid']."&hideerrors=1'>".$row['Type']." &agrave; ".$row['Rue']." ".$row['Quartier']."</a><br/><br/>";
 	}
 
 	$mysqli->close();
