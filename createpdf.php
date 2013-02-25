@@ -33,9 +33,12 @@ switch($typefacture){
 				$client = html_entity_decode($row['clientnom']." ".$row['clientprenom'],ENT_QUOTES, "UTF-8");
 				$client = strtoupper($client);
 				if($row['clientbp']==''){
-					$contact = get_geo($row['idclient']);
+					$ar_contact = get_geo($row['idclient']);
+					$contact1 = $ar_contact[0];
+					$contact2 = $ar_contact[1];
 				}else{
-					$contact = "BP : ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
+					$contact1 = "BP ".$row['clientbp'];
+					$contact2 = $row['clientcp']." ".$row['clientville'];
 				}
 				$email = "E-mail : ".$row['clientemail'];
 				$telephone = "Téléphone : ".$row['clienttelephone'];
@@ -105,7 +108,8 @@ switch($typefacture){
 				$facturevalidation = $row['validation'];
 				$client = $row['mandatairenom']." ".$row['mandataireprenom'];
 				$client = strtoupper($client);
-				$contact = "BP : ".$row['mandatairebp']." - ".$row['mandatairecp']." ".$row['mandataireville'];
+				$contact1 = "BP ".$row['mandatairebp'];
+				$contact2 = $row['mandatairecp']." ".$row['mandataireville'];
 				$email = "E-mail : ".$row['mandataireemail'];
 				$telephone = "Téléphone : ".$row['mandatairetelephone'];
 				$fax = "Vini : ".$row['mandatairetelephone2'];
@@ -163,9 +167,12 @@ switch($typefacture){
 				$client = html_entity_decode($row['clientnom']." ".$row['clientprenom'],ENT_QUOTES, "UTF-8");
 				$client = strtoupper($client);
 				if($row['clientbp']==''){
-					$contact = get_geo($row['idclient']);
+					$ar_contact = get_geo($row['idclient']);
+					$contact1 = $ar_contact[0];
+					$contact2 = $ar_contact[1];
 				}else{
-					$contact = "BP : ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
+					$contact1 = "BP ".$row['clientbp'];
+					$contact2 = $row['clientcp']." ".$row['clientville'];
 				}
 				
 				$email = "E-mail : ".$row['clientemail'];
@@ -200,7 +207,8 @@ switch($typefacture){
 				$facturevalidation = $row['validation'];
 				$client = html_entity_decode($row['mandatairenom']." ".$row['mandataireprenom'],ENT_QUOTES, "UTF-8");
 				$client = strtoupper($client);
-				$contact = "BP : ".$row['mandatairebp']." - ".$row['mandatairecp']." ".$row['mandataireville'];
+				$contact1 = "BP ".$row['mandatairebp'];
+				$contact2 = $row['mandatairecp']." ".$row['mandataireville'];
 				$email = "E-mail : ".$row['mandataireemail'];
 				if($row['mandatairetelephone']!==""){
 					$telephone = "Téléphone : ".$row['mandatairetelephone'];
@@ -234,12 +242,12 @@ switch($typefacture){
 
 
 
-genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$edt,$eau);
+genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$edt,$eau);
 
 $mysqli->close();
 
 
-function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$edt,$eau){
+function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$edt,$eau){
 	$xreg=-1.5;
 	$yreg=3.5;
 
@@ -320,9 +328,12 @@ switch($typefacture){
 	$pdf->SetXY(13+$xreg,46+$yreg);
 	$pdf->SetFont('Arial','B',10);
 	$pdf->Cell(55,10,$client);
+	$pdf->SetXY(13+$xreg,49.9+$yreg);
+	$pdf->SetFont('Arial','',10);
+	$pdf->Cell(55,10,utf8_decode($contact1));
 	$pdf->SetXY(13+$xreg,54.2+$yreg);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(55,10,utf8_decode($contact));
+	$pdf->Cell(55,10,utf8_decode($contact2));
 	$pdf->SetXY(13+$xreg,58.5+$yreg);
 	$pdf->Cell(55,10,utf8_decode($email));
 	$pdf->SetXY(13+$xreg,62.8+$yreg);
@@ -342,7 +353,7 @@ switch($typefacture){
 	$pdf->Cell(55,10,"Attn : ".strtoupper($client));
 	$pdf->SetXY(139+$xreg,54.2+$yreg);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(55,10,utf8_decode($contact));
+	$pdf->Cell(55,10,utf8_decode($contact1."-".$contact2));
 	$pdf->SetXY(139+$xreg,58.5+$yreg);
 	$pdf->Cell(55,10,utf8_decode("PY : ".$py));
 	$pdf->SetXY(139+$xreg,62.8+$yreg);
@@ -362,7 +373,7 @@ switch($typefacture){
 	$pdf->Cell(55,10,"Attn : ".strtoupper($client));
 	$pdf->SetXY(139+$xreg,54.2+$yreg);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(55,10,utf8_decode($contact));
+	$pdf->Cell(55,10,utf8_decode($contact1."-".$contact2));
 	$pdf->SetXY(139+$xreg,58.5+$yreg);
 	$pdf->Cell(55,10,utf8_decode($email));
 	$pdf->SetXY(139+$xreg,62.8+$yreg);
@@ -591,11 +602,12 @@ function get_geo($idclient){
 			 "INNER JOIN `".DBRUES."`.`quartiers` ON `lieux`.`lieuquartier` = `quartiers`.`IDQuartier` ".
 			 "WHERE `lieux`.`lieuproprietaire` = '$idclient' AND `lieux`.`lieuprincipal`='1'";
 
-	$output = ''; //defining the variable
+	//$output = ''; //defining the variable
 	$result = $mysqli->query($query);
 
 	$row = $result->fetch_array(MYSQLI_ASSOC);
-		$output = $row['lieunmaison']." srv.".$row['Rue']." qt.".$row['Quartier'];
+		$output[0] = $row['lieunmaison']." Aroa ".$row['Rue'];
+		$output[1] = "qt. ".$row['Quartier'];
 
 	$mysqli->close();
 	return $output;
