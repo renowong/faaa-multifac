@@ -60,8 +60,10 @@ function buildFacturesPayeesTable($id){
 		var obs = $("#obs").val();
                 var client = <?php echo $arCompte[1] ?>;
 		      
-		$.post("avoir_submit.php",{userid:userid,facturecode:facturecode,montant:montant,obs:obs,client:client});
-                window.location = "clients.php?hideerrors=1&success=1&edit="+client;	
+		$.post("avoir_submit.php",{userid:userid,facturecode:facturecode,montant:montant,obs:obs,client:client},
+		       function(data){
+				window.location = "clients.php?hideerrors=1&success=1&edit="+client;		
+				});
 		}
 		}
 	    
