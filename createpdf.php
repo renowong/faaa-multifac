@@ -607,7 +607,7 @@ function get_geo($idclient){
 
 	$row = $result->fetch_array(MYSQLI_ASSOC);
 		$output[0] = $row['lieunmaison']." Aroa ".$row['Rue'];
-		$output[1] = "qt. ".$row['Quartier'];
+		$output[1] = "Quartier ".$row['Quartier'];
 
 	$mysqli->close();
 	return $output;
