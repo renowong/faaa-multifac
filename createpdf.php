@@ -337,7 +337,7 @@ switch($typefacture){
 	$pdf->Cell(55,10,"Navire ".$nav);
 	$pdf->SetXY(139+$xreg,50+$yreg);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(55,10,"Attn : ".strtoupper());
+	$pdf->Cell(55,10,"Attn : ".strtoupper($client));
 	$pdf->SetXY(139+$xreg,54.2+$yreg);
 	$pdf->SetFont('Arial','',10);
 	$pdf->Cell(55,10,utf8_decode($contact1."-".$contact2));
