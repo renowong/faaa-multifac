@@ -4,6 +4,7 @@ require_once('checksession.php');
 //###############################variables######################################
 $serviceOptions = array("0" => "[S&eacute;lectionner]",
 "INF" => "Cellule Informatique",
+"REG" => "R&eacute;gie",
 "FTR" => "Facturation Taxes",
 "ETU" => "Etudes");
 $legend = 'Nouveau compte';
