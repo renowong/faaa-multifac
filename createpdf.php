@@ -76,8 +76,8 @@ switch($typefacture){
 			case "160-2012":
 				$delib = "La présente facture est conforme à la délibération n°160/2012 du 28 août 2012 fixant le tarif des repas de cantine scolaire.";
 				break;
-			case "182-2012":
-				$delib = "La présente facture est conforme à la délibération n°182/2012 du 24 octobre 2012 fixant le tarif des repas de cantine scolaire.";
+			case "217-2013":
+				$delib = "La présente facture est conforme à la délibération n°217/2013 du 18 février 2013 fixant le tarif des repas de cantine scolaire.";
 				break;
 		}
 		
