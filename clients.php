@@ -513,6 +513,7 @@ require_once('clients_top.php');
 			<br/>
 			</div>
 		</div>
+		<br/><br/>
 		<div id="opaquediv" name="opaquediv" style="position:absolute;top:0px;width:100%;height:100%;z-index:20;">
 			<div style="background-color:white;" id="div_avoir" name="div_avoir" />
 		</div>

@@ -53,18 +53,20 @@ function buildFacturesEnCoursTable($id){
                     })
 
 		function apply_avoir(){
-				
-		if($("#txt_montant").val()=="" || $("#obs").val()=="" || $("#slt_facture").val()==null){
-			alert("Pas d'application possible.");	
-		}else{
-		var avoirid = $("#idavoir").val();
-		var facturecode = $("#slt_facture").val();
-		var montant = <?php echo $avoir ?>;
-		var client = <?php echo $arCompte[1] ?>;
-		
-		$.post("avoir_apply.php",{avoirid:avoirid,facturecode:facturecode,montant:montant});
-                window.location = "clients.php?hideerrors=1&success=1&edit="+client;
-		}
+                    if($("#txt_montant").val()=="" || $("#obs").val()=="" || $("#slt_facture").val()==null){
+                            alert("Pas d'application possible.");	
+                    }else{
+                    var avoirid = $("#idavoir").val();
+                    var facturecode = $("#slt_facture").val();
+                    var montant = <?php echo $avoir ?>;
+                    var client = <?php echo $arCompte[1] ?>;
+                    
+                    $.post("avoir_apply.php",{avoirid:avoirid,facturecode:facturecode,montant:montant},
+                           function(data){
+                                    window.location = "clients.php?hideerrors=1&success=1&edit="+client;
+                           });
+                    
+                    }
 		}
 	    
 	</script>
