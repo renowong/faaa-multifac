@@ -5,22 +5,26 @@ require_once('global_functions.php');
 $list = $_GET['validlist'];
 $type = $_GET['type'];
 
+if(isset($_GET['client'])){
+     $client = " AND `idclient`='".$_GET['client']."'";
+}
+
 if($list){
         $output = "<div style='display: inline-block; height:inherit; overflow:auto;margin: 0px auto;'><table><tr><th>Type de Facture</th><th>Client</th><th width=500px>Facture</th><th>D&eacute;validation</th></tr>";
         switch($type){
                 case "cantine":
-                        $output .= getcantinelist();
+                        $output .= getcantinelist($client);
                 break;
                 case "etal":
-                        $output .= getetallist();
+                        $output .= getetallist($client);
                 break;
                 case "amarrage":
-                        $output .= getamarragelist();
+                        $output .= getamarragelist($client);
                 break;
                 default:
-                        $output .= getcantinelist();
-                        $output .= getetallist();
-                        $output .= getamarragelist();
+                        $output .= getcantinelist($client);
+                        $output .= getetallist($client);
+                        $output .= getamarragelist($client);
                 break;
         }  
         $output .= "</table></div>";      
@@ -28,18 +32,18 @@ if($list){
         $output = "<div style='display: inline-block; height:inherit; overflow:auto;margin: 0px auto;'><table><tr><th>Type de Facture</th><th>Client</th><th width=500px>Facture</th><th>Validation/Rejet</th></tr>";
         switch($type){
                 case "cantine":
-                        $output .= getcantinevalidate();
+                        $output .= getcantinevalidate($client);
                 break;
                 case "etal":
-                        $output .= getetalvalidate();
+                        $output .= getetalvalidate($client);
                 break;
                 case "amarrage":
-                        $output .= getamarragevalidate();
+                        $output .= getamarragevalidate($client);
                 break;
                 default:
-                        $output .= getcantinevalidate();
-                        $output .= getetalvalidate();
-                        $output .= getamarragevalidate();
+                        $output .= getcantinevalidate($client);
+                        $output .= getetalvalidate($client);
+                        $output .= getamarragevalidate($client);
                 break;
         }    
         $output .= "</table></div>";
@@ -50,9 +54,9 @@ print $output;
 
 ####################################functions######################################
 
-function getetalvalidate(){
+function getetalvalidate($client){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $query = "SELECT * FROM `".DB."`.`factures_etal` INNER JOIN `mandataires` ON `factures_etal`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_etal`.`validation` = '0'";
+        $query = "SELECT * FROM `".DB."`.`factures_etal` INNER JOIN `mandataires` ON `factures_etal`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_etal`.`validation` = '0'$client";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $output .= "<tr><td>place et &eacute;tal</td><td><a href='mandataires.php?edit=".$row["mandataireid"]."&hideerrors=1'>".$row["mandataireprefix"]." ".$row["mandataireRS"]." / ".htmlentities($row["mandatairenom"])." ".htmlentities($row["mandataireprenom"])."</a></td>".
@@ -66,9 +70,9 @@ function getetalvalidate(){
         return $output;
 }
 
-function getetallist(){
+function getetallist($client){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $query = "SELECT * FROM `".DB."`.`factures_etal` INNER JOIN `mandataires` ON `factures_etal`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_etal`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0'";
+        $query = "SELECT * FROM `".DB."`.`factures_etal` INNER JOIN `mandataires` ON `factures_etal`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_etal`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0'$client";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $type='etal';
@@ -80,9 +84,9 @@ function getetallist(){
         return $output;
 }
 
-function getamarragevalidate(){
+function getamarragevalidate($client){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $query = "SELECT * FROM `".DB."`.`factures_amarrage` INNER JOIN `clients` ON `factures_amarrage`.`idclient` = `clients`.`clientid` WHERE `factures_amarrage`.`validation` = '0' AND `factures_amarrage`.`type_client` = 'C'";
+        $query = "SELECT * FROM `".DB."`.`factures_amarrage` INNER JOIN `clients` ON `factures_amarrage`.`idclient` = `clients`.`clientid` WHERE `factures_amarrage`.`validation` = '0' AND `factures_amarrage`.`type_client` = 'C'$client";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $type='amarrage';
@@ -95,7 +99,7 @@ function getamarragevalidate(){
                 "<img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
         }
         
-        $query = "SELECT * FROM `".DB."`.`factures_amarrage` INNER JOIN `mandataires` ON `factures_amarrage`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_amarrage`.`validation` = '0' AND `factures_amarrage`.`type_client` = 'M'";
+        $query = "SELECT * FROM `".DB."`.`factures_amarrage` INNER JOIN `mandataires` ON `factures_amarrage`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_amarrage`.`validation` = '0' AND `factures_amarrage`.`type_client` = 'M'$client";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $type='amarrage';
@@ -111,9 +115,9 @@ function getamarragevalidate(){
         return $output;
 }
 
-function getamarragelist(){
+function getamarragelist($client){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $query = "SELECT * FROM `".DB."`.`factures_amarrage` INNER JOIN `clients` ON `factures_amarrage`.`idclient` = `clients`.`clientid` WHERE `factures_amarrage`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0'";
+        $query = "SELECT * FROM `".DB."`.`factures_amarrage` INNER JOIN `clients` ON `factures_amarrage`.`idclient` = `clients`.`clientid` WHERE `factures_amarrage`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0'$client";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $type='amarrage';
@@ -125,9 +129,9 @@ function getamarragelist(){
         return $output;
 }
 
-function getcantinevalidate(){
+function getcantinevalidate($client){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $query = "SELECT * FROM `".DB."`.`factures_cantine` INNER JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` WHERE `factures_cantine`.`validation` = '0'";
+        $query = "SELECT * FROM `".DB."`.`factures_cantine` INNER JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` WHERE `factures_cantine`.`validation` = '0'$client";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $type='cantine';
@@ -143,9 +147,9 @@ function getcantinevalidate(){
         return $output;
 }
 
-function getcantinelist(){
+function getcantinelist($client){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $query = "SELECT * FROM `".DB."`.`factures_cantine` INNER JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` WHERE `factures_cantine`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0'";
+        $query = "SELECT * FROM `".DB."`.`factures_cantine` INNER JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` WHERE `factures_cantine`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0'$client";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 $type='cantine';

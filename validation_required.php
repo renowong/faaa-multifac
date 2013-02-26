@@ -83,9 +83,18 @@ $login = $cUser->userlogin();
 	}
 	
 	function filter(type){
+		$(".chzn-select").val('').trigger("liszt:updated");
 		var validated = gup("validlist");
 		$("#list_validation").empty();
 		$("#list_validation").load("facture_validate_list.php?validlist="+validated+"&type="+type);
+	}
+
+	function filter_byclient(){
+		$("#slt_filter")[0].selectedIndex = 0;
+		var client = $("#box_search").val();
+		var validated = gup("validlist");
+		$("#list_validation").empty();
+		$("#list_validation").load("facture_validate_list.php?validlist="+validated+"&client="+client);
 	}
 
 	function init(){
@@ -109,19 +118,15 @@ $login = $cUser->userlogin();
 			<option value="etal">Place et Etal</option>
 			<option value="amarrage">Amarrage</option>
 		</select><br/><br/>
-		
-		<!--test-->
-		<small style="float:right; visibility:hidden;">Hidden ID Field: <input type="text" id="suggestid" value="" style="font-size: 10px; width: 20px;" disabled="disabled" /></small>
-		<form method="POST" action="<? echo $_SERVER['PHP_SELF'] . "?form=" . $_GET['form'] ?>" style="width:100%;text-align:center;">
+				
 				<label for="box_search"><? echo $label ?></label>
 				
 				<select name="box_search" id="box_search" data-placeholder="S&eacute;lectionner un compte" class="chzn-select" tabindex="2" style="width:450px;">
 					<option value=""></option>
 					<?php buildOptionsPersonnes($_GET['form']); ?>
 				</select>
-				<input type="submit" id="submitbutton" value="Ouvrir le dossier" />
-		</form>
-		<!--test-->
+				<button onclick="filter_byclient();">Filtrer par client</button>
+		<br/><br/>
 		
 		<div id="list_validation" name="list_validation" style="height:600px;"></div>
 		
