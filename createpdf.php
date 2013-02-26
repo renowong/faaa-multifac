@@ -21,7 +21,7 @@ switch($typefacture){
 			"`factures_cantine`.`avoir`, `clients`.`clientcivilite`, ".
 			"`clients`.`clientnom`, `clients`.`clientnommarital`, `clients`.`clientprenom`, `clients`.`clientprenom2`, ".
 			"`clients`.`clientbp`, `clients`.`clientcp`, `clients`.`clientville`, `clients`.`clientcommune`, ".
-			"`clients`.`clientpays`, `clients`.`clienttelephone`, `clients`.`clientfax`, `clients`.`clientemail` ".
+			"`clients`.`clientpays`, `clients`.`clienttelephone`, `clients`.`clientfax` ".
 			"FROM `factures_cantine` INNER JOIN `clients` ON `factures_cantine`.`idclient`=`clients`.`clientid` ".
 			"WHERE `factures_cantine`.`idfacture` = $idfacture";
 		$result = $mysqli->query($query);
@@ -32,15 +32,10 @@ switch($typefacture){
 				$facturevalidation = $row['validation'];
 				$client = html_entity_decode($row['clientnom']." ".$row['clientprenom'],ENT_QUOTES, "UTF-8");
 				$client = strtoupper($client);
-				if($row['clientbp']==''){
 					$ar_contact = get_geo($row['idclient']);
 					$contact1 = $ar_contact[0];
 					$contact2 = $ar_contact[1];
-				}else{
-					$contact1 = "BP ".$row['clientbp'];
-					$contact2 = $row['clientcp']." ".$row['clientville'];
-				}
-				$email = "E-mail : ".$row['clientemail'];
+				$bp = "BP ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
 				$telephone = "Téléphone : ".$row['clienttelephone'];
 				$fax = "Fax : ".$row['clientfax'];
 				$datelimite = $row['datelimite'];
@@ -96,7 +91,7 @@ switch($typefacture){
 			"`mandataires`.`mandataireprefix`, `mandataires`.`mandataireRS`, ".
 			"`mandataires`.`mandatairenom`, `mandataires`.`mandataireprenom`, ".
 			"`mandataires`.`mandatairebp`, `mandataires`.`mandatairecp`, `mandataires`.`mandataireville`, `mandataires`.`mandatairecommune`, ".
-			"`mandataires`.`mandatairepays`, `mandataires`.`mandatairetelephone`, `mandataires`.`mandatairetelephone2`, `mandataires`.`mandataireemail` ".
+			"`mandataires`.`mandatairepays`, `mandataires`.`mandatairetelephone`, `mandataires`.`mandatairetelephone2` ".
 			"FROM `factures_etal` INNER JOIN `mandataires` ON `factures_etal`.`idclient`=`mandataires`.`mandataireid` ".
 			"WHERE `factures_etal`.`idfacture` = $idfacture";
 
@@ -110,7 +105,6 @@ switch($typefacture){
 				$client = strtoupper($client);
 				$contact1 = "BP ".$row['mandatairebp'];
 				$contact2 = $row['mandatairecp']." ".$row['mandataireville'];
-				$email = "E-mail : ".$row['mandataireemail'];
 				$telephone = "Téléphone : ".$row['mandatairetelephone'];
 				$fax = "Vini : ".$row['mandatairetelephone2'];
 				$datelimite = $row['datelimite'];
@@ -155,7 +149,7 @@ switch($typefacture){
 			"`clients`.`clientcivilite`, ".
 			"`clients`.`clientnom`, `clients`.`clientnommarital`, `clients`.`clientprenom`, `clients`.`clientprenom2`, ".
 			"`clients`.`clientbp`, `clients`.`clientcp`, `clients`.`clientville`, `clients`.`clientcommune`, ".
-			"`clients`.`clientpays`, `clients`.`clienttelephone`, `clients`.`clientfax`, `clients`.`clientemail` ".
+			"`clients`.`clientpays`, `clients`.`clienttelephone`, `clients`.`clientfax` ".
 			"FROM `factures_amarrage` INNER JOIN `clients` ON `factures_amarrage`.`idclient`=`clients`.`clientid` ".
 			"WHERE `factures_amarrage`.`idfacture` = $idfacture";
 		$result = $mysqli->query($query);
@@ -166,16 +160,10 @@ switch($typefacture){
 				$facturevalidation = $row['validation'];
 				$client = html_entity_decode($row['clientnom']." ".$row['clientprenom'],ENT_QUOTES, "UTF-8");
 				$client = strtoupper($client);
-				if($row['clientbp']==''){
 					$ar_contact = get_geo($row['idclient']);
 					$contact1 = $ar_contact[0];
 					$contact2 = $ar_contact[1];
-				}else{
-					$contact1 = "BP ".$row['clientbp'];
-					$contact2 = $row['clientcp']." ".$row['clientville'];
-				}
-				
-				$email = "E-mail : ".$row['clientemail'];
+				$bp = "BP ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
 				$telephone = "Téléphone : ".$row['clienttelephone'];
 				$fax = "Fax : ".$row['clientfax'];
 				$datelimite = $row['datelimite'];
@@ -196,7 +184,7 @@ switch($typefacture){
 			"`mandataires`.`mandataireprefix`, `mandataires`.`mandataireRS`, ".
 			"`mandataires`.`mandatairenom`,`mandataires`.`mandataireprenom`, ".
 			"`mandataires`.`mandatairebp`, `mandataires`.`mandatairecp`, `mandataires`.`mandataireville`, `mandataires`.`mandatairecommune`, ".
-			"`mandataires`.`mandatairepays`, `mandataires`.`mandatairetelephone`, `mandataires`.`mandatairetelephone2`, `mandataires`.`mandatairefax`, `mandataires`.`mandataireemail` ".
+			"`mandataires`.`mandatairepays`, `mandataires`.`mandatairetelephone`, `mandataires`.`mandatairetelephone2`, `mandataires`.`mandatairefax` ".
 			"FROM `factures_amarrage` INNER JOIN `mandataires` ON `factures_amarrage`.`idclient`=`mandataires`.`mandataireid` ".
 			"WHERE `factures_amarrage`.`idfacture` = $idfacture";
 		$result = $mysqli->query($query);
@@ -209,7 +197,6 @@ switch($typefacture){
 				$client = strtoupper($client);
 				$contact1 = "BP ".$row['mandatairebp'];
 				$contact2 = $row['mandatairecp']." ".$row['mandataireville'];
-				$email = "E-mail : ".$row['mandataireemail'];
 				if($row['mandatairetelephone']!==""){
 					$telephone = "Téléphone : ".$row['mandatairetelephone'];
 				}else{
@@ -242,12 +229,12 @@ switch($typefacture){
 
 
 
-genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$edt,$eau);
+genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$bp,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$edt,$eau);
 
 $mysqli->close();
 
 
-function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$email,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$edt,$eau){
+function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$bp,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$edt,$eau){
 	$xreg=-1.5;
 	$yreg=3.5;
 
@@ -335,7 +322,7 @@ switch($typefacture){
 	$pdf->SetFont('Arial','',10);
 	$pdf->Cell(55,10,utf8_decode($contact2));
 	$pdf->SetXY(13+$xreg,58.5+$yreg);
-	$pdf->Cell(55,10,utf8_decode($email));
+	$pdf->Cell(55,10,utf8_decode($bp));
 	$pdf->SetXY(13+$xreg,62.8+$yreg);
 	$pdf->Cell(55,10,utf8_decode($telephone));
 	$pdf->SetXY(13+$xreg,67.1+$yreg);
@@ -350,14 +337,14 @@ switch($typefacture){
 	$pdf->Cell(55,10,"Navire ".$nav);
 	$pdf->SetXY(139+$xreg,50+$yreg);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(55,10,"Attn : ".strtoupper($client));
+	$pdf->Cell(55,10,"Attn : ".strtoupper());
 	$pdf->SetXY(139+$xreg,54.2+$yreg);
 	$pdf->SetFont('Arial','',10);
 	$pdf->Cell(55,10,utf8_decode($contact1."-".$contact2));
 	$pdf->SetXY(139+$xreg,58.5+$yreg);
-	$pdf->Cell(55,10,utf8_decode("PY : ".$py));
+	$pdf->Cell(55,10,utf8_decode($bp));
 	$pdf->SetXY(139+$xreg,62.8+$yreg);
-	$pdf->Cell(55,10,utf8_decode("Emplacement : ".$lieu));
+	$pdf->Cell(55,10,utf8_decode("PY : $py/Emp. : ".$lieu));
 	$pdf->SetXY(139+$xreg,67.1+$yreg);
 	$pdf->Cell(55,10,utf8_decode($telephone));
 	$pdf->SetLineWidth(0.4);
@@ -375,7 +362,7 @@ switch($typefacture){
 	$pdf->SetFont('Arial','',10);
 	$pdf->Cell(55,10,utf8_decode($contact1."-".$contact2));
 	$pdf->SetXY(139+$xreg,58.5+$yreg);
-	$pdf->Cell(55,10,utf8_decode($email));
+	$pdf->Cell(55,10,utf8_decode($bp));
 	$pdf->SetXY(139+$xreg,62.8+$yreg);
 	$pdf->Cell(55,10,utf8_decode($telephone));
 	$pdf->SetXY(139+$xreg,67.1+$yreg);
