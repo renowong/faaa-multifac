@@ -186,8 +186,8 @@ function translatemode($input){
 			$mode = "Tr&eacute;sor";	
 		break;
 
-		case "anl":
-			$mode = "<b>Annulation</b>";	
+		case "mnd":
+			$mode = "Mandat";	
 		break;
 
 		case "tpe":

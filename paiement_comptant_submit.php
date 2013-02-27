@@ -37,11 +37,6 @@ if ($echelonnage=='0'){
 		if($restearegler==0){$reglement = 1;}else{$reglement = 0;}
 }
 
-if($mode=='anl'){
-	$montantcfp = 0;
-	$montanteuro = 0;
-}
-
 $lastid = enterdata($id,$date_paiement,$payeur,$type,$numero_cheque,$organisme,$date_virement,$date_tresor,$info_tresor,$tpe,$montantcfp,$montanteuro,$mode,$echelonnage,$obs,$restearegler,$reglement,$table);
 
 if ($lastid>0) {
@@ -118,7 +113,7 @@ function enterdata($id,$date_paiement,$payeur,$type,$numero_cheque,$organisme,$d
 				
 		break;
 
-		case "anl":
+		case "mnd":
 				$query = "INSERT INTO `".DB."`.`paiements` (`idpaiement`,`idfacture`,`date_paiement`,`payeur`,`type`,`mode`,`montantcfp`,`montanteuro`,`obs`)".
 				" VALUES (NULL, '".$id."', '".$date_paiement."', '".$payeur."', '".$type."', '".$mode."', '".$montantcfp."', '".$montanteuro."', '".$obs."')";
 				$mysqli->query($query);

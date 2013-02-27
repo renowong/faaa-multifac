@@ -129,7 +129,7 @@ require_once('paiement_comptant_top.php');
 					message("Veuillez entrer une date et information du tr\351sor");
 					return false;
 				}
-				if(mode=='anl' && obs=='') {
+				if(mode=='mnd' && obs=='') {
 					message("Veuillez entrer une observation (obligatoire)");
 					return false;
 				}
@@ -238,7 +238,7 @@ require_once('paiement_comptant_top.php');
 										<option value="chq">Ch&egrave;que</option>
 										<option value="vir">Virement</option>
 										<option value="tsr">Tr&eacute;sor</option>
-										<option value="anl">Annulation</option>
+										<option value="mnd">Mandat</option>
 										<option value="tpe">TPE</option>
 									</select>
 								</td>
