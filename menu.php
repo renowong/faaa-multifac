@@ -68,9 +68,9 @@ $menu .= "<a href='paiement_comptant.php?id=0&type=repas'>Tickets cantine</a>";
 $menu .= "</div>";
 
 //<!--5rd drop down menu -->
-$menu .= "<div id='dropmenu5' class='dropmenudiv' style='width: 180px;'>";
-if ($svc=="FTR"||$admin) $menu .= "<a href='extract.php?type=tivaa'>TIVAA</a>";
-if ($svc=="FTR"||$admin) $menu .= "<a href='extract.php?type=rolmre_cantine'>ROLME CANTINE</a>";
+$menu .= "<div id='dropmenu5' class='dropmenudiv' style='width: 180px;'>".
+"<a href='extract.php?type=tivaa'>TIVAA</a>".
+"<a href='extract.php?type=rolmre_cantine'>ROLME CANTINE</a>";
 $menu .= "</div>";
 
 //<!--6rd drop down menu -->
