@@ -441,9 +441,9 @@ switch($typefacture){
 		
 		if($avoir>0){
 		$ydet+=5.5;
-		$pdf->SetXY(12+$xreg,104.5+$yreg+$ydet);
+		$pdf->SetXY(12+$xreg,109.9+$yreg+$ydet);
 		$pdf->Cell(89,5, "Avoir",0,1);
-		$pdf->SetXY(166+$xreg,104.5+$yreg+$ydet);
+		$pdf->SetXY(166+$xreg,109.9+$yreg+$ydet);
 		$pdf->Cell(32,5, "-".trispace($avoir)." F",0,1,'R');
 		}
 		
