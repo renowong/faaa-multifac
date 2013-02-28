@@ -341,7 +341,11 @@ foreach( $ar_tables as &$val ){
 		}else{
 			if($row["acceptation"]==0){$status="Refus&eacute;e";$reject="reject";}else{$status="Valid&eacute;e";$reject="";}
 		}
-                $output .= "<tbody class=\"$reject\"><td>".$val['title']."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">Facture du ".french_date($row["datefacture"])." montant de ";
+                if($val['title']=="cantine"){
+				$output .= "<tbody class=\"$reject\"><td>".$val['title']."<br/>".getEnfantPrenom($row['idfacture'])."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">Facture du ".french_date($row["datefacture"])." montant de ";
+			}else{
+				$output .= "<tbody class=\"$reject\"><td>".$val['title']."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">Facture du ".french_date($row["datefacture"])." montant de ";
+				}
 		$output .= trispace($row["montantfcp"]);
 		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a></td><td>$status</td><td>".$row["comment"]."</td></tbody>";
         }
@@ -414,5 +418,16 @@ function getAllKids($id){
 	$count = $result->num_rows;
         $mysqli->close();
         return $count;
+}
+
+function getEnfantPrenom($idfacture){
+    $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+    $query = "SELECT `enfants`.`prenom` FROM `factures_cantine_details` INNER JOIN `enfants` ".
+            " ON `factures_cantine_details`.`idenfant`=`enfants`.`enfantid` WHERE `factures_cantine_details`.`idfacture`='$idfacture'";
+    $result = $mysqli->query($query);
+    $row = $result->fetch_array(MYSQLI_ASSOC);
+    $output = $row["prenom"];
+    $mysqli->close();
+    return $output;
 }
 ?>

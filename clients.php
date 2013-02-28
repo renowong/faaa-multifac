@@ -496,7 +496,7 @@ require_once('clients_top.php');
 		</table>
 		</div>
 		<div id="divhistorique">
-			<h1>Historique des derni&egrave;res factures</h1> <button href="#" id="togglehistory">Afficher</button> <button href="#" id="showreject">Afficher les rejets</button>	
+			<h1>Status des factures li&eacute;es au compte</h1> <button href="#" id="togglehistory">Afficher</button> <button href="#" id="showreject">Afficher les rejets</button>	
 			<div id="historique">
 				<?php 
 				if (isset($_GET['edit'])) echo buildFacturesEnCoursTable($_GET['edit'],$ar_f_c);
