@@ -421,6 +421,11 @@ switch($typefacture){
 			$pdf->Cell(89,5, "allocataire",0,1);
 			$pdf->SetXY(12+$xreg,109.9+$yreg+$ydet);
 			$pdf->Cell(89,5, $details_array[$count]['status'],0,1);
+			$cf = $details_array[$count]['quant']*$details_array[$count]['MontantFCP'];
+			$cf = $cf*$details_array[$count]['valeur']/100;
+			$pdf->SetXY(166+$xreg,109.9+$yreg+$ydet);
+			$pdf->Cell(32,5, "-".trispace($cf)." F",0,1,'R');
+
 		}else{
 			$pdf->Cell(89,5, $details_array[$count]['status'],0,1);
 		}
@@ -443,6 +448,7 @@ switch($typefacture){
 		}
 		
 		$stotal+=$soustotal;
+		$stotal-=$cf;
 		$stotal-=$avoir;
 		$ydet+=5.5;
 	}
