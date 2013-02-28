@@ -74,7 +74,7 @@ function enterdata($id,$date_paiement,$payeur,$type,$numero_cheque,$organisme,$d
 				$mysqli->query($query);
 				$lastid = $mysqli->insert_id;
 				////next update facture
-				$query = "UPDATE  `".DB."`.`factures_".$table."` SET `reglement`='$reglement', `datereglement`='$date_paiement', `restearegler`='$restearegler',`comment`='R&eacute;gl&eacute;'  WHERE  `factures_".$table."`.`idfacture` = $id";
+				$query = "UPDATE  `".DB."`.`factures_".$table."` SET `reglement`='$reglement', `datereglement`='$date_paiement', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacute;e ($mode)')  WHERE  `factures_".$table."`.`idfacture` = $id";
 				$mysqli->query($query);
 			
 		break;
@@ -85,7 +85,7 @@ function enterdata($id,$date_paiement,$payeur,$type,$numero_cheque,$organisme,$d
 				$mysqli->query($query);
 				$lastid = $mysqli->insert_id;
 				////next update facture
-				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`='R&eacute;gl&eacute'  WHERE  `factures_".$table."`.`idfacture` = $id";
+				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacutee ($mode)')  WHERE  `factures_".$table."`.`idfacture` = $id";
 				$mysqli->query($query);
 		break;
 
@@ -96,7 +96,7 @@ function enterdata($id,$date_paiement,$payeur,$type,$numero_cheque,$organisme,$d
 				$mysqli->query($query);
 				$lastid = $mysqli->insert_id;
 				////next update facture
-				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`='R&eacute;gl&eacute'  WHERE  `factures_".$table."`.`idfacture` = $id";
+				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacutee ($mode)')  WHERE  `factures_".$table."`.`idfacture` = $id";
 				$mysqli->query($query);
 				
 		break;
@@ -108,7 +108,7 @@ function enterdata($id,$date_paiement,$payeur,$type,$numero_cheque,$organisme,$d
 				$mysqli->query($query);
 				$lastid = $mysqli->insert_id;
 				////next update facture
-				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`='R&eacute;gl&eacute'  WHERE  `factures_".$table."`.`idfacture` = $id";
+				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacutee ($mode)')  WHERE  `factures_".$table."`.`idfacture` = $id";
 				$mysqli->query($query);
 				
 		break;
@@ -119,7 +119,7 @@ function enterdata($id,$date_paiement,$payeur,$type,$numero_cheque,$organisme,$d
 				$mysqli->query($query);
 				$lastid = $mysqli->insert_id;
 				////next update facture
-				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`='R&eacute;gl&eacute'  WHERE  `factures_".$table."`.`idfacture` = $id";
+				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacutee ($mode)')  WHERE  `factures_".$table."`.`idfacture` = $id";
 				$mysqli->query($query);
 				
 		break;
@@ -130,17 +130,23 @@ function enterdata($id,$date_paiement,$payeur,$type,$numero_cheque,$organisme,$d
 				$mysqli->query($query);
 				$lastid = $mysqli->insert_id;
 				////next update facture
-				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`='R&eacute;gl&eacute'  WHERE  `factures_".$table."`.`idfacture` = $id";
+				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacutee ($mode)')  WHERE  `factures_".$table."`.`idfacture` = $id";
 				$mysqli->query($query);
 				
 		break;
 
-		case "12bc":
-				$$reglement = 0;
-				$restearegler = $montanttotalcfp/2;
-				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`='1/2 Bourse Commune'  WHERE  `factures_".$table."`.`idfacture` = $id";
+		case "22bc":
+				$$reglement = 1;
+				$restearegler = 0;
+				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / application 2/2 Bourse Commune')  WHERE  `factures_".$table."`.`idfacture` = $id";
 				$mysqli->query($query);
-				
+				$lastid = 0;
+		break;
+
+		case "12bc":
+				$query = "UPDATE  `".DB."`.`factures_".$table."` SET `reglement`='$reglement', `datereglement`='$date_paiement', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / application 1/2 Bourse Commune')  WHERE  `factures_".$table."`.`idfacture` = $id";
+				$mysqli->query($query);
+				$lastid = 0;
 		break;
 		
 		default:

@@ -168,7 +168,16 @@ require_once('paiement_comptant_top.php');
 				$("#ech").hide();
 				$("#chk_echelon").prop("checked", false);
 				
-				if(mode=="#22bc" || mode=="#12bc"){
+				if(mode=="#22bc"){
+					$("#chk_echelon").prop("disabled", true);
+					
+				}else{
+					$("#chk_echelon").prop("disabled", false);
+				}
+				
+				if(mode=="#12bc"){
+					$("#chk_echelon").prop("checked", true);
+					toggle_ech();
 					$("#chk_echelon").prop("disabled", true);
 					
 				}else{
@@ -242,14 +251,7 @@ require_once('paiement_comptant_top.php');
 									<!--Mode-->
 									<label for="box_Mode">Mode de paiement</label><br />
 									<select class="input" name="box_Mode" id="box_Mode" onchange="selectmode(this.value);">
-										<option value="num">Num&eacute;raire</option>
-										<option value="chq">Ch&egrave;que</option>
-										<option value="vir">Virement</option>
-										<option value="tsr">Tr&eacute;sor</option>
-										<option value="mnd">Mandat</option>
-										<option value="tpe">TPE</option>
-										<option value="22bc">2/2 Bourse Commune</option>
-										<option value="12bc">1/2 Bourse Commune</option>
+										<? print Modes(); ?>
 									</select>
 								</td>
 								<td>

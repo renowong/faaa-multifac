@@ -61,7 +61,7 @@ $login = $cUser->userlogin();
 	
 	function validate(type,factureid,valid){
 		if(valid) {
-			validatefacture(type,factureid,1,'En attente de r&egrave;glement');
+			validatefacture(type,factureid,1,'Valid&eacute;e');
 		}else{
 			fconfirm(type,"Veuillez entrer un commentaire (obligatoire).",factureid,0);
 		}
