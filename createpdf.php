@@ -46,7 +46,7 @@ switch($typefacture){
 		
 
 		//next get information on details of facture
-		$query = "SELECT `factures_cantine_details`.`quant`, `status_cantine`.`status`, `status_cantine`.`MontantFCP`, `status_cantine`.`MontantEURO`, `status_cantine`.`Unite`, `status_cantine`.`Delib`, `status_cantine`.`Datedelib`, `enfants`.`prenom`, `enfants`.`enfantid` FROM `factures_cantine_details` LEFT JOIN `status_cantine` ON `factures_cantine_details`.`idtarif` = `status_cantine`.`idstatus` RIGHT JOIN `enfants` ON `factures_cantine_details`.`idenfant` = `enfants`.`enfantid` WHERE `factures_cantine_details`.`idfacture` = $idfacture";
+		$query = "SELECT `factures_cantine_details`.`quant`, `status_cantine`.`status`, `status_cantine`.`valeur`, `status_cantine`.`MontantFCP`, `status_cantine`.`MontantEURO`, `status_cantine`.`Unite`, `status_cantine`.`Delib`, `status_cantine`.`Datedelib`, `enfants`.`prenom`, `enfants`.`enfantid` FROM `factures_cantine_details` LEFT JOIN `status_cantine` ON `factures_cantine_details`.`idtarif` = `status_cantine`.`idstatus` RIGHT JOIN `enfants` ON `factures_cantine_details`.`idenfant` = `enfants`.`enfantid` WHERE `factures_cantine_details`.`idfacture` = $idfacture";
 		
 		$result = $mysqli->query($query);
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
@@ -417,7 +417,13 @@ switch($typefacture){
 	for($count=0;$count<count($details_array);$count++){
 		$pdf->SetXY(12+$xreg,104.5+$yreg+$ydet);
 //		$pdf->Cell(89,5, $details_array[$count]['status']." (".$details_array[$count]['prenom'].")",0,1);
-		$pdf->Cell(89,5, $details_array[$count]['status'],0,1);
+		if($details_array[$count]['valeur']>0){
+			$pdf->Cell(89,5, "allocataire",0,1);
+			$pdf->SetXY(12+$xreg,109.9+$yreg+$ydet);
+			$pdf->Cell(89,5, $details_array[$count]['status'],0,1);
+		}else{
+			$pdf->Cell(89,5, $details_array[$count]['status'],0,1);
+		}
 		$pdf->SetXY(101+$xreg,104.5+$yreg+$ydet);
 		$pdf->Cell(17,5, $details_array[$count]['Unite'],0,1,'C');
 		$pdf->SetXY(118+$xreg,104.5+$yreg+$ydet);

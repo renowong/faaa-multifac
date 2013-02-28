@@ -314,7 +314,7 @@ function buildOptionsClasses(){
 
 function buildStatusCantine($s){
 	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$query = 'SELECT * FROM `status_cantine` WHERE (`idstatus` BETWEEN 5 AND 6) OR (`idstatus` BETWEEN 19 AND 20)';
+	$query = 'SELECT * FROM `status_cantine` WHERE (`idstatus` BETWEEN 1 AND 7) OR (`idstatus` BETWEEN 15 AND 21)';
 	$result = $mysqli->query($query);
 	while($row = $result->fetch_array(MYSQLI_ASSOC)){
 		if($row["idstatus"]==$s){$select=" selected";}else{$select="";}

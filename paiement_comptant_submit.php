@@ -134,6 +134,14 @@ function enterdata($id,$date_paiement,$payeur,$type,$numero_cheque,$organisme,$d
 				$mysqli->query($query);
 				
 		break;
+
+		case "12bc":
+				$$reglement = 0;
+				$restearegler = $montanttotalcfp/2;
+				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`='1/2 Bourse Commune'  WHERE  `factures_".$table."`.`idfacture` = $id";
+				$mysqli->query($query);
+				
+		break;
 		
 		default:
 				$lastid = 0;

@@ -166,11 +166,19 @@ require_once('paiement_comptant_top.php');
 				$("#tsr").hide();
 				$("#tpe").hide();
 				$("#ech").hide();
+				$("#chk_echelon").prop("checked", false);
+				
+				if(mode=="#22bc" || mode=="#12bc"){
+					$("#chk_echelon").prop("disabled", true);
+					
+				}else{
+					$("#chk_echelon").prop("disabled", false);
+				}
 				
 				// then show selected
 				$(mode).show();
 				//alert(mode)
-;				//if(mode=="#anl") {$("#chk_echelon").prop("disabled","disabled");}else{$("#chk_echelon").prop("disabled","");};
+				//if(mode=="#anl") {$("#chk_echelon").prop("disabled","disabled");}else{$("#chk_echelon").prop("disabled","");};
 			}
 			
 			function toggle_ech(){
@@ -240,6 +248,8 @@ require_once('paiement_comptant_top.php');
 										<option value="tsr">Tr&eacute;sor</option>
 										<option value="mnd">Mandat</option>
 										<option value="tpe">TPE</option>
+										<option value="22bc">2/2 Bourse Commune</option>
+										<option value="12bc">1/2 Bourse Commune</option>
 									</select>
 								</td>
 								<td>
