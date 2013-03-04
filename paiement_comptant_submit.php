@@ -100,8 +100,11 @@ function enterdata($id,$date_paiement,$payeur,$type,$numero_cheque,$organisme,$d
 				$mysqli->query($query);
 				
 		break;
-
+		
+		case "12cf":
+		case "22cf":
 		case "vir":
+				$mode = "vir";
 				$date_virement = mysqldateformat($date_virement);
 				$query = "INSERT INTO `".DB."`.`paiements` (`idpaiement`,`idfacture`,`date_paiement`,`payeur`,`type`,`mode`,`montantcfp`,`montanteuro`,`date_transaction`,`obs`)".
 				" VALUES (NULL, '".$id."', '".$date_paiement."', '".$payeur."', '".$type."', '".$mode."', '".$montantcfp."', '".$montanteuro."', '".$date_virement."', '".$obs."')";

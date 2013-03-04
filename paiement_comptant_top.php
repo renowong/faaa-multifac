@@ -20,9 +20,25 @@ function Modes(){
 		$mode = getMode();
 		$output = "<option value=\"0\">S&eacute;lectionner</option>";
 		switch($mode){
+				case "1":
+				case "15":		
+				$output .= "<option value=\"22cf\">CF 100% CPS</option>";	
+				break;
+				
 				case "3":
 				case "17":		
 				$output .= "<option value=\"22bc\">2/2 Bourse Commune</option>";	
+				break;
+		
+				case "2":
+				case "16":		
+				$output .= "<option value=\"num\">Num&eacute;raire</option>";
+				$output .= "<option value=\"chq\">Ch&egrave;que</option>";
+				$output .= "<option value=\"vir\">Virement</option>";
+				$output .= "<option value=\"tsr\">Tr&eacute;sor</option>";
+				$output .= "<option value=\"mnd\">Mandat</option>";
+				$output .= "<option value=\"tpe\">TPE</option>";
+				$output .= "<option value=\"12cf\">CF 50% CPS</option>";	
 				break;
 		
 				case "4":

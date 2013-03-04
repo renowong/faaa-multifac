@@ -186,6 +186,20 @@ require_once('paiement_comptant_top.php');
 						$("#txt_payeur").val("Commune de FAAA");
 						$("#txt_payeur").prop("readonly", true);
 					break;
+					case "#22cf":
+						$("#chk_echelon").prop("disabled", true);
+						$("#txt_payeur").val("CPS");
+						$("#txt_payeur").prop("readonly", true);
+					break;
+					case "#12cf":
+						var ech = eval($("#montanttotal").val())/2;
+						$("#chk_echelon").prop("checked", true);
+						toggle_ech();
+						$("#chk_echelon").prop("disabled", true);
+						$("#txt_payeur").val("CPS");
+						$("#txt_payeur").prop("readonly", true);
+						$("#txt_echelon").val(ech);
+					break;
 					case "#12bc":
 						var ech = eval($("#montanttotal").val())/2;
 						$("#chk_echelon").prop("checked", true);
