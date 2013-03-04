@@ -123,6 +123,12 @@ require_once('paiement_comptant_top.php');
 					message("Montant de l'\351chelon vide");
 					return false;
 				}
+				
+				if(mode=='0') {
+					message("Veuillez s\351lectionner un mode de paiement");
+					return false;
+				}
+				
 				if(mode=='chq' && num_chq=='') {
 					message("Veuillez entrer un num\351ro de ch\350que");
 					return false;
@@ -181,11 +187,13 @@ require_once('paiement_comptant_top.php');
 						$("#txt_payeur").prop("readonly", true);
 					break;
 					case "#12bc":
+						var ech = eval($("#montanttotal").val())/2;
 						$("#chk_echelon").prop("checked", true);
 						toggle_ech();
 						$("#chk_echelon").prop("disabled", true);
 						$("#txt_payeur").val("Commune de FAAA");
 						$("#txt_payeur").prop("readonly", true);
+						$("#txt_echelon").val(ech);
 					break;
 					default:
 						$("#chk_echelon").prop("disabled", false);

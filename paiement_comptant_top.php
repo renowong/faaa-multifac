@@ -18,6 +18,7 @@ $info = getInfo();
 
 function Modes(){
 		$mode = getMode();
+		$output = "<option value=\"0\">S&eacute;lectionner</option>";
 		switch($mode){
 				case "3":
 				case "17":		
@@ -26,7 +27,7 @@ function Modes(){
 		
 				case "4":
 				case "18":		
-				$output = "<option value=\"num\">Num&eacute;raire</option>";
+				$output .= "<option value=\"num\">Num&eacute;raire</option>";
 				$output .= "<option value=\"chq\">Ch&egrave;que</option>";
 				$output .= "<option value=\"vir\">Virement</option>";
 				$output .= "<option value=\"tsr\">Tr&eacute;sor</option>";
@@ -36,7 +37,7 @@ function Modes(){
 				break;
 				
 				default:
-				$output = "<option value=\"num\">Num&eacute;raire</option>";
+				$output .= "<option value=\"num\">Num&eacute;raire</option>";
 				$output .= "<option value=\"chq\">Ch&egrave;que</option>";
 				$output .= "<option value=\"vir\">Virement</option>";
 				$output .= "<option value=\"tsr\">Tr&eacute;sor</option>";
@@ -86,7 +87,7 @@ function getInfo(){
                 $result = $mysqli->query($query);
                 $row = $result->fetch_array(MYSQLI_ASSOC);
                 $output[0] = "<b>Facture $type ".$row['communeid']." du ".standarddateformat($row['datefacture'])." montant ".trispace($row['montantfcp'])."FCP (".$row['montanteuro']."&euro;)</b><br/>".
-                "Reste &agrave; r&eacute;gler ".trispace($row['restearegler'])." FCP<input type='hidden' id='montantmax' value='".$row['restearegler']."'/>";
+                "Reste &agrave; r&eacute;gler ".trispace($row['restearegler'])." FCP<input type='hidden' id='montantmax' value='".$row['restearegler']."'/><input type='hidden' id='montanttotal' value='".$row['montantfcp']."'/>";
                 $output[1] = strtoupper($type);
             break;
             case "etal":
@@ -95,7 +96,7 @@ function getInfo(){
                 $result = $mysqli->query($query);
                 $row = $result->fetch_array(MYSQLI_ASSOC);
                 $output[0] = "<b>Facture Place et Etal ".$row['communeid']." du ".standarddateformat($row['datefacture'])." montant ".trispace($row['montantfcp'])."FCP (".$row['montanteuro']."&euro;)</b><br/>".
-                "Reste &agrave; r&eacute;gler ".trispace($row['restearegler'])." FCP<input type='hidden' id='montantmax' value='".$row['restearegler']."'/>";
+                "Reste &agrave; r&eacute;gler ".trispace($row['restearegler'])." FCP<input type='hidden' id='montantmax' value='".$row['restearegler']."'/><input type='hidden' id='montanttotal' value='".$row['montantfcp']."'/>";
                 $output[1] = "PLACE ET ETAL";
             break;
 	    case "amarrage":
@@ -104,7 +105,7 @@ function getInfo(){
                 $result = $mysqli->query($query);
                 $row = $result->fetch_array(MYSQLI_ASSOC);
                 $output[0] = "<b>Facture Amarrage ".$row['communeid']." du ".standarddateformat($row['datefacture'])." montant ".trispace($row['montantfcp'])."FCP (".$row['montanteuro']."&euro;)</b><br/>".
-                "Reste &agrave; r&eacute;gler ".trispace($row['restearegler'])." FCP<input type='hidden' id='montantmax' value='".$row['restearegler']."'/>";
+                "Reste &agrave; r&eacute;gler ".trispace($row['restearegler'])." FCP<input type='hidden' id='montantmax' value='".$row['restearegler']."'/><input type='hidden' id='montanttotal' value='".$row['montantfcp']."'/>";
                 $output[1] = "AMARRAGE";
             break;
         }
