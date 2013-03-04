@@ -102,9 +102,16 @@ function getPaidFactures($id,$type){
 
 	switch($type){
 		case "client":
-			$query = "SELECT `factures_cantine`.`idfacture`, `factures_cantine`.`datefacture`, `factures_cantine`.`communeid`, `factures_cantine`.`montantfcp`, `factures_cantine`.`montanteuro`, `factures_cantine`.`comment`".
-			", `paiements`.`date_paiement`, `paiements`.`payeur`, `paiements`.`mode`, `paiements`.`montantcfp`, `paiements`.`idpaiement`, `paiements`.`obs` FROM `".DB."`.`factures_cantine` ".
-			" LEFT JOIN `".DB."`.`paiements` ON `factures_cantine`.`idfacture`=`paiements`.`idfacture` WHERE `factures_cantine`.`reglement` = 1 AND `factures_cantine`.`acceptation` = 1 AND `factures_cantine`.`idclient` = $id ORDER BY `paiements`.`idpaiement` DESC LIMIT 10";
+			/*
+			 $query = "SELECT `factures_cantine`.`idfacture`, `factures_cantine`.`datefacture`, `factures_cantine`.`communeid`, `factures_cantine`.`montantfcp`, `factures_cantine`.`montanteuro`, `factures_cantine`.`comment`".
+			", `paiements`.`date_paiement`, `paiements`.`payeur`, `paiements`.`mode`, `paiements`.`montantcfp`, `paiements`.`idpaiement`, `paiements`.`obs` FROM `factures_cantine` ".
+			" LEFT JOIN `paiements` ON `factures_cantine`.`idfacture`=`paiements`.`idfacture` WHERE `factures_cantine`.`reglement` = 1 AND `factures_cantine`.`acceptation` = 1 AND `factures_cantine`.`idclient` = $id ORDER BY `paiements`.`idpaiement` DESC LIMIT 10";
+			*/
+			
+			$query = "SELECT * FROM `factures_cantine` ".
+			" LEFT JOIN `paiements` ON `factures_cantine`.`idfacture`=`paiements`.`idfacture` WHERE (`factures_cantine`.`montantfcp`>`factures_cantine`.`restearegler`) AND `factures_cantine`.`acceptation` = 1 AND `factures_cantine`.`idclient` = $id ORDER BY `paiements`.`idpaiement` DESC LIMIT 10";
+			
+			
 			//echo $query;
 			$result = $mysqli->query($query);
 			while($row = $result->fetch_array(MYSQLI_ASSOC)){
