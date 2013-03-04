@@ -69,34 +69,34 @@ function enterdata($id,$date_paiement,$payeur,$type,$numero_cheque,$organisme,$d
 	
 	switch($mode) {
 		case "num":
-				$query = "INSERT INTO `".DB."`.`paiements` (`idpaiement`,`idfacture`,`date_paiement`,`payeur`,`type`,`mode`,`montantcfp`,`montanteuro`,`obs`)".
+				$query = "INSERT INTO `paiements` (`idpaiement`,`idfacture`,`date_paiement`,`payeur`,`type`,`mode`,`montantcfp`,`montanteuro`,`obs`)".
 					 " VALUES (NULL, '".$id."', '".$date_paiement."', '".$payeur."', '".$type."', '".$mode."', '".$montantcfp."', '".$montanteuro."', '".$obs."')";
 				$mysqli->query($query);
 				$lastid = $mysqli->insert_id;
 				////next update facture
-				$query = "UPDATE  `".DB."`.`factures_".$table."` SET `reglement`='$reglement', `datereglement`='$date_paiement', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacute;e ($mode par $payeur)')  WHERE  `factures_".$table."`.`idfacture` = $id";
+				$query = "UPDATE  `factures_".$table."` SET `reglement`='$reglement', `datereglement`='$date_paiement', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacute;e ($mode par $payeur)')  WHERE  `factures_".$table."`.`idfacture` = $id";
 				$mysqli->query($query);
 			
 		break;
 
 		case "chq":
-				$query = "INSERT INTO `".DB."`.`paiements` (`idpaiement`,`idfacture`,`date_paiement`,`payeur`,`type`,`mode`,`montantcfp`,`montanteuro`,`numero_cheque`,`organisme`,`obs`)".
+				$query = "INSERT INTO `paiements` (`idpaiement`,`idfacture`,`date_paiement`,`payeur`,`type`,`mode`,`montantcfp`,`montanteuro`,`numero_cheque`,`organisme`,`obs`)".
 				" VALUES (NULL, '".$id."', '".$date_paiement."', '".$payeur."', '".$type."', '".$mode."', '".$montantcfp."', '".$montanteuro."', '".$numero_cheque."', '".$organisme."', '".$obs."')";
 				$mysqli->query($query);
 				$lastid = $mysqli->insert_id;
 				////next update facture
-				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacutee ($mode par $payeur)')  WHERE  `factures_".$table."`.`idfacture` = $id";
+				$query = "UPDATE  `factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacutee ($mode par $payeur)')  WHERE  `factures_".$table."`.`idfacture` = $id";
 				$mysqli->query($query);
 		break;
 
 		case "tsr":
 				$date_tresor = mysqldateformat($date_tresor);
-				$query = "INSERT INTO `".DB."`.`paiements` (`idpaiement`,`idfacture`,`date_paiement`,`payeur`,`type`,`mode`,`montantcfp`,`montanteuro`,`date_transaction`,`info_tresor`,`obs`)".
+				$query = "INSERT INTO `paiements` (`idpaiement`,`idfacture`,`date_paiement`,`payeur`,`type`,`mode`,`montantcfp`,`montanteuro`,`date_transaction`,`info_tresor`,`obs`)".
 				" VALUES (NULL, '".$id."', '".$date_paiement."', '".$payeur."', '".$type."', '".$mode."', '".$montantcfp."', '".$montanteuro."', '".$date_tresor."', '".$info_tresor."', '".$obs."')";
 				$mysqli->query($query);
 				$lastid = $mysqli->insert_id;
 				////next update facture
-				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacutee ($mode par $payeur)')  WHERE  `factures_".$table."`.`idfacture` = $id";
+				$query = "UPDATE  `factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacutee ($mode par $payeur)')  WHERE  `factures_".$table."`.`idfacture` = $id";
 				$mysqli->query($query);
 				
 		break;
@@ -106,34 +106,34 @@ function enterdata($id,$date_paiement,$payeur,$type,$numero_cheque,$organisme,$d
 		case "vir":
 				$mode = "vir";
 				$date_virement = mysqldateformat($date_virement);
-				$query = "INSERT INTO `".DB."`.`paiements` (`idpaiement`,`idfacture`,`date_paiement`,`payeur`,`type`,`mode`,`montantcfp`,`montanteuro`,`date_transaction`,`obs`)".
+				$query = "INSERT INTO `paiements` (`idpaiement`,`idfacture`,`date_paiement`,`payeur`,`type`,`mode`,`montantcfp`,`montanteuro`,`date_transaction`,`obs`)".
 				" VALUES (NULL, '".$id."', '".$date_paiement."', '".$payeur."', '".$type."', '".$mode."', '".$montantcfp."', '".$montanteuro."', '".$date_virement."', '".$obs."')";
 				$mysqli->query($query);
 				$lastid = $mysqli->insert_id;
 				////next update facture
-				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacutee ($mode par $payeur)')  WHERE  `factures_".$table."`.`idfacture` = $id";
+				$query = "UPDATE  `factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacutee ($mode par $payeur)')  WHERE  `factures_".$table."`.`idfacture` = $id";
 				$mysqli->query($query);
 				
 		break;
 
 		case "mnd":
-				$query = "INSERT INTO `".DB."`.`paiements` (`idpaiement`,`idfacture`,`date_paiement`,`payeur`,`type`,`mode`,`montantcfp`,`montanteuro`,`obs`)".
+				$query = "INSERT INTO `paiements` (`idpaiement`,`idfacture`,`date_paiement`,`payeur`,`type`,`mode`,`montantcfp`,`montanteuro`,`obs`)".
 				" VALUES (NULL, '".$id."', '".$date_paiement."', '".$payeur."', '".$type."', '".$mode."', '".$montantcfp."', '".$montanteuro."', '".$obs."')";
 				$mysqli->query($query);
 				$lastid = $mysqli->insert_id;
 				////next update facture
-				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacutee ($mode par $payeur)')  WHERE  `factures_".$table."`.`idfacture` = $id";
+				$query = "UPDATE  `factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacutee ($mode par $payeur)')  WHERE  `factures_".$table."`.`idfacture` = $id";
 				$mysqli->query($query);
 				
 		break;
 		
 		case "tpe":
-				$query = "INSERT INTO `".DB."`.`paiements` (`idpaiement`,`idfacture`,`date_paiement`,`payeur`,`type`,`mode`,`tpe`,`montantcfp`,`montanteuro`,`obs`)".
+				$query = "INSERT INTO `paiements` (`idpaiement`,`idfacture`,`date_paiement`,`payeur`,`type`,`mode`,`tpe`,`montantcfp`,`montanteuro`,`obs`)".
 				" VALUES (NULL, '".$id."', '".$date_paiement."', '".$payeur."', '".$type."', '".$mode."', '".$tpe."', '".$montantcfp."', '".$montanteuro."', '".$obs."')";
 				$mysqli->query($query);
 				$lastid = $mysqli->insert_id;
 				////next update facture
-				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacutee ($mode par $payeur)')  WHERE  `factures_".$table."`.`idfacture` = $id";
+				$query = "UPDATE  `factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / R&eacute;gl&eacutee ($mode par $payeur)')  WHERE  `factures_".$table."`.`idfacture` = $id";
 				$mysqli->query($query);
 				
 		break;
@@ -141,14 +141,18 @@ function enterdata($id,$date_paiement,$payeur,$type,$numero_cheque,$organisme,$d
 		case "22bc":
 				$$reglement = 1;
 				$restearegler = 0;
-				$query = "UPDATE  `".DB."`.`factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / application 2/2 Bourse Commune')  WHERE  `factures_".$table."`.`idfacture` = $id";
+				$query = "UPDATE  `factures_".$table."` SET  `reglement`='$reglement', `datereglement`='".$date_paiement."', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / application 2/2 Bourse Commune')  WHERE  `factures_".$table."`.`idfacture` = $id";
 				$mysqli->query($query);
+				
+				enterbourse($id,$mode,$montantcfp);
 				$lastid = 0;
 		break;
 
 		case "12bc":
-				$query = "UPDATE  `".DB."`.`factures_".$table."` SET `reglement`='$reglement', `datereglement`='$date_paiement', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / application 1/2 Bourse Commune')  WHERE  `factures_".$table."`.`idfacture` = $id";
+				$query = "UPDATE  `factures_".$table."` SET `reglement`='$reglement', `datereglement`='$date_paiement', `restearegler`='$restearegler',`comment`=CONCAT(`comment`,' / application 1/2 Bourse Commune')  WHERE  `factures_".$table."`.`idfacture` = $id";
 				$mysqli->query($query);
+				
+				enterbourse($id,$mode,$montantcfp);
 				$lastid = 0;
 		break;
 		
@@ -160,6 +164,35 @@ function enterdata($id,$date_paiement,$payeur,$type,$numero_cheque,$organisme,$d
 	$mysqli->close();
 	return $lastid;
 }
+
+function enterbourse($factureid,$mode,$montant){
+		$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+		$mysqli->set_charset("utf8");
+		$query = "SELECT `factures_cantine_details`.`idfacture`, `enfants`.`nom`, `enfants`.`prenom`, `enfants`.`classe`, `enfants`.`dn`, `status_cantine`.`status`, `ecoles_faaa`.`nomecole` ".
+		"FROM `factures_cantine_details` ".
+		"LEFT JOIN `enfants` ON `factures_cantine_details`.`idenfant`=`enfants`.`enfantid` ".
+		"LEFT JOIN `status_cantine` ON `factures_cantine_details`.`idtarif`=`status_cantine`.`idstatus` ".
+		"LEFT JOIN `ecoles_faaa` ON `enfants`.`ecole`=`ecoles_faaa`.`ecoleid` ".
+		"WHERE `factures_cantine_details`.`idfacture` = '$factureid'";
+		
+		$result = $mysqli->query($query);
+		$row = $result->fetch_array(MYSQLI_ASSOC);
+                $nom = $row['nom'];
+		$prenom = $row['prenom'];
+		$classe = $row['classe'];
+		$dn = $row['dn'];
+		$status = $row['status'];
+		$ecole = $row['nomecole'];
+		
+		
+		$query = "INSERT INTO `bourses` (`idbourse`, `type`, `nom`, `prenom`, `status`, `ecole`, `classe`, `dn`, `montant`, `date`) ".
+		"VALUES (NULL, '$mode','$nom','$prenom','$status','$ecole','$classe','$dn','$montant',CURRENT_TIMESTAMP)";
+		$mysqli->query($query);
+		$mysqli->close();
+		
+		print $query;
+}
+
 
 function mysqldateformat($input){
 		$arr = explode('/', $input);

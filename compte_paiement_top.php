@@ -29,8 +29,8 @@ function getAllFactures($id,$type){
 				$typef="cantine";
 				$enfant_prenom = "<br/>".getEnfantPrenom($row['idfacture']);
 				$output .= "<tr><td>$typef$enfant_prenom</td>";
-				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)";
-				if(trispace($row["restearegler"])!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : ".trispace($row["restearegler"])." FCP";}
+				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de <b>".trispace($row["montantfcp"])." FCP</b> (soit ".$row["montanteuro"]." &euro;)";
+				if($row["restearegler"]!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : <b>".trispace($row["restearegler"])." FCP</b>";}
 				$output .= "<br/>Infos : ".$row["comment"];
 				$output .= "<br/>Obs : ".$row["obs"];
 				$output .= "</td><td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=$typef\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
@@ -43,8 +43,8 @@ function getAllFactures($id,$type){
 				$result = $mysqli->query($query);
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
 				$output .= "<tr><td>amarrage<br/>".$row["navire"]."</td>";
-				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)";
-				if(trispace($row["restearegler"])!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : ".trispace($row["restearegler"])." FCP";}
+				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de <b>".trispace($row["montantfcp"])." FCP</b> (soit ".$row["montanteuro"]." &euro;)";
+				if($row["restearegler"]!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : <b>".trispace($row["restearegler"])." FCP</b>";}
 				$output .= "<br/>Obs : ".$row["obs"];
 				$output .= "</td><td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=amarrage\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
 				$output .= "<td style=\"text-align:center\"><a href=\"javascript:paiement('".$row["idfacture"]."','amarrage')\"><img src=\"img/visa-icon.png\" height=\"32\" style=\"border:0px\"></a></td>";
@@ -58,8 +58,8 @@ function getAllFactures($id,$type){
 				$result = $mysqli->query($query);
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
 				$output .= "<tr><td>place et &eacute;tal</td>";
-				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)";
-				if(trispace($row["restearegler"])!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : ".trispace($row["restearegler"])." FCP";}
+				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de <b>".trispace($row["montantfcp"])." FCP</b> (soit ".$row["montanteuro"]." &euro;)";
+				if($row["restearegler"]!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : <b>".trispace($row["restearegler"])." FCP</b>";}
 				$output .= "<br/>Obs : ".$row["obs"];
 				$output .= "</td><td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=etal\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
 				$output .= "<td style=\"text-align:center\"><a href=\"javascript:paiement('".$row["idfacture"]."','etal')\"><img src=\"img/visa-icon.png\" height=\"32\" style=\"border:0px\"></a></td>";
@@ -72,8 +72,8 @@ function getAllFactures($id,$type){
 				$result = $mysqli->query($query);
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
 				$output .= "<tr><td>amarrage<br/>".$row["navire"]."</td>";
-				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)";
-				if(trispace($row["restearegler"])!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : ".trispace($row["restearegler"])." FCP";}
+				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de <b>".trispace($row["montantfcp"])."</b> FCP (soit ".$row["montanteuro"]." &euro;)";
+				if($row["restearegler"]!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : <b>".trispace($row["restearegler"])."</b> FCP";}
 				$output .= "<br/>Obs : ".$row["obs"];
 				$output .= "</td><td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=amarrage\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
 				$output .= "<td style=\"text-align:center\"><a href=\"javascript:paiement('".$row["idfacture"]."','amarrage')\"><img src=\"img/visa-icon.png\" height=\"32\" style=\"border:0px\"></a></td>";
