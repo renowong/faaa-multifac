@@ -33,6 +33,7 @@ require_once('paiement_comptant_top.php');
 				}else{
 					$("#mt").hide();
 					$("#txt_payeur").val('<?php print $arCompte[0] ?>');
+					$("#hid_payeur").val('<?php print $arCompte[0] ?>');
 				}
 				
 				$( "#dialog-confirm" ).hide();
@@ -113,6 +114,11 @@ require_once('paiement_comptant_top.php');
 					var restearegler = details['restearegler'];
 				}
 				
+				if(payeur==''){
+					message("Veuiller entrer le nom ou l'organisme payeur!");
+					return false;
+				}
+				
 				if(echelonnage && montantech=='') {
 					message("Montant de l'\351chelon vide");
 					return false;
@@ -142,7 +148,7 @@ require_once('paiement_comptant_top.php');
 					message("Montant de l'\351chelon supp\351rieur au montant \340 r\351gler!");
 					return false;
 				}
-		
+						
 				$.get("paiement_comptant_submit.php",{id:id,payeur:payeur,type:type,mode:mode,echelonnage:echelonnage,montantech:montantech,obs:obs,numero_cheque:num_chq,organisme:organisme,date_virement:date_virement,date_tresor:date_tresor,info_tresor:info_tresor,tpe:tpe,montantfcp:montantfcp,montanteuro:montanteuro,restearegler:restearegler,table:table},
 				      function(data){
 					readResponse(data);
@@ -168,20 +174,23 @@ require_once('paiement_comptant_top.php');
 				$("#ech").hide();
 				$("#chk_echelon").prop("checked", false);
 				
-				if(mode=="#22bc"){
-					$("#chk_echelon").prop("disabled", true);
-					
-				}else{
-					$("#chk_echelon").prop("disabled", false);
-				}
-				
-				if(mode=="#12bc"){
-					$("#chk_echelon").prop("checked", true);
-					toggle_ech();
-					$("#chk_echelon").prop("disabled", true);
-					
-				}else{
-					$("#chk_echelon").prop("disabled", false);
+				switch(mode){
+					case "#22bc":
+						$("#chk_echelon").prop("disabled", true);
+						$("#txt_payeur").val("Commune de FAAA");
+						$("#txt_payeur").prop("readonly", true);
+					break;
+					case "#12bc":
+						$("#chk_echelon").prop("checked", true);
+						toggle_ech();
+						$("#chk_echelon").prop("disabled", true);
+						$("#txt_payeur").val("Commune de FAAA");
+						$("#txt_payeur").prop("readonly", true);
+					break;
+					default:
+						$("#chk_echelon").prop("disabled", false);
+						$("#txt_payeur").prop("readonly", false);
+						$("#txt_payeur").val($("#hid_payeur").val());
 				}
 				
 				// then show selected
@@ -213,7 +222,9 @@ require_once('paiement_comptant_top.php');
 			//	var last_char=input.charAt(the_length-1);
 			//	return isNaN(last_char);
 			//}
-
+			function set_new_name(n){
+				$("#hid_payeur").val(n);
+			}
 		</script>
 	</head>
 	<body>
@@ -242,8 +253,9 @@ require_once('paiement_comptant_top.php');
 								<td colspan="2">
 									<!--Payeur-->
 									<label for="txt_payeur">Payeur</label><br />
-									<input type="text" id="txt_payeur" name="txt_payeur" size="40" maxlength="20" value="" class="uppercase"/> 
+									<input type="text" id="txt_payeur" name="txt_payeur" size="40" maxlength="20" value="" class="uppercase" onblur="set_new_name(this.value);" />
 									<input type="hidden" id="hid_type" name="hid_type" value="<?php echo $info[1] ?>"/>
+									<input type="hidden" id="hid_payeur" name="hid_payeur" />
 								</td> 
 							</tr>
 							<tr>
