@@ -347,7 +347,7 @@ foreach( $ar_tables as &$val ){
 				$output .= "<tbody class=\"$reject\"><td>".$val['title']."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">Facture du ".french_date($row["datefacture"])." montant de ";
 				}
 		$output .= trispace($row["montantfcp"]);
-		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a></td><td>$status</td><td>".$row["comment"]."</td></tbody>";
+		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a><br/>Obs : ".$row["obs"]."</td><td>$status</td><td>".$row["comment"]."</td></tbody>";
         }
     }  
 
