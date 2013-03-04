@@ -210,18 +210,6 @@ require_once('paiement_comptant_top.php');
 				}
 			}
 			
-			//function is_num(curinput, fieldID){
-			//	if (notnumber(curinput)) {
-			//		curinput = curinput.substring(0, curinput.length -1)
-			//		$("#"+fieldID).val(curinput);
-			//	}
-			//}
-			
-			//function notnumber(input){
-			//	var the_length=input.length;
-			//	var last_char=input.charAt(the_length-1);
-			//	return isNaN(last_char);
-			//}
 			function set_new_name(n){
 				$("#hid_payeur").val(n);
 			}
