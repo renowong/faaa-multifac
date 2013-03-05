@@ -173,6 +173,7 @@ require_once('clients_top.php');
 		function showSubmitResult(){
 			var success = gup('success');
 			var edit = gup('edit');
+			var exist = gup('exist');
 			if (success=='1') {
 				if (edit>0) {
 					message("Compte mis &agrave; jour avec succ&egrave;s");
@@ -185,7 +186,9 @@ require_once('clients_top.php');
 				} else {
 					message("Echec dans l'ajout du nouvel administr&eacute;");
 				}
+				if (exist){message("Doublon d&eacute;tect&eacute;");}
 			}
+			
 		}
 		
 		function editkid(id){

@@ -65,15 +65,19 @@ function submit_data(){
     
     switch($type){
     case "insert":
-    $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-    if($dest=='1'){uncheckdest($clientid);}else{
-            if(!checkdest_exist($clientid)){$dest = '1';}
-        }
-        $query = "INSERT INTO `".DB."`.`enfants` (`enfantid`,`clientid`,`nom`,`prenom`,`ecole`,`classe`,`active`,`dn`,`cps`,`sexe`,`status`,`destinataire`) VALUES (NULL,'$clientid','$nom','$prenom','$ecole','$classe','1','$dn','$cps','$sexe','$status','$dest')";
-        $mysqli->query($query);
-        $success = $mysqli->affected_rows;
-        $mysqli->close();
-        print $query;
+	if(!check_enf_exist($cps)){
+		$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+		if($dest=='1'){uncheckdest($clientid);}else{
+		    if(!checkdest_exist($clientid)){$dest = '1';}
+		}
+		$query = "INSERT INTO `".DB."`.`enfants` (`enfantid`,`clientid`,`nom`,`prenom`,`ecole`,`classe`,`active`,`dn`,`cps`,`sexe`,`status`,`destinataire`) VALUES (NULL,'$clientid','$nom','$prenom','$ecole','$classe','1','$dn','$cps','$sexe','$status','$dest')";
+		$mysqli->query($query);
+		$success = $mysqli->affected_rows;
+		$mysqli->close();
+		print $query;
+	}else{
+		$exist = 1;
+	}
     break;
     case "update":
     $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
@@ -88,19 +92,26 @@ function submit_data(){
     break;
     }
     
-    	//if ($success > 0){
+    	if ($success > 0){
 		//resetenfantvalues();
 		header("Location:clients.php?edit=$clientid&success=1&reset=1");
-	//} else {
-	//	header("Location:clients.php?edit=$clientid&success=0");
-	//}
+	} else {
+		header("Location:clients.php?edit=$clientid&success=0&exist=$exist");
+	}
 }
 
-
+function check_enf_exist($cps){
+$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+    $query = "SELECT `enfantid` FROM `enfants` WHERE `cps`='$cps'";
+    $mysqli->query($query);
+    $count = $mysqli->affected_rows;
+    $mysqli->close();
+    if($count>0){return true;}else{return false;}
+}
 
 function uncheckdest($clientid){
     $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-    $query = "UPDATE `".DB."`.`enfants` SET `destinataire`='0' WHERE `clientid`='$clientid'";
+    $query = "UPDATE `enfants` SET `destinataire`='0' WHERE `clientid`='$clientid'";
     $mysqli->query($query);
     $mysqli->close();
     //print $query;
@@ -108,7 +119,7 @@ function uncheckdest($clientid){
 
 function checkdest_exist($clientid,$enfantid){
     $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-    $query = "SELECT `enfantid` FROM `".DB."`.`enfants` WHERE `clientid`='$clientid' AND `destinataire`='1' AND NOT `enfantid`='$enfantid'";
+    $query = "SELECT `enfantid` FROM `enfants` WHERE `clientid`='$clientid' AND `destinataire`='1' AND NOT `enfantid`='$enfantid'";
     $mysqli->query($query);
     $count = $mysqli->affected_rows;
     $mysqli->close();
