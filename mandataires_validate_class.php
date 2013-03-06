@@ -211,7 +211,7 @@ class Validate {
 
 	private function validateRS($value) {
                 $value = decode_utf8($value);
-                return (!preg_match('/^[0-9a-z_]{1,}$/i', $value)) ? 0 : 1;
+                return (!preg_match('/^[0-9a-z_ ]{1,}$/i', $value)) ? 0 : 1;
         }
 
 
