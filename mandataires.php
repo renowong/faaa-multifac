@@ -188,7 +188,7 @@ require_once('mandataires_top.php');
                                                                         <td>
                                                                                 <!--RS-->
                                                                                 <label for="txt_RS">Raison Sociale<span class="red">*</span></label><br />
-                                                                                <input class="uppercase" type="text" name="txt_RS" id="txt_RS" value="<?php echo $_SESSION['values']['txt_RS'] ?>" size="20" maxlength="20" onBlur="validate(this.value, this.id);" />
+                                                                                <input class="uppercase" type="text" name="txt_RS" id="txt_RS" value="<?php echo $_SESSION['values']['txt_RS'] ?>" size="20" maxlength="25" onBlur="validate(this.value, this.id);" />
                                                                                 <span id="txt_RSFailed" class="<?php echo $_SESSION['errors']['RS'] ?> red"><br/>
                                                                                         Veuillez entrer une raison sociale.
                                                                                 </span>
