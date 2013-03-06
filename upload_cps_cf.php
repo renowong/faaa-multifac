@@ -76,7 +76,7 @@ function update_data($f){
             fwrite($fw, $l);
 	    
 	    $cps = $ar_l[1];
-	    if($ar_l[5]=="100"){$status=1;}else{$status=2;}
+	    if($ar_l[5]=="100"){$status=15;}else{$status=16;}
 	    
 	    update_enfant($cps,$status,$fin);
         } else {
