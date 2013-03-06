@@ -293,7 +293,7 @@ require_once('paiement_comptant_top.php');
 									<label for="box_Organisme">Organisme de paiement</label><br />
 									<select class="input" name="box_Organisme" id="box_Organisme">
 										<option value="BT">BT</option>
-										<option value="BTP">BTP</option>
+										<option value="BP">BP</option>
 										<option value="CCP">CCP</option>
 										<option value="CDC">CDC</option>
 										<option value="SOC">SOC</option>
