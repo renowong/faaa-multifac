@@ -21,7 +21,7 @@ $jsarUnite = buildJSArray($fact, 'Unite');
 
 //#################################building forms################################
 $InValidationList = buildFacturesEnAttente($arCompte[1]);
-$PeriodeList = buildOptionsPeriod();
+$PeriodeList = buildOptionsPeriod(0);
 
 //#################################functions#####################################
 
@@ -60,24 +60,6 @@ function buildOptionsType($selectedOption, $f) {
 	}
 }
 
-function buildOptionsPeriod() {
-    $year = date("Y");
-    $thismonth = date("n");
-    $lastyear = $year-1;
-    $nextyear = $year+1;
-	$months = array("Janvier","F&eacute;vrier","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","D&eacute;cembre");
-	for($i=0;$i<count($months);$i++){
-		$list .= "<option value='".htmlentities($months[$i])." ".$lastyear."'>".$months[$i]." ".$lastyear."</option>";
-	}
-    for($i=0;$i<count($months);$i++){
-        if(($i+1)==$thismonth){$s=" SELECTED";}else{$s="";}
-		$list .= "<option value='".htmlentities($months[$i])." ".$year."'$s>".$months[$i]." ".$year."</option>";
-	}
-    for($i=0;$i<count($months);$i++){
-		$list .= "<option value='".htmlentities($months[$i])." ".$nextyear."'>".$months[$i]." ".$nextyear."</option>";
-	}
-	return $list;
-}
 
 function buildFacturesEnAttente($idclient) {
 	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);

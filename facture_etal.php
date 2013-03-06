@@ -116,6 +116,9 @@ require_once('facture_etal_top.php');
 		
 		function submit_facture(fdata,clientid){
 		var period = $("#box_periode").val();
+		var period2 = $("#box_periode2").val();
+		if(period2.length>0){period += " - "+period2;};
+		
 		$.get("facture_etal_submit.php",{fdata:fdata,clientid:clientid,period:period},
 		      function(data){
 			readResponse(data);
@@ -159,7 +162,11 @@ require_once('facture_etal_top.php');
 						<!--Periode-->
                                                 <label for="box_periode">P&eacute;riode</label>
                                                 <select name="box_periode" id="box_periode">
-                                                        <?php echo $PeriodeList ?>
+                                                        <?php echo buildOptionsPeriod(1) ?>
+                                                </select>
+						<select name="box_periode2" id="box_periode2">
+							<option value="" selected="selected">Pas de seconde p&eacute;riode</option>
+                                                        <?php echo buildOptionsPeriod(0) ?>
                                                 </select>
 					</td>
 				</tr>

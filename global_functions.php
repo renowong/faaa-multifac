@@ -36,4 +36,23 @@ function reverse_date_to_normal($d){
 function french_date($timestamp){
 	return date("d/m/Y",strtotime($timestamp));
 }
+
+function buildOptionsPeriod($setthismonth) {
+    $year = date("Y");
+    $thismonth = date("n");
+    $lastyear = $year-1;
+    $nextyear = $year+1;
+	$months = array("Janvier","F&eacute;vrier","Mars","Avril","Mai","Juin","Juillet","Ao&ucirc;t","Septembre","Octobre","Novembre","D&eacute;cembre");
+	for($i=0;$i<count($months);$i++){
+		$list .= "<option value='".htmlentities($months[$i])." ".$lastyear."'>".$months[$i]." ".$lastyear."</option>";
+	}
+    for($i=0;$i<count($months);$i++){
+        if(($i+1)==$thismonth && $setthismonth){$s=" SELECTED";}else{$s="";}
+		$list .= "<option value='".htmlentities($months[$i])." ".$year."'$s>".$months[$i]." ".$year."</option>";
+	}
+    for($i=0;$i<count($months);$i++){
+		$list .= "<option value='".htmlentities($months[$i])." ".$nextyear."'>".$months[$i]." ".$nextyear."</option>";
+	}
+	return $list;
+}
 ?>

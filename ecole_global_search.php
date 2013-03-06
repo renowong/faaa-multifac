@@ -185,7 +185,7 @@ require_once('ecole_global_search_top.php');
 				</td>
 				<td><h1>P&eacute;riode</h1>
 					<select name="box_periode" id="box_periode">
-                        <?php echo buildOptionsPeriod(); ?>
+                        <?php echo buildOptionsPeriod(0); ?>
                     </select>
 				</td>
 				<td>
