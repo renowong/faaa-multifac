@@ -278,7 +278,7 @@ require_once('mandataires_top.php');
 									<td>
 										<!--BP-->
 										<label for="txt_BP">B.P.</label><br />
-										<input type="text" name="txt_BP" id="txt_BP" value="<?php echo $_SESSION['values']['txt_BP'] ?>" size="20" maxlength="5" onBlur="validate(this.value, this.id);" />
+										<input type="text" name="txt_BP" id="txt_BP" value="<?php echo $_SESSION['values']['txt_BP'] ?>" size="20" maxlength="6" onBlur="validate(this.value, this.id);" />
 										<span id="txt_BPFailed" class="<?php echo $_SESSION['errors']['BP'] ?> red"><br/>
 											Veuillez entrer une bo&icirc;te postale valide (ex: 60002).
 										</span>
