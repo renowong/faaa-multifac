@@ -21,7 +21,7 @@ $jsarUnite = buildJSArray($fact, 'Unite');
 
 //#################################building forms################################
 $InValidationList = buildFacturesEnAttente($arCompte[1]);
-$PeriodeList = buildOptionsPeriod(0);
+//$PeriodeList = buildOptionsPeriod(0);
 
 //#################################functions#####################################
 

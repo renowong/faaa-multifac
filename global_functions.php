@@ -46,11 +46,11 @@ function buildOptionsPeriod($setthismonth) {
 	for($i=0;$i<count($months);$i++){
 		$list .= "<option value='".htmlentities($months[$i])." ".$lastyear."'>".$months[$i]." ".$lastyear."</option>";
 	}
-    for($i=0;$i<count($months);$i++){
+	for($i=0;$i<count($months);$i++){
         if(($i+1)==$thismonth && $setthismonth){$s=" SELECTED";}else{$s="";}
 		$list .= "<option value='".htmlentities($months[$i])." ".$year."'$s>".$months[$i]." ".$year."</option>";
 	}
-    for($i=0;$i<count($months);$i++){
+	for($i=0;$i<count($months);$i++){
 		$list .= "<option value='".htmlentities($months[$i])." ".$nextyear."'>".$months[$i]." ".$nextyear."</option>";
 	}
 	return $list;

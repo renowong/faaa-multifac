@@ -27,6 +27,16 @@ $comptetype = getCompteType();
 			});
 
 			$( "#dialog-confirm" ).hide();
+			
+			$("#box_periode2").change(function(){
+				var selection2 = $("#box_periode2").get(0).selectedIndex;
+				var selection = $("#box_periode").get(0).selectedIndex;
+				selection2 -= 1;
+				if (selection>=selection2){
+					message("P\351riode invalide");
+					$("#box_periode2")[0].selectedIndex = 0;
+				}
+			});
 		});
 		
 		var fdata=new Array();
@@ -134,6 +144,10 @@ $comptetype = getCompteType();
 		
 		function submit_facture(fdata,clientid){
 		var period = $("#box_periode").val();
+		var period2 = $("#box_periode2").val();
+		if(period2.length>0){period += " - "+period2;};
+		
+		
 		var py = $("#txt_PY").val();
 		var edt = $("#txt_EDT").val();
 		var eau = $("#txt_eau").val();
@@ -184,7 +198,11 @@ $comptetype = getCompteType();
 						<!--Periode-->
                                                 <label for="box_periode">P&eacute;riode</label>
                                                 <select name="box_periode" id="box_periode">
-                                                        <?php echo $PeriodeList ?>
+                                                        <?php echo buildOptionsPeriod(1) ?>
+                                                </select>
+						<select name="box_periode2" id="box_periode2">
+							<option value="" selected="selected">Pas de seconde p&eacute;riode</option>
+                                                        <?php echo buildOptionsPeriod(0) ?>
                                                 </select>
 					</td>
 					<td colspan="2">

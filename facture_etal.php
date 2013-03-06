@@ -17,6 +17,16 @@ require_once('facture_etal_top.php');
 			});
 
 			$( "#dialog-confirm" ).hide();
+			
+			$("#box_periode2").change(function(){
+				var selection2 = $("#box_periode2").get(0).selectedIndex;
+				var selection = $("#box_periode").get(0).selectedIndex;
+				selection2 -= 1;
+				if (selection>=selection2){
+					message("P\351riode invalide");
+					$("#box_periode2")[0].selectedIndex = 0;
+				}
+			});
 		});
 		
 		var fdata=new Array();
