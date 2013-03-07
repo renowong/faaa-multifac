@@ -210,6 +210,10 @@ function translatemode($input){
 		case "tpe":
 			$mode = "TPE";	
 		break;
+
+		case "anl":
+			$mode = "Annulation";	
+		break;
 				
 		default:
 			$mode = "ERREUR TRADUCTION MODE";
