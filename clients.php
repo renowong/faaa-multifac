@@ -11,7 +11,8 @@ require_once('clients_top.php');
 <html>
 	<head>
 		<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$clientjs.$retrieve_rues_js.$graburljs.$jquery.$jqueryui.$message_div.$compte_div.$kids_valid ?>
-
+		<link rel="stylesheet" href="chosen/chosen.css" />
+		<script src="chosen/chosen.jquery.js" type="text/javascript"></script>
 		<script type="text/javascript" src="js/jquery.ui.datepicker-fr.js"></script>
 		<script type="text/javascript">
 		<? print "var listclasses = ".json_encode(buildOptionsClasses()).";\n"; ?>
@@ -28,7 +29,20 @@ require_once('clients_top.php');
 				$('#historique').hide();
 				$('#avoirs').hide();
 				$('#showreject').hide();
-				if (edit>0){$('#divhistorique').show();$('#divavoirs').show();}else{$('#divhistorique').hide();$('#divavoirs').hide();$('#accounttoggle').hide();}
+				if (edit>0){
+					$('#divhistorique').show();
+					$('#divavoirs').show();
+					$('#divconjoint').load('conjoint.php?id='+edit, function(){
+						$("#box_conjoint").chosen();
+					});
+					$('#divconjoint').show();
+					
+				}else{
+					$('#divhistorique').hide();
+					$('#divavoirs').hide();
+					$('#accounttoggle').hide();
+					$('#divconjoint').hide();
+				}
 				
 				$('#showreject').click( function() {
 					$('.reject').toggle();
@@ -70,7 +84,7 @@ require_once('clients_top.php');
                                         }
                                 });
 				
-				$('#list_enfants').load('list_kids.php?id=<? print $_GET['edit']; ?>');
+				$('#list_enfants').load('list_kids.php?id='+edit);
 				
 				
 				//////key checks//////
@@ -281,6 +295,9 @@ require_once('clients_top.php');
 		function div_avoir_close(){
 			$("#div_avoir").empty();
 			$("#opaquediv").hide();
+		}
+		function affect_conjoint(){
+			alert("TEST");
 		}
 		</script>
 	</head>
@@ -493,8 +510,8 @@ require_once('clients_top.php');
 						<p class="legend"><span class="red">*</span> Champs Obligatoires</p>
 					</form>
 				</td>
-					<?php echo buildEnfantsTable() ?>
-					<?php echo buildLieuTable() ?>
+				<?php echo buildConjointEnfantsTable() ?>
+				<?php echo buildLieuTable() ?>
 			</tr>
 		</table>
 		</div>

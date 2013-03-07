@@ -236,9 +236,9 @@ if (isset($_GET['edit']) && $_GET['edit'] > 0) {
 	}
 }
 
-function buildEnfantsTable(){
+function buildConjointEnfantsTable(){
 if (isset($_GET['edit']) && $_GET['edit'] > 0) {
-	$output = '<td><form id="frmkids" name="frmkids" method="post" action="kids_validate.php?validationType=php"><table name="tblenfants" id="tblenfants" class="tblform">'.
+	$output = '<td><div id="divconjoint" name="divconjoint"></div><form id="frmkids" name="frmkids" method="post" action="kids_validate.php?validationType=php"><table name="tblenfants" id="tblenfants" class="tblform">'.
 				'	<thead>'.
 				'		<tr>'.
 				'			<th colspan="2">Enfants</th>'.
@@ -276,7 +276,8 @@ if (isset($_GET['edit']) && $_GET['edit'] > 0) {
 				'			<td colspan="2"><div name="list_enfants" id="list_enfants"></div></td>'.
 				'		</tr>'.
 				'	</tbody>'.
-				'</table></form></td>';
+				'</table></form>'.
+				'</td>';
 //	'</tr>'.
 //	'</table>';
 

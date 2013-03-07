@@ -134,7 +134,7 @@ require_once('lieux_top.php');
 										<!--Proprietaire-->
 										<label for="box_Proprietaire">Propri&eacute;taire<span class="red">*</span></label><br />
 										<select name="box_Proprietaire" id="box_Proprietaire" onchange="validate(this.value, this.id);addOption();" data-placeholder="S&eacute;lectionner un propri&eacute;taire" class="chzn-select" tabindex="2">
-                                            <option value=""></option>
+											<option value=""></option>
 											<?php buildOptionsPersonnes($_SESSION['values']['box_Proprietaire']) ?>
 										</select><br/>
 										<span id="box_ProprietaireFailed" class="<?php echo $_SESSION['errors']['Proprietaire'] ?> red">
