@@ -206,81 +206,72 @@ function getLieu($type){
 	return $output;
 }
 
-function buildLieuTable(){
+
+function buildAnnexesTable(){
 if (isset($_GET['edit']) && $_GET['edit'] > 0) {
-	$output = '<td><table name="tbllieu" id="tbllieu" class="tblform">'.
-				'	<thead>'.
-				'		<tr>'.
-				'			<th>Lieux</th>'.
-				'		</tr>'.
-				'	</thead>'.
-				'	<tbody>'.
-				'		<tr>'.
-				'			<td><label>Propri&eacute;taire de</label></td>'.
-				'		</tr>'.
-				'		<tr>'.
-				'			<td>'.getLieu("lieuproprietaire").'</td>'.
-				'		</tr>'.
-				'		<tr>'.
-				'			<td><label>Locataire de</label></td>'.
-				'		</tr>'.
-				'		<tr>'.
-				'			<td>'.getLieu("lieulocataire").'</td>'.
-				'		</tr>'.
-				'	</tbody>'.
-				'</table></td>';
-//	'</tr>'.
-//	'</table>';
-
-	return $output;
-	}
-}
-
-function buildConjointEnfantsTable(){
-if (isset($_GET['edit']) && $_GET['edit'] > 0) {
-	$output = '<td><div id="divconjoint" name="divconjoint"></div><form id="frmkids" name="frmkids" method="post" action="kids_validate.php?validationType=php"><table name="tblenfants" id="tblenfants" class="tblform">'.
-				'	<thead>'.
-				'		<tr>'.
-				'			<th colspan="2">Enfants</th>'.
-				'		</tr>'.
-				'	</thead>'.
-				'	<tbody>'.
-				'		<tr>'.
-				'			<td colspan=\'2\'><label>Actif</label><br /><input type="checkbox" name="chk_actif_enfant" id="chk_actif_enfant" checked /></td>'.
-				'		</tr>'.	
-				'		<tr>'.
-				'			<td><label>Nom</label><span class="red">*</span><br /><input type="text" size="20" maxlength="25" name="txt_nom_enfant" id="txt_nom_enfant" class="uppercase" onBlur="enf_validate(this.value, this.id);" value="'.$_SESSION['values']['txt_enfantNom'].'" /><br/><span id="txt_nom_enfantFailed" class="'.$_SESSION['errors']['enfantNom'].' red">Veuillez entrer un nom valide.</span></td>'.
-				'			<td><label>Pr&eacute;nom</label><span class="red">*</span><br /><input type="text" size="20" maxlength="25" name="txt_prenom_enfant" id="txt_prenom_enfant" class="uppercase" onBlur="enf_validate(this.value, this.id);" value="'.$_SESSION['values']['txt_enfantPrenom'].'" /><br/><span id="txt_prenom_enfantFailed" class="'.$_SESSION['errors']['enfantPrenom'].' red">Veuillez entrer un pr&eacute;nom valide.</span></td>'.
-				'		</tr>'.
-				'		<tr>'.
-				'			<td><label>Date de Naissance</label><span class="red">*</span><br /><input type="text" size="10" maxlength="10" name="txt_dn_enfant" id="txt_dn_enfant" value="'.$_SESSION['values']['txt_enfantDN'].'" readonly /><br/><span id="txt_dn_enfantFailed" class="'.$_SESSION['errors']['enfantDN'].' red">Veuillez entrer une date valide.</span></td>'.
-				'			<td><label>Sexe</label><span class="red">*</span><br /><select name="slt_sexe_enfant" id="slt_sexe_enfant" onChange="enf_validate(this.value, this.id);"><option value="M">M</option><option value="F">F</option></select></td>'.
-				'		</tr>'.
-				'		<tr>'.
-				'			<td><label>DN CPS</label><span class="red">*</span><br /><input type="text" size="7" maxlength="7" name="txt_cps_enfant" id="txt_cps_enfant" onBlur="enf_validate(this.value, this.id);" value="'.$_SESSION['values']['txt_enfantCPS'].'" /><br/><span id="txt_cps_enfantFailed" class="'.$_SESSION['errors']['enfantCPS'].' red">Veuillez entrer un num&eacute;ro CPS valide.</span></td>'.
-				'			<td><label>Status</label><span class="red">*</span><br /><select name="slt_status_enfant" id="slt_status_enfant" onChange="enf_validate(this.value, this.id);">'.buildStatusCantine($_SESSION['values']['slt_enfantStatus']).'</select></td>'.
-				'		</tr>'.
-				'		<tr>'.
-				'			<td><label>Ecole</label><span class="red">*</span><br /><select name="slt_ecole_enfant" id="slt_ecole_enfant" onchange="load_classes(this.value,\'slt_classe_enfant\');enf_validate(this.value, this.id);">'.buildOptionsSchools($_SESSION['values']['slt_enfantEcole']).'</select></td>'.
-				'			<td><label>Classe</label><span class="red">*</span><br /><select name="slt_classe_enfant" id="slt_classe_enfant" onChange="enf_validate(this.value, this.id);"></select></td>'.
-				'		</tr>'.
-				'		<tr>'.
-				'			<td colspan="2" style="text-align:right;"><input type="hidden" id="id_client_enfant" name="id_client_enfant" value="'.$_GET['edit'].'" /><input type="hidden" id="id_enfant" name="id_enfant" value="'.$_SESSION['values']['hid_enfantid'].'" />'.
-				'			<button class="submit" type="reset" id="reset_enfant" name="reset_enfant" onclick="javascript:$(\'#btn_add_enfant\').button(\'option\',\'label\',\'Ajouter\');resetenfant();">RAZ</button> <button type="submit" class="submit" name="btn_add_enfant" id="btn_add_enfant">Ajouter</button></td>'.
-				'		</tr>'.			
-				'		<tr>'.
-				'			<td colspan="2"><label>Liste des enfants</label>';
-				if(getAllKids($_GET['edit'])>0) $output .='<a href="javascript:reaffectkid();"><img src="img/Actions-user-group-properties-icon.png" title="R&eacute;affection parent"/></a></td>';
-				$output .= '		</tr>'.
-				'		<tr>'.
-				'			<td colspan="2"><div name="list_enfants" id="list_enfants"></div></td>'.
-				'		</tr>'.
-				'	</tbody>'.
-				'</table></form>'.
-				'</td>';
-//	'</tr>'.
-//	'</table>';
-
+	$output = '<td><div id="divconjoint" name="divconjoint"></div>'.
+		'<form id="frmkids" name="frmkids" method="post" action="kids_validate.php?validationType=php">'.
+		'<table name="tblenfants" id="tblenfants" class="tblform">'.
+		'	<thead>'.
+		'		<tr>'.
+		'			<th colspan="2">Enfants</th>'.
+		'		</tr>'.
+		'	</thead>'.
+		'	<tbody>'.
+		'		<tr>'.
+		'			<td colspan=\'2\'><input type="checkbox" name="chk_actif_enfant" id="chk_actif_enfant" checked /> <label>Actif</label></td>'.
+		'		</tr>'.	
+		'		<tr>'.
+		'			<td><label>Nom</label><span class="red">*</span><br /><input type="text" size="20" maxlength="25" name="txt_nom_enfant" id="txt_nom_enfant" class="uppercase" onBlur="enf_validate(this.value, this.id);" value="'.$_SESSION['values']['txt_enfantNom'].'" /><br/><span id="txt_nom_enfantFailed" class="'.$_SESSION['errors']['enfantNom'].' red">Veuillez entrer un nom valide.</span></td>'.
+		'			<td><label>Pr&eacute;nom</label><span class="red">*</span><br /><input type="text" size="20" maxlength="25" name="txt_prenom_enfant" id="txt_prenom_enfant" class="uppercase" onBlur="enf_validate(this.value, this.id);" value="'.$_SESSION['values']['txt_enfantPrenom'].'" /><br/><span id="txt_prenom_enfantFailed" class="'.$_SESSION['errors']['enfantPrenom'].' red">Veuillez entrer un pr&eacute;nom valide.</span></td>'.
+		'		</tr>'.
+		'		<tr>'.
+		'			<td><label>Date de Naissance</label><span class="red">*</span><br /><input type="text" size="10" maxlength="10" name="txt_dn_enfant" id="txt_dn_enfant" value="'.$_SESSION['values']['txt_enfantDN'].'" readonly /><br/><span id="txt_dn_enfantFailed" class="'.$_SESSION['errors']['enfantDN'].' red">Veuillez entrer une date valide.</span></td>'.
+		'			<td><label>Sexe</label><span class="red">*</span><br /><select name="slt_sexe_enfant" id="slt_sexe_enfant" onChange="enf_validate(this.value, this.id);"><option value="M">M</option><option value="F">F</option></select></td>'.
+		'		</tr>'.
+		'		<tr>'.
+		'			<td><label>DN CPS</label><span class="red">*</span><br /><input type="text" size="7" maxlength="7" name="txt_cps_enfant" id="txt_cps_enfant" onBlur="enf_validate(this.value, this.id);" value="'.$_SESSION['values']['txt_enfantCPS'].'" /><br/><span id="txt_cps_enfantFailed" class="'.$_SESSION['errors']['enfantCPS'].' red">Veuillez entrer un num&eacute;ro CPS valide.</span></td>'.
+		'			<td><label>Status</label><span class="red">*</span><br /><select name="slt_status_enfant" id="slt_status_enfant" onChange="enf_validate(this.value, this.id);">'.buildStatusCantine($_SESSION['values']['slt_enfantStatus']).'</select></td>'.
+		'		</tr>'.
+		'		<tr>'.
+		'			<td><label>Ecole</label><span class="red">*</span><br /><select name="slt_ecole_enfant" id="slt_ecole_enfant" onchange="load_classes(this.value,\'slt_classe_enfant\');enf_validate(this.value, this.id);">'.buildOptionsSchools($_SESSION['values']['slt_enfantEcole']).'</select></td>'.
+		'			<td><label>Classe</label><span class="red">*</span><br /><select name="slt_classe_enfant" id="slt_classe_enfant" onChange="enf_validate(this.value, this.id);"></select></td>'.
+		'		</tr>'.
+		'		<tr>'.
+		'			<td colspan="2" style="text-align:right;"><input type="hidden" id="id_client_enfant" name="id_client_enfant" value="'.$_GET['edit'].'" /><input type="hidden" id="id_enfant" name="id_enfant" value="'.$_SESSION['values']['hid_enfantid'].'" />'.
+		'			<button class="submit" type="reset" id="reset_enfant" name="reset_enfant" onclick="javascript:$(\'#btn_add_enfant\').button(\'option\',\'label\',\'Ajouter\');resetenfant();">RAZ</button> <button type="submit" class="submit" name="btn_add_enfant" id="btn_add_enfant">Ajouter</button></td>'.
+		'		</tr>'.			
+		'		<tr>'.
+		'			<td colspan="2"><label>Liste des enfants</label>';
+		if(getAllKids($_GET['edit'])>0) $output .='<a href="javascript:reaffectkid();"><img src="img/Actions-user-group-properties-icon.png" title="R&eacute;affection parent"/></a></td>';
+		$output .= '		</tr>'.
+		'		<tr>'.
+		'			<td colspan="2"><div name="list_enfants" id="list_enfants"></div></td>'.
+		'		</tr>'.
+		'	</tbody>'.
+		'</table></form>'.
+		'<table name="tbllieu" id="tbllieu" class="tblform" style="width:100%;">'.
+		'	<thead>'.
+		'		<tr>'.
+		'			<th>Lieux</th>'.
+		'		</tr>'.
+		'	</thead>'.
+		'	<tbody>'.
+		'		<tr>'.
+		'			<td><label>Propri&eacute;taire de</label></td>'.
+		'		</tr>'.
+		'		<tr>'.
+		'			<td>'.getLieu("lieuproprietaire").'</td>'.
+		'		</tr>'.
+		'		<tr>'.
+		'			<td><label>Locataire de</label></td>'.
+		'		</tr>'.
+		'		<tr>'.
+		'			<td>'.getLieu("lieulocataire").'</td>'.
+		'		</tr>'.
+		'	</tbody>'.
+		'</table>'.
+		'</td>';
 	return $output;
 	}
 }

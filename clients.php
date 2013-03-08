@@ -508,7 +508,7 @@ require_once('clients_top.php');
 									<td colspan="2">
 										<!--Obs-->
 										<label for="txt_obs">Observations</label><br />
-										<textarea style="height:80px;width:340px;resize:none;" id="txt_obs" name="txt_obs"><?php echo $_SESSION['values']['txt_obs'] ?></textarea>
+										<textarea style="height:100px;width:340px;resize:none;" id="txt_obs" name="txt_obs"><?php echo $_SESSION['values']['txt_obs'] ?></textarea>
 									</td>
 								</tr>	
 								<tr>
@@ -524,8 +524,7 @@ require_once('clients_top.php');
 						<p class="legend"><span class="red">*</span> Champs Obligatoires</p>
 					</form>
 				</td>
-				<?php echo buildConjointEnfantsTable() ?>
-				<?php echo buildLieuTable() ?>
+				<?php echo buildAnnexesTable() ?>
 			</tr>
 		</table>
 		</div>
