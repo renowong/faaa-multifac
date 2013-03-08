@@ -15,7 +15,7 @@ $cUser = unserialize($_SESSION['user']);
 ############functions###############
 function buildFacturesPayeesTable($id){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$query = "SELECT * FROM `".DB."`.`factures_cantine` WHERE `factures_cantine`.`reglement` = '1' AND `factures_cantine`.`idclient` = $id ORDER BY `idfacture` DESC LIMIT 5";
+	$query = "SELECT * FROM `".DB."`.`factures_cantine` WHERE `factures_cantine`.`reglement` = '1' AND `factures_cantine`.`idclient` = $id ORDER BY `idfacture` DESC LIMIT 10";
 	//echo $query;
         $result = $mysqli->query($query);
         $list = "<select id='slt_facture' name='slt_facture'>";
