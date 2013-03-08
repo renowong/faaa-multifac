@@ -18,7 +18,7 @@ if (!isset($_SESSION['values']) || (isset($_GET['reset']) && $_GET['reset']==1))
 if (isset($_GET['edit']) && $_GET['edit'] > 0) {
 	getData($_GET['edit']); //set client data into session variables (just for the form)
 	setPersistData($_GET['edit']); //set client data into persistent variable (XML)
-	$legend = "Edition du compte de ".$_SESSION['values']['box_Civilite']." ".$_SESSION['values']['txt_Nom']." ".$_SESSION['values']['txt_Prenom']." (".$_GET['edit'].")";
+	$legend = "Edition du compte de ".$_SESSION['values']['box_Civilite']." ".$_SESSION['values']['txt_Nom']." ".$_SESSION['values']['txt_Prenom'];
 } else {
 	$legend = "Cr&eacute;ation d'un compte client";
 	$_SESSION['values']['chk_status'] = '1';
