@@ -2,7 +2,7 @@
 include_once('config.php');
 $id = $_GET["id"];
 
-$output = '<table name="tblconjoint" id="tblconjoint" class="tblform">'.
+$output = '<table name="tblconjoint" id="tblconjoint" class="tblform" style="width:100%;">'.
 				'	<thead>'.
 				'		<tr>'.
 				'			<th>Conjoint</th>'.
@@ -11,10 +11,10 @@ $output = '<table name="tblconjoint" id="tblconjoint" class="tblform">'.
 				'	<tbody>'.
 				'		<tr>'.
 				'			<td><label>Sélectionner un conjoint</label><br />'.
-                                '<select name="box_conjoint" id="box_conjoint" onchange="validate(this.value, this.id);addOption();" data-placeholder="S&eacute;lectionner un conjoint" class="chzn-select" tabindex="2">'.
+                                '<select name="box_conjoint" id="box_conjoint" onchange="validate(this.value, this.id);addOption();" data-placeholder="Affecter &agrave; vide pour supprimer le conjoint" class="chzn-select" tabindex="2">'.
 				'<option value=""></option>';
 				$output .=  buildOptionsPersonnes();
-				$output .= '</select><button onclick=affect_conjoint();>Affecter</button>'.
+				$output .= '</select> <button onclick=affect_conjoint();>Affecter</button>'.
                                 '</td>'.
 				'		</tr>'.	
 				'		<tr>'.
@@ -49,7 +49,7 @@ function find_conjoint($id){
         $result = $mysqli->query($query);
 
         $row = $result->fetch_array(MYSQLI_ASSOC);
-	if($mysqli->numrows>0) $output = "<a href='clients.php?hideerrors=1&edit=".$row['clientid']."'>".strtoupper($row['clientnom'])." ".strtoupper($row['clientprenom'])." - ".date("d/m/Y",strtotime($row['clientdatenaissance']))."</a>";
+	if($result->num_rows>0) $output = "<a href='clients.php?hideerrors=1&edit=".$row['clientid']."'>".strtoupper($row['clientnom'])." ".strtoupper($row['clientprenom'])." - ".date("d/m/Y",strtotime($row['clientdatenaissance']))."</a>";
 	$mysqli->close();
 	return $output;
 }

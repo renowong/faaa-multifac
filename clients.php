@@ -219,7 +219,7 @@ require_once('clients_top.php');
 					var id = $child.attr("id");
 					var nom = $child.find("nom").text();
 					var prenom = $child.find("prenom").text();
-				    var dn = $child.find("dn").text();
+					var dn = $child.find("dn").text();
 					var sexe = $child.find("sexe").text();
 					var cps = $child.find("cps").text();
 					var status = $child.find("status").text();
@@ -297,7 +297,17 @@ require_once('clients_top.php');
 			$("#opaquediv").hide();
 		}
 		function affect_conjoint(){
-			alert("TEST");
+			var conjointid = $("#box_conjoint").val();
+			var id = gup('edit');
+			
+			$.get("conjoint_set.php",{id:id,conjointid:conjointid},
+			function(data){
+				$('#divconjoint').empty();
+				$('#divconjoint').load('conjoint.php?id='+id, function(){
+					$("#box_conjoint").chosen();
+				});
+			});
+
 		}
 		</script>
 	</head>
