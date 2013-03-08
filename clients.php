@@ -331,7 +331,7 @@ require_once('clients_top.php');
 					<form name="frmRegistration" action="clients_validate.php?validationType=php<? echo $edit ?>" method="POST">
 						<table name="tblclient" id="tblclient" class="tblform">
 							<tbody>
-								<th colspan="3">Donn&eacute;es du compte</th>
+								<th colspan="2">Donn&eacute;es du compte</th>
 								<tr>
 									<td title="Option d&eacute;sactiv&eacute;e lorsque des factures sont en cours ou la liste des enfants n'est pas vide.">
 										<!--Status-->
@@ -348,11 +348,6 @@ require_once('clients_top.php');
 										<span id="box_CiviliteFailed" class="<?php echo $_SESSION['errors']['Civilite'] ?> red">
 											Veuillez s&eacute;lectionner une civilit&eacute;.
 										</span>
-									</td>
-									<td rowspan="10">
-										<!--Obs-->
-										<label for="txt_obs">Observations</label><br />
-										<textarea style="height:442px;width:179px;resize:none;" id="txt_obs" name="txt_obs"><?php echo $_SESSION['values']['txt_obs'] ?></textarea>
 									</td>
 								</tr>
 								<tr>
@@ -509,6 +504,13 @@ require_once('clients_top.php');
                                                                                 </span>
 									</td>
 								</tr>
+								<tr>
+									<td colspan="2">
+										<!--Obs-->
+										<label for="txt_obs">Observations</label><br />
+										<textarea style="height:80px;width:340px;resize:none;" id="txt_obs" name="txt_obs"><?php echo $_SESSION['values']['txt_obs'] ?></textarea>
+									</td>
+								</tr>	
 								<tr>
 									<td colspan="3" align="right">
 										<!--Reset-->
