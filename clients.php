@@ -34,6 +34,7 @@ require_once('clients_top.php');
 					$('#divavoirs').show();
 					$('#divconjoint').load('conjoint.php?id='+edit, function(){
 						$("#box_conjoint").chosen();
+						$("button").button();
 					});
 					$('#divconjoint').show();
 					
@@ -305,6 +306,7 @@ require_once('clients_top.php');
 				$('#divconjoint').empty();
 				$('#divconjoint').load('conjoint.php?id='+id, function(){
 					$("#box_conjoint").chosen();
+					$("button").button();
 				});
 			});
 
