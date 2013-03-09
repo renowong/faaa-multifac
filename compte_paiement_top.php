@@ -27,7 +27,7 @@ function getAllFactures($id,$type){
 				$result = $mysqli->query($query);
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
 				$typef="cantine";
-				$comment = str_replace(" ; ","<br/>",$row["comment"]);
+				$comment = str_replace(" ; ","<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",$row["comment"]);
 				$enfant_prenom = "<br/>".getEnfantPrenom($row['idfacture']);
 				$output .= "<tr><td>$typef$enfant_prenom</td>";
 				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de <b>".trispace($row["montantfcp"])." FCP</b> (soit ".$row["montanteuro"]." &euro;)";
