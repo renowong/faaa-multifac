@@ -329,6 +329,8 @@ foreach( $ar_tables as &$val ){
         
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
+		//$comment = $row["comment"];
+		$comment = str_replace(" ; ","<br/>",$row["comment"]);
 		if($row["validation"]==0) {$status="En cours de validation";$reject="";
 		}else{
 			if($row["acceptation"]==0){$status="Refus&eacute;e";$reject="reject";}else{$status="Valid&eacute;e";$reject="";}
@@ -339,7 +341,7 @@ foreach( $ar_tables as &$val ){
 				$output .= "<tbody class=\"$reject\"><td>".$val['title']."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">Facture du ".french_date($row["datefacture"])." montant de ";
 				}
 		$output .= trispace($row["montantfcp"]);
-		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a><br/>Obs : ".$row["obs"]."</td><td>$status</td><td>".$row["comment"]."</td></tbody>";
+		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a><br/>Obs : ".$row["obs"]."</td><td>$status</td><td>$comment</td></tbody>";
         }
     }  
 
