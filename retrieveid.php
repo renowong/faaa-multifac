@@ -108,6 +108,7 @@ if (isset($_POST['box_search'])) {
 				
 			$( "#dialog-confirm" ).hide();
 			
+			$( "input:submit,input:button,button" ).button();
 			///////chosen//////		
 				load_list('1');
 				
@@ -125,13 +126,11 @@ if (isset($_POST['box_search'])) {
 			
 			$.post("retrieveid_list.php", { form:form , active:active })
 			.done(function(data) {
-				$("#box_search_div").empty();
-				$("#box_search_div").append("<select name='box_search' id='box_search' data-placeholder='S&eacute;lectionner un compte' class='chzn-select' tabindex='2' style='width:450px;'></select>");
+				$("#box_search").empty();
 				$("#box_search").append("<option value=''></option>");
 				$("#box_search").append(data);
-				$("#box_search_div").append("<input type='submit' id='submitbutton' value='Ouvrir le dossier' />");
-				$( "input:submit,input:button,button" ).button();
 				$("#box_search").chosen();
+				$("#box_search").trigger("liszt:updated");
 				
 			});
 		}
@@ -176,7 +175,9 @@ if (isset($_POST['box_search'])) {
 				<input type="checkbox" id="active_xml" />
 				<label for="active_xml" id="label_compte_desactive">Voir comptes d&eacute;sactiv&eacute;s</label>
 				<br/>
-				<div id="box_search_div"></div>
+				<label for="box_search"><? echo $label ?></label>
+				<select name="box_search" id="box_search" data-placeholder="S&eacute;lectionner un compte" class="chzn-select" tabindex="2" style="width:450px;"></select>
+				<input type="submit" id="submitbutton" value="Ouvrir le dossier" />
 				<input type="hidden" name="reaffect" id="reaffect" value="<? echo $_GET['reaffect']; ?>"/>
 				<input type="hidden" name="reaffecttype" id="reaffecttype" value="<? echo $_GET['type']; ?>"/>
 				<input type="hidden" name="reaffectfrom" id="reaffectfrom" value="<? echo $arCompte[1]; ?>"/>
