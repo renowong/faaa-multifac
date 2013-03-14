@@ -36,7 +36,7 @@ $kids_list = getAllKids($_GET['edit']);
 
 if($facture_en_cours>0){
 	$actiflock = "style='visibility:hidden;'";
-	$totalfactures = $facture_en_cours." facture(s) en cours. <a href='javascript:reaffectfactures();' title='Cliquez pour transf&eacute;rer les factures'><img src='img/reaffect.png' style='vertical-align:baseline;'/></a>";
+	$totalfactures = $facture_en_cours." facture(s) en cours. <a href='javascript:reaffectfactures();'><img src='img/reaffect.png' style='vertical-align:middle;' title='Cliquez pour transf&eacute;rer les factures &agrave; un autre compte' /></a>";
 }elseif($kids_list>0){
 	$actiflock = "style='visibility:hidden;'";
 }
@@ -243,7 +243,7 @@ if (isset($_GET['edit']) && $_GET['edit'] > 0) {
 		'		</tr>'.			
 		'		<tr>'.
 		'			<td colspan="2"><label>Liste des enfants</label>';
-		if(getAllKids($_GET['edit'])>0) $output .='<a href="javascript:reaffectkid();"><img src="img/Actions-user-group-properties-icon.png" title="R&eacute;affection parent"/></a></td>';
+		if(getAllKids($_GET['edit'])>0) $output .='<a href="javascript:reaffectkid();"><img style="vertical-align:middle;" src="img/reaffect.png" title="Cliquez pour une r&eacute;affection vers un autre parent"/></a></td>';
 		$output .= '		</tr>'.
 		'		<tr>'.
 		'			<td colspan="2"><div name="list_enfants" id="list_enfants"></div></td>'.

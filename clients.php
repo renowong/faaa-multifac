@@ -336,8 +336,10 @@ require_once('clients_top.php');
 									<td title="Option d&eacute;sactiv&eacute;e lorsque des factures sont en cours ou la liste des enfants n'est pas vide.">
 										<!--Status-->
 										<label for="chk_status">Compte Actif</label>
-										<input type="checkbox" name="chk_status" id="chk_status" value="1" <? if($_SESSION['values']['chk_status']) echo 'checked="checked"'; ?> <? echo $actiflock ?>/><br/>
+										<input type="checkbox" name="chk_status" id="chk_status" value="1" <? if($_SESSION['values']['chk_status']) echo 'checked="checked"'; ?> <? echo $actiflock ?>/>
+										<div>
 										<? echo $totalfactures; ?>
+										</div>
 									</td>
 									<td>
 										<!--Civilite-->
