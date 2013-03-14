@@ -45,7 +45,7 @@ if (isset($_POST['box_search'])) {
 	<head>
 	<?php echo $title.$icon.$charset.$nocache.$defaultcss.$chromecss.$graburljs.$compte_div.$jquery.$jqueryui.$message_div ?>
 		<link rel="stylesheet" href="chosen/chosen.css" />
-        <script src="chosen/chosen.jquery.js" type="text/javascript"></script>
+		<script src="chosen/chosen.jquery.js" type="text/javascript"></script>
 		
 		<script type="text/javascript">
 		$(document).ready(function() {
@@ -108,11 +108,33 @@ if (isset($_POST['box_search'])) {
 				
 			$( "#dialog-confirm" ).hide();
 			
-			//////jqueryui buttons/////
-				$( "input:submit,input:button,button" ).button();
+			///////chosen//////		
+				load_list('1');
 				
-				$("#box_search").chosen();
+				$("#active_xml").change(function(){
+					if($("#active_xml").prop("checked")){
+						load_list('0');	
+					}else{
+						load_list('1');	
+					}
+				})
 			});
+		
+		function load_list(active){
+			var form = gup('form');
+			
+			$.post("retrieveid_list.php", { form:form , active:active })
+			.done(function(data) {
+				$("#box_search_div").empty();
+				$("#box_search_div").append("<select name='box_search' id='box_search' data-placeholder='S&eacute;lectionner un compte' class='chzn-select' tabindex='2' style='width:450px;'></select>");
+				$("#box_search").append("<option value=''></option>");
+				$("#box_search").append(data);
+				$("#box_search_div").append("<input type='submit' id='submitbutton' value='Ouvrir le dossier' />");
+				$( "input:submit,input:button,button" ).button();
+				$("#box_search").chosen();
+				
+			});
+		}
 		
 		
 		function init() {
@@ -151,16 +173,10 @@ if (isset($_POST['box_search'])) {
 		<br/>
 
 			<form method="POST" action="<? echo $_SERVER['PHP_SELF'] . "?form=" . $_GET['form'] ?>" style="width:100%;text-align:center;">
-				<!--<input type="checkbox" id="active_xml" />-->
-				<!--<label for="active_xml" id="label_compte_desactive">Voir comptes d&eacute;sactiv&eacute;s</label>-->
-				<!--<br/>-->
-					<label for="box_search"><? echo $label ?></label>
-					
-					<select name="box_search" id="box_search" data-placeholder="S&eacute;lectionner un compte" class="chzn-select" tabindex="2" style="width:450px;">
-						<option value=""></option>
-						<?php buildOptionsPersonnes($_GET['form']); ?>
-					</select>
-					<input type="submit" id="submitbutton" value="Ouvrir le dossier" />
+				<input type="checkbox" id="active_xml" />
+				<label for="active_xml" id="label_compte_desactive">Voir comptes d&eacute;sactiv&eacute;s</label>
+				<br/>
+				<div id="box_search_div"></div>
 				<input type="hidden" name="reaffect" id="reaffect" value="<? echo $_GET['reaffect']; ?>"/>
 				<input type="hidden" name="reaffecttype" id="reaffecttype" value="<? echo $_GET['type']; ?>"/>
 				<input type="hidden" name="reaffectfrom" id="reaffectfrom" value="<? echo $arCompte[1]; ?>"/>

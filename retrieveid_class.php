@@ -24,7 +24,7 @@ class retrieveid {
 				 '" AND `clients`.`clientprenom` = "' . $value[1] .
 				 '" AND `clients`.`clientdatenaissance` = "' . $dn[2] . "-" . $dn[1] . "-" . $dn[0] . '"';
 		*/
-		$query = "SELECT `clients`.`clientid` FROM `".DB."`.`clients` WHERE `clients`.`clientid` = '".$code."'";
+		$query = "SELECT `clientid` FROM `clients` WHERE `clientid` = '".$code."'";
 		break;
 
 		case "mandataires":
@@ -32,7 +32,7 @@ class retrieveid {
 				 '" AND `mandataires`.`mandataireprenom` = "' . $value[1] .
 				 '" AND `mandataires`.`mandatairetelephone` = "' . $value[2] . '"';
 		*/
-		$query = "SELECT `mandataires`.`mandataireid` FROM `".DB."`.`mandataires` WHERE `mandataires`.`mandataireid` = '".$code."'";
+		$query = "SELECT `mandataireid` FROM `mandataires` WHERE `mandataireid` = '".$code."'";
 		break;
 		}
 		//echo $query;
