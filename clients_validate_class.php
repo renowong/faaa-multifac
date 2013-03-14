@@ -233,7 +233,7 @@ class Validate {
 
 	private function validateNom($value) {
 		$value = decode_utf8($value);
-		return (!preg_match('/^[A-Za-z]{1,}[\-\ ]?[A-Za-z]*[\-\ ]?[A-Za-z]*$/i', $value)) ? 0 : 1;
+		return (!preg_match('/^[A-Za-z]{1,}[\-\ ]?[A-Za-z]*[\-\ ]?[A-Za-z]*[\-\ ]?[A-Za-z]*$/i', $value)) ? 0 : 1;
 	}
 
 	private function validateNomMarital($value) {
