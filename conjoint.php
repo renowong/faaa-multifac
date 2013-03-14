@@ -32,7 +32,7 @@ print $output;
 
 function buildOptionsPersonnes() {
 	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$query = "SELECT `clientid`, `clientnom`, `clientprenom`, `clientdatenaissance` FROM `clients` ORDER BY clientnom";
+	$query = "SELECT `clientid`, `clientnom`, `clientprenom`, `clientdatenaissance` FROM `clients` WHERE `clientstatus`='1' ORDER BY `clientnom`";
 	$result = $mysqli->query($query);
 
 	while($row = $result->fetch_array(MYSQLI_ASSOC)){

@@ -49,7 +49,7 @@ function buildOptionsCategories($selectedOption) {
 
 function buildOptionsPersonnes($selectedOption) {
 	$Mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$query = "SELECT `clients`.`clientid`, `clients`.`clientnom`, `clients`.`clientprenom`, `clients`.`clientdatenaissance` FROM `".DB."`.`clients` ORDER BY clientnom";
+	$query = "SELECT `clientid`, `clientnom`, `clientprenom`, `clientdatenaissance` FROM `clients` WHERE `clientstatus`='1' ORDER BY `clientnom`";
 	$result = $Mysqli->query($query);
 
 	while($row = $result->fetch_array(MYSQLI_ASSOC)){
@@ -64,7 +64,7 @@ function buildOptionsPersonnes($selectedOption) {
 
 function buildOptionsMandataires($selectedOption) {
 	$Mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$query = "SELECT `mandataires`.`mandataireid`, `mandataires`.`mandatairenom`, `mandataires`.`mandataireprenom`, `mandataires`.`mandatairetelephone` FROM `".DB."`.`mandataires` ORDER BY mandatairenom";
+	$query = "SELECT `mandataireid`, `mandatairenom`, `mandataireprenom`, `mandatairetelephone` FROM `mandataires`  WHERE `mandatairestatus`='1' ORDER BY `mandatairenom`";
 	$result = $Mysqli->query($query);
 
 	while($row = $result->fetch_array(MYSQLI_ASSOC)){
@@ -79,7 +79,7 @@ function buildOptionsMandataires($selectedOption) {
 
 function buildOptionsServitudes($selectedOption) {
 	$Mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DBRUES);
-	$query = "SELECT `rues`.`IDRue`, `rues`.`Rue` FROM `".DBRUES."`.`rues` ORDER BY Rue";
+	$query = "SELECT `rues`.`IDRue`, `rues`.`Rue` FROM `".DBRUES."`.`rues` ORDER BY `Rue`";
 	$result = $Mysqli->query($query);
 
 	while($row = $result->fetch_array(MYSQLI_ASSOC)){
