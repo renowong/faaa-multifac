@@ -331,6 +331,13 @@ require_once('mandataires_top.php');
                                                                         </td>
                                                                 </tr>
 								<tr>
+									<td colspan="2">
+										<!--Obs-->
+										<label for="txt_obs">Observations</label><br />
+										<textarea style="height:100px;width:340px;resize:none;" id="txt_obs" name="txt_obs"><?php echo $_SESSION['values']['txt_obs'] ?></textarea>
+									</td>
+								</tr>	
+								<tr>
 									<td colspan="2" align="right">
 										<!--Reset-->
 										<input class="submit" type="button" onClick="window.location='<?php echo $_SERVER['PHP_SELF'] ?>?reset=1';" value="Annuler" name="raz" />

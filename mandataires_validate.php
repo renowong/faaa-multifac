@@ -52,7 +52,7 @@ function enterdata($edit){
 			 " `mandatairestatus`, `mandatairenom`,".
 			 " `mandataireprenom`, `mandataireidtresor`, `mandataireemail`, `mandatairenotahiti`, `mandataireRC`,".
 			 " `mandatairetelephone`,`mandatairetelephone2`, `mandatairefax`, `mandatairebp`,".
-			 " `mandatairecp`, `mandataireville`, `mandatairecommune`, `mandatairepays`, `mandatairerib`)".
+			 " `mandatairecp`, `mandataireville`, `mandatairecommune`, `mandatairepays`, `mandatairerib`,`obs`)".
 			 " VALUES (NULL, '".$_POST['box_Prefix']."', '".strtoupper($_POST['txt_RS']).
 		 	 "', '".$_POST['chk_status']."', '".strtoupper($_POST['txt_Nom'])."', '".strtoupper($_POST['txt_Prenom']).
 			 "', '".$_POST['txt_IDTresor']."', '".strtolower($_POST['txt_Email']).
@@ -60,7 +60,7 @@ function enterdata($edit){
 			 "', '".$_POST['txt_Telephone']."', '".$_POST['txt_Telephone2'].
 			 "', '".$_POST['txt_Fax']."', '".$_POST['txt_BP'].
 			 "', '".$_POST['txt_CP']."', '".addslashes(strtoupper($_POST['txt_Ville'])).
-			 "', '".addslashes(strtoupper($_POST['txt_Commune']))."', '".strtoupper($_POST['txt_Pays'])."', '".$_POST['txt_RIB']."')";
+			 "', '".addslashes(strtoupper($_POST['txt_Commune']))."', '".strtoupper($_POST['txt_Pays'])."', '".$_POST['txt_RIB']."', '".addslashes($_POST['txt_obs'])."')";
 			//echo $query;
 			$Mysqli->query($query);
 			$lastid = $Mysqli->insert_id;
@@ -79,7 +79,8 @@ function enterdata($edit){
 			 "', `mandatairetelephone`='".$_POST['txt_Telephone']."', `mandatairetelephone2`='".$_POST['txt_Telephone2'].
 			 "', `mandatairefax`='".$_POST['txt_Fax']."', `mandatairebp`='".$_POST['txt_BP'].
 			 "', `mandatairecp`='".$_POST['txt_CP']."', `mandataireville`='".addslashes(strtoupper($_POST['txt_Ville'])).
-			 "', `mandatairecommune`='".addslashes(strtoupper($_POST['txt_Commune']))."', `mandatairepays`='".strtoupper($_POST['txt_Pays'])."', `mandatairerib`='".$_POST['txt_RIB']."'".
+			 "', `mandatairecommune`='".addslashes(strtoupper($_POST['txt_Commune']))."', `mandatairepays`='".strtoupper($_POST['txt_Pays']).
+                         "', `mandatairerib`='".$_POST['txt_RIB']."', `obs`='".addslashes($_POST['txt_obs'])."'".
 			 " WHERE `mandataireid`=". $edit;
 			//echo $query;
 			$Mysqli->query($query);

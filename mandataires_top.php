@@ -61,6 +61,7 @@ function getData($id){
 		$_SESSION['values']['txt_Commune'] = $row['mandatairecommune'];
 		$_SESSION['values']['txt_Pays'] = $row['mandatairepays'];
 		$_SESSION['values']['txt_RIB'] = $row['mandatairerib'];
+                $_SESSION['values']['txt_obs'] = $row['obs'];
 	}
 	if ($_GET['hideerrors']) reseterrors();
 	$Mysqli->close();
@@ -116,6 +117,7 @@ function resetvalues(){
 	$_SESSION['values']['txt_Commune'] = '';
 	$_SESSION['values']['txt_Pays'] = '';
 	$_SESSION['values']['txt_RIB'] = '';
+        $_SESSION['values']['txt_obs'] = '';
 }
 
 function reseterrors(){
