@@ -168,10 +168,10 @@ require_once('clients_top.php');
 				});
 				
 				if(edit==""|edit=="0"){
-						$('#txt_DateNaissance').datepicker({inline: true,changeMonth: true,changeYear: true,minDate: "-70Y",maxDate: "-18Y"});
+						$('#txt_DateNaissance').datepicker({inline: true,changeMonth: true,changeYear: true,minDate: "-70Y",maxDate: "-18Y",yearRange: "-70:-18"});
 				}
 				
-				$('#txt_dn_enfant').datepicker({inline: true,changeMonth: true,changeYear: true,minDate: "-18Y",maxDate: "0"});
+				$('#txt_dn_enfant').datepicker({inline: true,changeMonth: true,changeYear: true,minDate: "-18Y",maxDate: "0",yearRange: "-18:+0"});
 			
 				//////jqueryui buttons/////
 				$( "input:submit,input:button,button" ).button();
