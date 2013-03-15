@@ -1,5 +1,5 @@
 <?php 
-function chifre_en_lettre($montant, $devise1='', $devise2='')
+function chiffre_en_lettre($montant, $devise1='', $devise2='')
 {
 	$montant = round($montant);
 	if(empty($devise1)) $dev1=' Francs FCP';

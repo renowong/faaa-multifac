@@ -1,6 +1,6 @@
 <?php
 require('fpdf/fpdf.php');
-require('chifrenlettre.php');
+require('chiffreenlettre.php');
 require_once ('config.php');
 require_once('global_functions.php');
 
@@ -553,7 +553,7 @@ switch($typefacture){
 	$pdf->Cell(89,10, utf8_decode('ARRETE LA PRESENTE FACTURE A LA SOMME DE :'));
 	$pdf->SetXY(12+$xreg,195.5+$yreg);
 	$pdf->SetFont('Arial','B',10);
-	$pdf->Cell(89,10, utf8_decode(chifre_en_lettre($total)));
+	$pdf->Cell(89,10, utf8_decode(chiffre_en_lettre($total)));
 
 	////////////////////////////////fin arrete au montant////////////////////////////////////
 	////////////////////////////////information////////////////////////////////////

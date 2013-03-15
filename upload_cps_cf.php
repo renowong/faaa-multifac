@@ -1,7 +1,7 @@
 <?php
 include_once('config.php');
 require('global_functions.php');
-require('chifrenlettre.php');
+require('chiffreenlettre.php');
 
 $allowedExts = array("csv");
 $extension = end(explode(".", $_FILES["file"]["name"]));
@@ -71,7 +71,7 @@ function update_data($f){
             $ar_l[15]=0;
             $ar_l[16]=$ar_l[11];
             $total += $ar_l[16];
-            $touteslettres = chifre_en_lettre($total);
+            $touteslettres = chiffre_en_lettre($total);
             $l = join(";",$ar_l);
             fwrite($fw, $l);
 	    
