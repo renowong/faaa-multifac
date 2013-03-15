@@ -130,7 +130,7 @@ function getPaidFactures($id,$type){
 			$output .= "- Obs: ".$row["obs"]."</td>".
 			"<td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=$typef\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
 			if(isset($row['idpaiement'])){
-				$output .= "<td style=\"text-align:center\"><a href=\"createrecu.php?id=".$row['idpaiement']."&type=$typef\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
+				$output .= "<td style=\"text-align:center\"><a href=\"createrecu.php?id=".$row['idpaiement']."&type=$typef\" target=\"_blank\"><img src=\"img/pdf_blue.png\" height=\"32\" style=\"border:0px\"></a></td>";
 				}
 			}
 			$result->close();
@@ -146,7 +146,7 @@ function getPaidFactures($id,$type){
 			"- R&eacute;gl&eacute;e la somme de <b>".trispace($row["montantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".french_date($row["date_paiement"]).")<br/>".
 			"- Obs: ".$row["obs"]."</td>".
 			"<td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=amarrage\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>".
-			"<td style=\"text-align:center\"><a href=\"createrecu.php?id=".$row['idpaiement']."&type=amarrage\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
+			"<td style=\"text-align:center\"><a href=\"createrecu.php?id=".$row['idpaiement']."&type=amarrage\" target=\"_blank\"><img src=\"img/pdf_blue.png\" height=\"32\" style=\"border:0px\"></a></td>";
 			}
 			$result->close();
 		break;
@@ -163,7 +163,7 @@ function getPaidFactures($id,$type){
 			"- R&eacute;gl&eacute;e la somme de <b>".trispace($row["montantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".french_date($row["date_paiement"]).")<br/>".
 			"- Obs: ".$row["obs"]."</td>".
 			"<td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=etal\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>".
-			"<td style=\"text-align:center\"><a href=\"createrecu.php?id=".$row['idpaiement']."&type=etal\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
+			"<td style=\"text-align:center\"><a href=\"createrecu.php?id=".$row['idpaiement']."&type=etal\" target=\"_blank\"><img src=\"img/pdf_blue.png\" height=\"32\" style=\"border:0px\"></a></td>";
 			}
 			$result->close();
 			
@@ -178,7 +178,7 @@ function getPaidFactures($id,$type){
 			"- R&eacute;gl&eacute;e la somme de <b>".trispace($row["montantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".french_date($row["date_paiement"]).")<br/>".
 			"- Obs: ".$row["obs"]."</td>".
 			"<td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=amarrage\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>".
-			"<td style=\"text-align:center\"><a href=\"createrecu.php?id=".$row['idpaiement']."&type=amarrage\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
+			"<td style=\"text-align:center\"><a href=\"createrecu.php?id=".$row['idpaiement']."&type=amarrage\" target=\"_blank\"><img src=\"img/pdf_blue.png\" height=\"32\" style=\"border:0px\"></a></td>";
 			}
 			$result->close();
 		break;
