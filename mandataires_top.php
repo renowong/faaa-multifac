@@ -202,13 +202,14 @@ foreach( $ar_tables as &$val ){
         $query = "SELECT * FROM `".$val['table']."` WHERE `idclient` = $id ORDER BY datefacture DESC, idfacture DESC limit 30";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
+            $comment = str_replace(" ; ","<br/>",$row["comment"]);
 		if($row["validation"]==0) {$status="En cours de validation";$reject="";
 		}else{
 			if($row["acceptation"]==0){$status="Refus&eacute;e";$reject="reject";}else{$status="Valid&eacute;e";$reject="";}
 		}
                 $output .= "<tbody class=\"$reject\"><td>".$val['title']."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">Facture du ".$row["datefacture"]." montant de ";
 		$output .= trispace($row["montantfcp"]);
-		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a></td><td>$status</td><td>".$row["comment"]."</td></tbody>";
+		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a></td><td>$status</td><td>$comment</td></tbody>";
         }
     }  
 
