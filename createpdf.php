@@ -420,14 +420,14 @@ switch($typefacture){
 		if($details_array[$count]['valeur']>0){
 			$pdf->Cell(89,5, "allocataire",0,1);
 			$pdf->SetXY(12+$xreg,109.9+$yreg+$ydet);
-			$pdf->Cell(89,5, $details_array[$count]['status'],0,1);
+			$pdf->Cell(89,5, html_entity_decode($details_array[$count]['status'],ENT_NOQUOTES,"cp1252"),0,1);
 			$cf = $details_array[$count]['quant']*$details_array[$count]['MontantFCP'];
 			$cf = $cf*$details_array[$count]['valeur']/100;
 			$pdf->SetXY(166+$xreg,109.9+$yreg+$ydet);
 			$pdf->Cell(32,5, "-".trispace($cf)." F",0,1,'R');
 
 		}else{
-			$pdf->Cell(89,5, $details_array[$count]['status'],0,1);
+			$pdf->Cell(89,5, html_entity_decode($details_array[$count]['status'],ENT_NOQUOTES,"cp1252"),0,1);
 		}
 		$pdf->SetXY(101+$xreg,104.5+$yreg+$ydet);
 		$pdf->Cell(17,5, $details_array[$count]['Unite'],0,1,'C');
@@ -456,7 +456,7 @@ switch($typefacture){
 	case "amarrage":
 	for($count=0;$count<count($details_array);$count++){
 		$pdf->SetXY(12+$xreg,104.5+$yreg+$ydet);
-		$pdf->Cell(89,5, html_entity_decode($details_array[$count]['Type']),0,1);
+		$pdf->Cell(89,5, html_entity_decode($details_array[$count]['Type'],ENT_NOQUOTES,"cp1252"),0,1);
 		$pdf->SetXY(101+$xreg,104.5+$yreg+$ydet);
 		$pdf->Cell(17,5, $details_array[$count]['Unite'],0,1,'C');
 		$pdf->SetXY(118+$xreg,104.5+$yreg+$ydet);
@@ -492,7 +492,7 @@ switch($typefacture){
 	default:
 	for($count=0;$count<count($details_array);$count++){
 		$pdf->SetXY(12+$xreg,104.5+$yreg+$ydet);
-		$pdf->Cell(89,5, html_entity_decode($details_array[$count]['Type']),0,1);
+		$pdf->Cell(89,5, html_entity_decode($details_array[$count]['Type'],ENT_NOQUOTES,"cp1252"),0,1);
 		$pdf->SetXY(101+$xreg,104.5+$yreg+$ydet);
 		$pdf->Cell(17,5, $details_array[$count]['Unite'],0,1,'C');
 		$pdf->SetXY(118+$xreg,104.5+$yreg+$ydet);
