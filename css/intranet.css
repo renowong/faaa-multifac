@@ -100,7 +100,7 @@ input, select {
         }
 
 #version {
-	position:absolute;
+	position:fixed;
 	/*border:2px solid;*/
 	text-align:right;
 	right:1px;
