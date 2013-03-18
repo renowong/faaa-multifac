@@ -86,6 +86,14 @@ class Validate {
 			case 'txt_Pays':
 			return $this->validatePays($inputValue);
 			break;
+		
+			case 'txt_Aroa':
+			return $this->validateAroa($inputValue);
+			break;
+		
+			case 'txt_Quartier':
+			return $this->validateQuartier($inputValue);
+			break;
 			
 			case 'txt_RIB':
 			return $this->validateRIB($inputValue);
@@ -114,6 +122,8 @@ class Validate {
 		$_SESSION['errors']['Ville'] = 'hidden';
 		$_SESSION['errors']['Commune'] = 'hidden';
 		$_SESSION['errors']['Pays'] = 'hidden';
+		$_SESSION['errors']['Aroa'] = 'hidden';
+		$_SESSION['errors']['Quartier'] = 'hidden';
 		$_SESSION['errors']['RIB'] = 'hidden';
 
 		if(!$this->validateCivilite($_POST['box_Civilite'])){
@@ -203,6 +213,16 @@ class Validate {
 		if(!$this->validatePays($_POST['txt_Pays'])){
 			$errorExist = 1;
 			$_SESSION['errors']['Pays'] = 'error';
+		}
+		
+		if(!$this->validateAroa($_POST['txt_Aroa'])){
+			$errorExist = 1;
+			$_SESSION['errors']['Aroa'] = 'error';
+		}
+		
+		if(!$this->validateQuartier($_POST['txt_Quartier'])){
+			$errorExist = 1;
+			$_SESSION['errors']['Quartier'] = 'error';
 		}
 
 		if(!$this->validateRIB($_POST['txt_RIB'])){
@@ -316,6 +336,14 @@ class Validate {
 	private function validatePays($value) {
 		if ($value=='') return 1;
 		return (!preg_match('/^[a-z_]{1,}$/i', $value)) ? 0 : 1;
+	}
+	
+	private function validateAroa($value) {
+		return ($value == '') ? 0 : 1;
+	}
+	
+	private function validateQuartier($value) {
+		return ($value == '') ? 0 : 1;
 	}
 
 	private function validateRIB($value) {

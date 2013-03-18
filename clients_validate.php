@@ -58,7 +58,7 @@ function enterdata($edit){
 				 " `clientprenom`, `clientprenom2`, `clientdatenaissance`,".
 				 " `clientlieunaissance`, `clientidtresor`, `clientemail`,".
 				 " `clientcps`, `clienttelephone`, `clientfax`, `clientbp`,".
-				 " `clientcp`, `clientville`, `clientcommune`, `clientpays`, `clientrib`, `obs`)".
+				 " `clientcp`, `clientville`, `clientcommune`, `clientpays`, `aroa`, `quartier`, `clientrib`, `obs`)".
 				 " VALUES (NULL, '".$generatedcode."', '".$_POST['chk_status']."', '".$_POST['box_Civilite'].
 				 "', '".strtoupper($_POST['txt_Nom'])."', '".strtoupper($_POST['txt_NomMarital']).
 				 "', '".strtoupper($_POST['txt_Prenom'])."', '".strtoupper($_POST['txt_Prenom2']).
@@ -67,7 +67,9 @@ function enterdata($edit){
 				 "', '".$_POST['txt_CPS']."', '".$_POST['txt_Telephone'].
 				 "', '".$_POST['txt_Fax']."', '".$_POST['txt_BP'].
 				 "', '".$_POST['txt_CP']."', '".addslashes(strtoupper($_POST['txt_Ville'])).
-				 "', '".addslashes(strtoupper($_POST['txt_Commune']))."', '".strtoupper($_POST['txt_Pays'])."', '".$_POST['txt_RIB']."', '".addslashes($_POST['txt_obs'])."');";
+				 "', '".addslashes(strtoupper($_POST['txt_Commune']))."', '".strtoupper($_POST['txt_Pays']).
+				 "', '".addslashes(strtoupper($_POST['txt_Aroa']))."', '".addslashes(strtoupper($_POST['txt_Quartier'])).
+				 "', '".$_POST['txt_RIB']."', '".addslashes($_POST['txt_obs'])."');";
 	$Mysqli->query($query);
 	$lastid = $Mysqli->insert_id;
 	//print $query;
@@ -90,6 +92,7 @@ function enterdata($edit){
 				 "', `clientfax`='".$_POST['txt_Fax']."', `clientbp`='".$_POST['txt_BP'].
 				 "', `clientcp`='".$_POST['txt_CP']."', `clientville`='".addslashes(strtoupper($_POST['txt_Ville'])).
 				 "', `clientcommune`='".addslashes(strtoupper($_POST['txt_Commune']))."', `clientpays`='".strtoupper($_POST['txt_Pays']).
+				 "', `aroa`='".addslashes(strtoupper($_POST['txt_Aroa']))."', `quartier`='".addslashes(strtoupper($_POST['txt_Quartier'])).
 				 "', `clientrib`='".$_POST['txt_RIB']."', `obs`='".addslashes($_POST['txt_obs'])."'".
 				 " WHERE `clientid`=". $edit;
 	$Mysqli->query($query);
@@ -123,6 +126,8 @@ function reinitialize(){
 	$_SESSION['values']['txt_Ville'] = '';
 	$_SESSION['values']['txt_Commune'] = '';
 	$_SESSION['values']['txt_Pays'] = '';
+	$_SESSION['values']['txt_Aroa'] = '';
+	$_SESSION['values']['txt_Quartier'] = '';
 	$_SESSION['values']['txt_enfantNom'] = '';
 	$_SESSION['values']['txt_enfantPrenom'] = '';
 	$_SESSION['values']['txt_enfantDN'] = '';

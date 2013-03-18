@@ -497,6 +497,24 @@ require_once('clients_top.php');
 									</td>
 								</tr>
 								<tr>
+									<td>
+										<!--Aroa-->
+										<label for="txt_Aroa">N&deg; + Aroa</label><span class="red">*</span><br />
+										<input class="uppercase" type="text" name="txt_Aroa" id="txt_Aroa" value="<?php echo stripslashes($_SESSION['values']['txt_Aroa']) ?>" size="20" maxlength="20" onBlur="validate(this.value, this.id);" />
+										<span id="txt_AroaFailed" class="<?php echo $_SESSION['errors']['Aroa'] ?> red"><br/>
+											Veuillez entrer une rue valide.
+										</span>
+									</td>
+									<td>
+										<!--Quartier-->
+										<label for="txt_Quartier">Quartier</label><span class="red">*</span><br />
+										<input class="uppercase" type="text" name="txt_Quartier" id="txt_Quartier" value="<?php echo $_SESSION['values']['txt_Quartier'] ?>" size="20" maxlength="20" onBlur="validate(this.value, this.id);" />
+										<span id="txt_QuartierFailed" class="<?php echo $_SESSION['errors']['Quartier'] ?> red"><br/>
+											Veuillez entrer un quartier valide.
+										</span>
+									</td>
+								</tr>
+								<tr>
 									<td colspan="2">
 										<!--RIB-->
 										<label for="txt_RIB">R.I.B.</label>
