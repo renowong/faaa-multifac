@@ -21,7 +21,7 @@ switch($typefacture){
 			"`factures_cantine`.`avoir`, `clients`.`clientcivilite`, ".
 			"`clients`.`clientnom`, `clients`.`clientnommarital`, `clients`.`clientprenom`, `clients`.`clientprenom2`, ".
 			"`clients`.`clientbp`, `clients`.`clientcp`, `clients`.`clientville`, `clients`.`clientcommune`, ".
-			"`clients`.`clientpays`, `clients`.`clienttelephone`, `clients`.`clientfax` ".
+			"`clients`.`clientpays`, `clients`.`clienttelephone`, `clients`.`clientfax`, `clients`.`aroa`, `clients`.`quartier` ".
 			"FROM `factures_cantine` INNER JOIN `clients` ON `factures_cantine`.`idclient`=`clients`.`clientid` ".
 			"WHERE `factures_cantine`.`idfacture` = $idfacture";
 		$result = $mysqli->query($query);
@@ -32,9 +32,8 @@ switch($typefacture){
 				$facturevalidation = $row['validation'];
 				$client = html_entity_decode($row['clientnom']." ".$row['clientprenom'],ENT_QUOTES, "UTF-8");
 				$client = strtoupper($client);
-					$ar_contact = get_geo($row['idclient']);
-					$contact1 = $ar_contact[0];
-					$contact2 = $ar_contact[1];
+				$contact1 = $row['aroa'];
+				$contact2 = $row['quartier'];
 				$bp = "BP ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
 				$telephone = "Téléphone : ".$row['clienttelephone'];
 				$fax = "Fax : ".$row['clientfax'];
@@ -149,7 +148,7 @@ switch($typefacture){
 			"`clients`.`clientcivilite`, ".
 			"`clients`.`clientnom`, `clients`.`clientnommarital`, `clients`.`clientprenom`, `clients`.`clientprenom2`, ".
 			"`clients`.`clientbp`, `clients`.`clientcp`, `clients`.`clientville`, `clients`.`clientcommune`, ".
-			"`clients`.`clientpays`, `clients`.`clienttelephone`, `clients`.`clientfax` ".
+			"`clients`.`clientpays`, `clients`.`clienttelephone`, `clients`.`clientfax`, `clients`.`aroa`, `clients`.`quartier` ".
 			"FROM `factures_amarrage` INNER JOIN `clients` ON `factures_amarrage`.`idclient`=`clients`.`clientid` ".
 			"WHERE `factures_amarrage`.`idfacture` = $idfacture";
 		$result = $mysqli->query($query);
@@ -160,9 +159,8 @@ switch($typefacture){
 				$facturevalidation = $row['validation'];
 				$client = html_entity_decode($row['clientnom']." ".$row['clientprenom'],ENT_QUOTES, "UTF-8");
 				$client = strtoupper($client);
-					$ar_contact = get_geo($row['idclient']);
-					$contact1 = $ar_contact[0];
-					$contact2 = $ar_contact[1];
+				$contact1 = $row['aroa'];
+				$contact2 = $row['quartier'];
 				$bp = "BP ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
 				$telephone = "Téléphone : ".$row['clienttelephone'];
 				$fax = "Fax : ".$row['clientfax'];
