@@ -32,9 +32,8 @@ switch($typefacture){
 				$facturevalidation = $row['validation'];
 				$client = html_entity_decode($row['clientnom']." ".$row['clientprenom'],ENT_QUOTES, "UTF-8");
 				$client = strtoupper($client);
-				$contact1 = $row['aroa'];
-				$contact2 = $row['quartier'];
-				$bp = "BP ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
+				$contact1 = "BP ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
+				$contact2 = $row['aroa']." / ".$row['quartier'];
 				$telephone = "Téléphone : ".$row['clienttelephone'];
 				$fax = "Fax : ".$row['clientfax'];
 				$datelimite = $row['datelimite'];
@@ -159,9 +158,8 @@ switch($typefacture){
 				$facturevalidation = $row['validation'];
 				$client = html_entity_decode($row['clientnom']." ".$row['clientprenom'],ENT_QUOTES, "UTF-8");
 				$client = strtoupper($client);
-				$contact1 = $row['aroa'];
-				$contact2 = $row['quartier'];
-				$bp = "BP ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
+				$contact1 = "BP ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
+				$contact2 = $row['aroa']." / ".$row['quartier'];
 				$telephone = "Téléphone : ".$row['clienttelephone'];
 				$fax = "Fax : ".$row['clientfax'];
 				$datelimite = $row['datelimite'];
@@ -193,7 +191,7 @@ switch($typefacture){
 				$facturevalidation = $row['validation'];
 				$client = html_entity_decode($row['mandatairenom']." ".$row['mandataireprenom'],ENT_QUOTES, "UTF-8");
 				$client = strtoupper($client);
-				$contact1 = "BP ".$row['mandatairebp']." ".$row['mandatairecp']." ".$row['mandataireville'];
+				$contact1 = "BP ".$row['mandatairebp']." - ".$row['mandatairecp']." ".$row['mandataireville'];
 				$contact2 = $row['aroa']." / ".$row['quartier'];
 				if($row['mandatairetelephone']!==""){
 					$telephone = "Téléphone : ".$row['mandatairetelephone'];
@@ -227,12 +225,12 @@ switch($typefacture){
 
 
 
-genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$bp,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$edt,$eau);
+genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$edt,$eau);
 
 $mysqli->close();
 
 
-function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$bp,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$edt,$eau){
+function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$edt,$eau){
 	$xreg=-1.5;
 	$yreg=3.5;
 
@@ -319,8 +317,6 @@ switch($typefacture){
 	$pdf->SetXY(13+$xreg,54.2+$yreg);
 	$pdf->SetFont('Arial','',10);
 	$pdf->Cell(55,10,utf8_decode($contact2));
-	$pdf->SetXY(13+$xreg,58.5+$yreg);
-	$pdf->Cell(55,10,utf8_decode($bp));
 	$pdf->SetXY(13+$xreg,62.8+$yreg);
 	$pdf->Cell(55,10,utf8_decode($telephone));
 	$pdf->SetXY(13+$xreg,67.1+$yreg);
