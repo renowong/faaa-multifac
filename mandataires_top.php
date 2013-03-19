@@ -60,6 +60,8 @@ function getData($id){
 		$_SESSION['values']['txt_Ville'] = $row['mandataireville'];
 		$_SESSION['values']['txt_Commune'] = $row['mandatairecommune'];
 		$_SESSION['values']['txt_Pays'] = $row['mandatairepays'];
+                $_SESSION['values']['txt_Aroa'] = $row['aroa'];
+                $_SESSION['values']['txt_Quartier'] = $row['quartier'];
 		$_SESSION['values']['txt_RIB'] = $row['mandatairerib'];
                 $_SESSION['values']['txt_obs'] = $row['obs'];
 	}
@@ -94,6 +96,8 @@ function setPersistData($id){
 	'<ville>'.$_SESSION['values']['txt_Ville'].'</ville>'.
 	'<commune>'.$_SESSION['values']['txt_Commune'].'</commune>'.
 	'<pays>'.$_SESSION['values']['txt_Pays'].'</pays>'.
+        '<aroa>'.$_SESSION['values']['txt_Aroa'].'</aroa>'.
+        '<quartier>'.$_SESSION['values']['txt_Quartier'].'</quartier>'.
 	'<rib>'.$_SESSION['values']['txt_RIB'].'</rib>'.
 	'</compte>';
 }
@@ -116,6 +120,8 @@ function resetvalues(){
 	$_SESSION['values']['txt_Ville'] = '';
 	$_SESSION['values']['txt_Commune'] = '';
 	$_SESSION['values']['txt_Pays'] = '';
+        $_SESSION['values']['txt_Aroa'] = '';
+        $_SESSION['values']['txt_Quartier'] = '';
 	$_SESSION['values']['txt_RIB'] = '';
         $_SESSION['values']['txt_obs'] = '';
 }
@@ -137,6 +143,8 @@ function reseterrors(){
 	$_SESSION['errors']['Ville'] = 'hidden';
 	$_SESSION['errors']['Commune'] = 'hidden';
 	$_SESSION['errors']['Pays'] = 'hidden';
+        $_SESSION['errors']['Aroa'] = 'hidden';
+        $_SESSION['errors']['Quartier'] = 'hidden';
 	$_SESSION['errors']['RIB'] = 'hidden';
 }
 

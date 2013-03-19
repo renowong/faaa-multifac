@@ -90,7 +90,7 @@ switch($typefacture){
 			"`mandataires`.`mandataireprefix`, `mandataires`.`mandataireRS`, ".
 			"`mandataires`.`mandatairenom`, `mandataires`.`mandataireprenom`, ".
 			"`mandataires`.`mandatairebp`, `mandataires`.`mandatairecp`, `mandataires`.`mandataireville`, `mandataires`.`mandatairecommune`, ".
-			"`mandataires`.`mandatairepays`, `mandataires`.`mandatairetelephone`, `mandataires`.`mandatairetelephone2` ".
+			"`mandataires`.`mandatairepays`, `mandataires`.`aroa`, `mandataires`.`quartier`, `mandataires`.`mandatairetelephone`, `mandataires`.`mandatairetelephone2` ".
 			"FROM `factures_etal` INNER JOIN `mandataires` ON `factures_etal`.`idclient`=`mandataires`.`mandataireid` ".
 			"WHERE `factures_etal`.`idfacture` = $idfacture";
 
@@ -102,8 +102,8 @@ switch($typefacture){
 				$facturevalidation = $row['validation'];
 				$client = $row['mandatairenom']." ".$row['mandataireprenom'];
 				$client = strtoupper($client);
-				$contact1 = "BP ".$row['mandatairebp'];
-				$contact2 = $row['mandatairecp']." ".$row['mandataireville'];
+				$contact1 = "BP ".$row['mandatairebp']." / ".$row['mandatairecp']." ".$row['mandataireville'];
+				$contact2 = $row['aroa']." ".$row['quartier'];
 				$telephone = "Téléphone : ".$row['mandatairetelephone'];
 				$fax = "Vini : ".$row['mandatairetelephone2'];
 				$datelimite = $row['datelimite'];
@@ -182,7 +182,7 @@ switch($typefacture){
 			"`mandataires`.`mandataireprefix`, `mandataires`.`mandataireRS`, ".
 			"`mandataires`.`mandatairenom`,`mandataires`.`mandataireprenom`, ".
 			"`mandataires`.`mandatairebp`, `mandataires`.`mandatairecp`, `mandataires`.`mandataireville`, `mandataires`.`mandatairecommune`, ".
-			"`mandataires`.`mandatairepays`, `mandataires`.`mandatairetelephone`, `mandataires`.`mandatairetelephone2`, `mandataires`.`mandatairefax` ".
+			"`mandataires`.`mandatairepays`, `mandataires`.`aroa`, `mandataires`.`quartier`, `mandataires`.`mandatairetelephone`, `mandataires`.`mandatairetelephone2`, `mandataires`.`mandatairefax` ".
 			"FROM `factures_amarrage` INNER JOIN `mandataires` ON `factures_amarrage`.`idclient`=`mandataires`.`mandataireid` ".
 			"WHERE `factures_amarrage`.`idfacture` = $idfacture";
 		$result = $mysqli->query($query);
@@ -193,8 +193,8 @@ switch($typefacture){
 				$facturevalidation = $row['validation'];
 				$client = html_entity_decode($row['mandatairenom']." ".$row['mandataireprenom'],ENT_QUOTES, "UTF-8");
 				$client = strtoupper($client);
-				$contact1 = "BP ".$row['mandatairebp'];
-				$contact2 = $row['mandatairecp']." ".$row['mandataireville'];
+				$contact1 = "BP ".$row['mandatairebp']." ".$row['mandatairecp']." ".$row['mandataireville'];
+				$contact2 = $row['aroa']." / ".$row['quartier'];
 				if($row['mandatairetelephone']!==""){
 					$telephone = "Téléphone : ".$row['mandatairetelephone'];
 				}else{
@@ -338,7 +338,10 @@ switch($typefacture){
 	$pdf->Cell(55,10,"Attn : ".strtoupper($client));
 	$pdf->SetXY(139+$xreg,54.2+$yreg);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(55,10,utf8_decode($contact1."-".$contact2));
+	$pdf->Cell(55,10,utf8_decode($contact1));
+	$pdf->SetXY(139+$xreg,58.4+$yreg);
+	$pdf->SetFont('Arial','',10);
+	$pdf->Cell(55,10,utf8_decode($contact2));
 	$pdf->SetXY(139+$xreg,58.5+$yreg);
 	$pdf->Cell(55,10,utf8_decode($bp));
 	$pdf->SetXY(139+$xreg,62.8+$yreg);
@@ -358,7 +361,10 @@ switch($typefacture){
 	$pdf->Cell(55,10,"Attn : ".strtoupper($client));
 	$pdf->SetXY(139+$xreg,54.2+$yreg);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(55,10,utf8_decode($contact1."-".$contact2));
+	$pdf->Cell(55,10,utf8_decode($contact1));
+	$pdf->SetXY(139+$xreg,58.4+$yreg);
+	$pdf->SetFont('Arial','',10);
+	$pdf->Cell(55,10,utf8_decode($contact2));
 	$pdf->SetXY(139+$xreg,58.5+$yreg);
 	$pdf->Cell(55,10,utf8_decode($bp));
 	$pdf->SetXY(139+$xreg,62.8+$yreg);
@@ -589,24 +595,4 @@ function get_typeclient($idfacture){
         return $type;
 }
 
-function get_geo($idclient){
-	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD);
-
-	$query = "SELECT `".DB."`.`lieux`.`lieuid`, `".DB."`.`lieux`.`lieunmaison`, `".DB."`.`lieux`.`lieuprincipal`,".
-			 " `".DBRUES."`.`rues`.`Rue`, `".DBRUES.
-			 "`.`quartiers`.`Quartier` FROM `".DB."`.`lieux` INNER JOIN `".DBRUES.
-			 "`.`rues` ON `lieux`.`lieuservitude` = `rues`.`IDRue` ".
-			 "INNER JOIN `".DBRUES."`.`quartiers` ON `lieux`.`lieuquartier` = `quartiers`.`IDQuartier` ".
-			 "WHERE `lieux`.`lieuproprietaire` = '$idclient' AND `lieux`.`lieuprincipal`='1'";
-
-	//$output = ''; //defining the variable
-	$result = $mysqli->query($query);
-
-	$row = $result->fetch_array(MYSQLI_ASSOC);
-		$output[0] = $row['lieunmaison']." Aroa ".$row['Rue'];
-		$output[1] = "Quartier ".$row['Quartier'];
-
-	$mysqli->close();
-	return $output;
-}
 ?>
