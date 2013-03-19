@@ -559,14 +559,14 @@ switch($typefacture){
 	////////////////////////////////information////////////////////////////////////
 
 	$pdf->SetLineWidth(0.4);
-	$pdf->Rect(12+$xreg,222+$yreg,187.6,30);
+	$pdf->Rect(12+$xreg,222+$yreg,187.6,35);
 	$pdf->SetXY(12+$xreg,222+$yreg);
 	$pdf->SetFont('Arial','BU',10);
 	$pdf->Cell(187.6,5,'Pour votre information :',0);
 	$pdf->SetXY(12+$xreg,227.5+$yreg);
 	$pdf->SetFont('Arial','BI',10);
 	$pdf->MultiCell(187.6,4,utf8_decode($delib),0);
-		$pdf->SetXY(12+$xreg,240+$yreg);
+		$pdf->SetXY(12+$xreg,245+$yreg);
 		$pdf->SetFont('Arial','I',10);
 		$pdf->MultiCell(187.6,4,utf8_decode('Merci de bien vouloir vous acquitter de la présente facture soit auprès de la Régie de la Commune de FAA\'A ou de nous faire parvenir votre règlement soit par chèque soit par virement à l\'ordre du Régisseur de recettes de la Mairie de FAA\'A, domicilié à l\'agence CCP Faa\'a centre, compte n°14168 00001 9024406F068 59'),0);
 
