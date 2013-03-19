@@ -156,6 +156,8 @@ $output;
 		$output.= $trio_c. ' ' .$secon_c. ' ' . $dev2;
 *////////////////////centimes
 
+$output = str_replace("  "," ",$output);
+
 return strtoupper(ltrim($output));
 }
 ?>

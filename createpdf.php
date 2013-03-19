@@ -67,10 +67,10 @@ switch($typefacture){
 		$d=$details_array[0]['Delib'];
 		switch($d){
 			case "160-2012":
-				$delib = "La présente facture est conforme à la délibération n°160/2012 du 28 août 2012 fixant le tarif des repas de cantine scolaire.";
+				$delib = "La présente facture est conforme à la délibération n°160/2012 du 28 août 2012 fixant la tarification des repas de la cuisine centrale.";
 				break;
 			case "217-2013":
-				$delib = "La présente facture est conforme à la délibération n°217/2013 du 18 février 2013 fixant le tarif des repas de cantine scolaire.";
+				$delib = "La présente facture est conforme à la délibération n°217/2013 du 18 février 2013 fixant la tarification des repas de la cuisine centrale.";
 				break;
 		}
 		
@@ -122,10 +122,10 @@ switch($typefacture){
 		$d=$details_array[0]['Delib'];
 		switch($d){
 			case "114-2012":
-				$delib = "La présente facture est conforme à la délibération n°114/2012 du 24 avril 2012 fixant le tarif des places et droit d'étal.";
+				$delib = "La présente facture est conforme à la délibération n°114/2012 du 24 avril 2012 fixant la tarification des droits de voirie, de stationnement et de dépôt sur la voie publique du territoire de la commune de Faa'a, et des droits de place et d'étal sur le marché municipal et le centre artisanal.";
 				break;
 			case "03-2011":
-				$delib = "La présente facture est conforme à la délibération n°03/2011 du 02 mars 2011 fixant le tarif des places et droit d'étal.";
+				$delib = "La présente facture est conforme à la délibération n°03/2011 du 02 mars 2011 fixant la tarification des droits de voirie, de stationnement et de dépôt sur la voie publique du territoire de la commune de Faa'a, et des droits de place et d'étal sur le marché municipal et le centre artisanal.";
 				break;
 		}
 		
@@ -548,10 +548,10 @@ switch($typefacture){
 	////////////////////////////////fin sous designation////////////////////////////////////
 	////////////////////////////////Arrete au montant////////////////////////////////////
 
-	$pdf->SetXY(12+$xreg,190+$yreg);
+	$pdf->SetXY(12+$xreg,185+$yreg);
 	$pdf->SetFont('Arial','',10);
 	$pdf->Cell(89,10, utf8_decode('ARRETE LA PRESENTE FACTURE A LA SOMME DE :'));
-	$pdf->SetXY(12+$xreg,195.5+$yreg);
+	$pdf->SetXY(12+$xreg,190.5+$yreg);
 	$pdf->SetFont('Arial','B',10);
 	$pdf->Cell(89,10, utf8_decode(chiffre_en_lettre($total)));
 
