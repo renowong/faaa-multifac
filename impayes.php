@@ -20,8 +20,7 @@ $login = $cUser->userlogin();
 	<script type="text/javascript">
 	$(document).ready(function(){
 
-	var validated = gup("validlist");
-	$("#list_validation").load("impayes_list.php");
+	$("#list_validation").load("impayes_list.php?type=all&range=0");
 	$( "#dialog-form" ).hide();
 	
 	$("#box_search").chosen();
@@ -30,16 +29,23 @@ $login = $cUser->userlogin();
     	
 	
 	function filter(type){
+            var range = $("#slt_range").val();
 		$(".chzn-select").val('').trigger("liszt:updated");
-		var validated = gup("validlist");
 		$("#list_validation").empty();
-		$("#list_validation").load("impayes_list.php?type="+type);
+		$("#list_validation").load("impayes_list.php?type="+type+"&range="+range);
+	}
+        
+        function range(range){
+            var type = $("#slt_filter").val();
+		$(".chzn-select").val('').trigger("liszt:updated");
+		$("#list_validation").empty();
+		$("#list_validation").load("impayes_list.php?range="+range+"&type="+type);
 	}
 
 	function filter_byclient(){
 		$("#slt_filter")[0].selectedIndex = 0;
+                $("#slt_range")[0].selectedIndex = 0;
 		var client = $("#box_search").val();
-		var validated = gup("validlist");
 		$("#list_validation").empty();
 		$("#list_validation").load("impayes_list.php?client="+client);
 	}
@@ -59,11 +65,16 @@ $login = $cUser->userlogin();
 		<br/>
 		<h1>Module des impay&eacute;s</h1><br/>
 		
-		Filtre : <select id="slt_filter" onchange="javascript:filter(this.value);">
+		Filtre par type : <select id="slt_filter" onchange="javascript:filter(this.value);">
 			<option value="all">Tout</option>
 			<option value="cantine">Cantine</option>
 			<option value="etal">Place et Etal</option>
 			<option value="amarrage">Amarrage</option>
+		</select> Filtre par date : <select id="slt_range" onchange="javascript:range(this.value);">
+                        <option value="0">Tout</option>
+			<option value="1">1 mois</option>
+			<option value="2">2 mois</option>
+			<option value="3">3 mois et plus</option>
 		</select><br/><br/>
 				
 				<label for="box_search"><? echo $label ?></label>
