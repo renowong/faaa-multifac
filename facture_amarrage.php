@@ -126,7 +126,7 @@ $comptetype = getCompteType();
 			height:150,
 			modal: true,
 			buttons: {
-				"Facturer": function() {
+				"Cr\351er": function() {
 					
 					var flat = fdata.toString();
 					
@@ -180,7 +180,7 @@ $comptetype = getCompteType();
 	<body onload="init();">
 		<? include_once('menu.php'); ?>
 		<div id="dialog-confirm" title="Demande de confirmation">
-		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Valider la facturation ?</p>
+		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Cr&eacute;er le devis ?</p>
 		</div>
 		<div name="message" id="message" ></div>
 		<div name="version" id="version">version <?php echo VERSION ?></div>

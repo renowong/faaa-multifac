@@ -66,7 +66,7 @@ function buildFacturesEnAttente($idclient) {
 	$query = "SELECT * FROM `".DB."`.`factures_amarrage` WHERE `idclient`=$idclient AND `validation`=0";
 	$result = $mysqli->query($query);
 	if($mysqli->affected_rows>0) {
-		$list = "<br><b>Factures en attente de validation -- actuellement imprimable en tant que devis</b>";
+		$list = "<br><b>Factures provisoires en attente de validation -- actuellement imprimable en tant que devis</b>";
 		while($row = $result->fetch_array(MYSQLI_ASSOC)){
 			$list .= "<br/><a href='createpdf.php?idfacture=".$row['idfacture']."&type=amarrage' target='_blank'>Devis ".$row['communeid']." du ".$row['datefacture']." montant de ";
 			$list .= trispace($row['montantfcp']);
