@@ -64,6 +64,7 @@ $menu .= "</div>";
 //<!--4rd drop down menu -->
 $menu .= "<div id='dropmenu4' class='dropmenudiv' style='width: 150px;'>";
 if ($arCompte[2]=="client" || $arCompte[2]=="mandataire") $menu .= "<a href='compte_paiement.php'>En attente</a>";
+$menu .= "<a href='impayes.php'>Impay&eacute;s</a>";
 $menu .= "<a href='paiement_comptant.php?id=0&type=repas'>Tickets cantine</a>";
 $menu .= "</div>";
 
