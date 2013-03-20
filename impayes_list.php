@@ -50,7 +50,7 @@ print $output;
 
 function getetallist($client,$range){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $query = "SELECT * FROM `factures_etal` INNER JOIN `mandataires` ON `factures_etal`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_etal`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0' $range$client";
+        $query = "SELECT * FROM `factures_etal` INNER JOIN `mandataires` ON `factures_etal`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_etal`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0' $range$client ORDER BY `datefacture` ASC";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
             
@@ -70,7 +70,7 @@ function getetallist($client,$range){
 
 function getamarragelist($client,$range){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $query = "SELECT * FROM `factures_amarrage` INNER JOIN `clients` ON `factures_amarrage`.`idclient` = `clients`.`clientid` WHERE `factures_amarrage`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0' $range$client";
+        $query = "SELECT * FROM `factures_amarrage` INNER JOIN `clients` ON `factures_amarrage`.`idclient` = `clients`.`clientid` WHERE `factures_amarrage`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0' $range$client ORDER BY `datefacture` ASC";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
             
@@ -89,7 +89,7 @@ function getamarragelist($client,$range){
 
 function getcantinelist($client,$range){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $query = "SELECT * FROM `factures_cantine` INNER JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` WHERE `factures_cantine`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0' $range$client";
+        $query = "SELECT * FROM `factures_cantine` INNER JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` WHERE `factures_cantine`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0' $range$client ORDER BY `datefacture` ASC";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 
