@@ -8,15 +8,16 @@ $typefacture = substr($facturecode,0,4);
 $factureid= substr($facturecode,4);
 
 $restearegler = getfactureamount($factureid);
+$communeid = getfacturenumber($avoirid);
 
-updatedata($avoirid,$typefacture,$factureid,$montant,$restearegler);
+updatedata($avoirid,$typefacture,$factureid,$montant,$restearegler,$communeid);
 
 
 ///////////////////////////functions////////////////////////////////////////////
 
 
 
-function updatedata($avoirid,$typefacture,$factureid,$avoir,$restearegler){
+function updatedata($avoirid,$typefacture,$factureid,$avoir,$restearegler,$communeid){
 
 	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
 	$difference = $restearegler - $avoir;
@@ -28,7 +29,7 @@ function updatedata($avoirid,$typefacture,$factureid,$avoir,$restearegler){
 		$avoirleft = 0;
 		$appliedavoir = $avoir;
 	}
-	$query = "UPDATE `factures_cantine` SET  `avoir` =  '$appliedavoir', `restearegler` = '$difference' WHERE  `idfacture` = '$factureid'";
+	$query = "UPDATE `factures_cantine` SET  `avoir` =  '$appliedavoir', `restearegler` = '$difference', `avoir_on_id` = '$communeid' WHERE  `idfacture` = '$factureid'";
 	$mysqli->query($query);
 	
 	$query = "UPDATE `avoirs` SET  `reste` =  '$avoirleft' WHERE  `idavoir` = '$avoirid'";
@@ -47,4 +48,14 @@ function getfactureamount($factureid){
         return $amount;
 }
 
+function getfacturenumber($avoirid){
+        $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+	$query = "SELECT `communeid` FROM `factures_cantine` INNER JOIN `avoirs` ON `factures_cantine`.`idfacture`=`avoirs`.`idfacture` WHERE `idavoir`='$avoirid';";
+	$result = $mysqli->query($query);
+        $row = $result->fetch_array(MYSQLI_ASSOC);
+        $number = $row['communeid'];
+        $mysqli->close();
+        
+        return $number;
+}
 ?>

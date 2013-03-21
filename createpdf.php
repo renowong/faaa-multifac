@@ -18,7 +18,7 @@ switch($typefacture){
 		$query = "SELECT DATE_FORMAT(`factures_cantine`.`datefacture`, '%d/%m/%Y') AS `datefacture`, ".
 			"DATE_FORMAT(DATE_ADD(`factures_cantine`.`datefacture`, INTERVAL 31 DAY), '%d/%m/%Y') AS `datelimite`, ".
 			"`factures_cantine`.`validation`, `factures_cantine`.`communeid`, `factures_cantine`.`idclient`, `factures_cantine`.`obs` AS `periode`, ".
-			"`factures_cantine`.`avoir`, `clients`.`clientcivilite`, ".
+			"`factures_cantine`.`avoir`, `factures_cantine`.`avoir_on_id`, `clients`.`clientcivilite`, ".
 			"`clients`.`clientnom`, `clients`.`clientnommarital`, `clients`.`clientprenom`, `clients`.`clientprenom2`, ".
 			"`clients`.`clientbp`, `clients`.`clientcp`, `clients`.`clientville`, `clients`.`clientcommune`, ".
 			"`clients`.`clientpays`, `clients`.`clienttelephone`, `clients`.`clientfax`, `clients`.`aroa`, `clients`.`quartier` ".
@@ -39,6 +39,7 @@ switch($typefacture){
 				$datelimite = $row['datelimite'];
 				$idclient = $row['idclient'];
 				$avoir = $row['avoir'];
+				$avoirobs = $row['avoir_on_id'];
 				}
 		$result->close();
 		
@@ -225,12 +226,12 @@ switch($typefacture){
 
 
 
-genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$edt,$eau);
+genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$avoirobs,$edt,$eau);
 
 $mysqli->close();
 
 
-function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$edt,$eau){
+function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$avoirobs,$edt,$eau){
 	$xreg=-1.5;
 	$yreg=3.5;
 
@@ -442,7 +443,7 @@ switch($typefacture){
 		if($avoir>0){
 		$ydet+=5.5;
 		$pdf->SetXY(12+$xreg,109.9+$yreg+$ydet);
-		$pdf->Cell(89,5, "Avoir",0,1);
+		$pdf->Cell(89,5, "Avoir sur facture ".$avoirobs,0,1);
 		$pdf->SetXY(166+$xreg,109.9+$yreg+$ydet);
 		$pdf->Cell(32,5, "-".trispace($avoir)." F",0,1,'R');
 		}
