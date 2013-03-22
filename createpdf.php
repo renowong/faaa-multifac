@@ -77,7 +77,7 @@ switch($typefacture){
 		
 		$result->close();
 		
-		$duplicata = get_duplicata_status($idfacture);
+		$duplicata = get_duplicata_status($idfacture,'factures_cantine');
 		
 	break;
 
@@ -132,6 +132,8 @@ switch($typefacture){
 		}
 		
 		$result->close();
+		
+		$duplicata = get_duplicata_status($idfacture,'factures_etal');
 	break;
 
 	case "amarrage":
@@ -222,6 +224,8 @@ switch($typefacture){
 				}
 		
 		$result->close();
+		
+		$duplicata = get_duplicata_status($idfacture,'factures_amarrage');
 	break;
 }
 
@@ -597,15 +601,15 @@ function get_typeclient($idfacture){
         return $type;
 }
 
-function get_duplicata_status($idfacture){
+function get_duplicata_status($idfacture,$table){
 	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $result = $mysqli->query("SELECT `duplicata`,`acceptation` FROM `factures_cantine` WHERE `idfacture`='$idfacture'");
+        $result = $mysqli->query("SELECT `duplicata`,`acceptation` FROM `$table` WHERE `idfacture`='$idfacture'");
         $row = $result->fetch_row();
         $status = $row[0];
 	$acceptation = $row[1];
 	
 	if($status=='0' && $acceptation=='1'){
-		$mysqli->query("UPDATE `factures_cantine` SET `duplicata`='1' WHERE `idfacture`='$idfacture'");
+		$mysqli->query("UPDATE `$table` SET `duplicata`='1' WHERE `idfacture`='$idfacture'");
 	}
 	
 	$mysqli->close();
