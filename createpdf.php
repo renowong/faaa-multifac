@@ -232,14 +232,18 @@ genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$
 $mysqli->close();
 
 
-function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$avoirobs,$edt,$eau,$duplicata){
-	$xreg=-1.5;
-	$yreg=3.5;
-
+function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$avoirobs,$edt,$eau,$duplicata){	
 	$pdf=new FPDF('P','mm','A4');
 	$pdf->AddPage();
+	
+	if($duplicata){
+	$pdf->SetXY(10,100);
+	$pdf->image('fpdf/watermark.jpg');
+	}
+	
 
-
+	$xreg=-1.5;
+	$yreg=3.5;
 	/////////////////////////////////////en tete////////////////////////////////////////
 	//logo
 	$pdf->Image('img/logo.jpg',16.5+$xreg,21+$yreg,21,18,'jpg');
@@ -574,10 +578,6 @@ switch($typefacture){
 
 	////////////////////////////////fin information////////////////////////////////////
 	
-	if($duplicata){
-		$pdf->Cell(89,10, 'DUPLICATA');
-	}
-
 	if($zip=='1'){
 		$pdf->Output("zippdf/".$nofacture.".pdf","F");
 	}else{
