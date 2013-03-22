@@ -599,11 +599,12 @@ function get_typeclient($idfacture){
 
 function get_duplicata_status($idfacture){
 	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $result = $mysqli->query("SELECT `duplicata` FROM `factures_cantine` WHERE `idfacture`='$idfacture'");
+        $result = $mysqli->query("SELECT `duplicata`,`acceptation` FROM `factures_cantine` WHERE `idfacture`='$idfacture'");
         $row = $result->fetch_row();
         $status = $row[0];
+	$acceptation = $row[1];
 	
-	if($status=='0'){
+	if($status=='0' && $acceptation=='1'){
 		$mysqli->query("UPDATE `factures_cantine` SET `duplicata`='1' WHERE `idfacture`='$idfacture'");
 	}
 	
