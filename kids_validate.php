@@ -72,7 +72,7 @@ function submit_data(){
 		if($dest=='1'){uncheckdest($clientid);}else{
 		    if(!checkdest_exist($clientid)){$dest = '1';}
 		}
-		$query = "INSERT INTO `".DB."`.`enfants` (`enfantid`,`clientid`,`nom`,`prenom`,`ecole`,`classe`,`active`,`dn`,`cps`,`sexe`,`status`,`status_periode`,`destinataire`) VALUES (NULL,'$clientid','$nom','$prenom','$ecole','$classe','1','$dn','$cps','$sexe','$status','$status_periode','$dest')";
+		$query = "INSERT INTO `enfants` (`enfantid`,`clientid`,`nom`,`prenom`,`ecole`,`classe`,`active`,`dn`,`cps`,`sexe`,`status`,`status_periode`,`destinataire`) VALUES (NULL,'$clientid','$nom','$prenom','$ecole','$classe','1','$dn','$cps','$sexe','$status','$status_periode','$dest')";
 		$mysqli->query($query);
 		$success = $mysqli->affected_rows;
 		$mysqli->close();
@@ -86,7 +86,7 @@ function submit_data(){
         if($dest=='1'){uncheckdest($clientid);}else{
             if(!checkdest_exist($clientid,$enfantid)){$dest = '1';}
         }
-        $query = "UPDATE  `".DB."`.`enfants` SET `nom`='$nom',`prenom`='$prenom',`dn`='$dn',`cps`='$cps',`sexe`='$sexe',`status`='$status',`status_periode`='$status_periode',`ecole`='$ecole',`classe`='$classe',`active`='$active',`destinataire`='$dest' WHERE `enfants`.`enfantid` =$enfantid";
+        $query = "UPDATE  `enfants` SET `nom`='$nom',`prenom`='$prenom',`dn`='$dn',`cps`='$cps',`sexe`='$sexe',`status`='$status',`status_periode`='$status_periode',`ecole`='$ecole',`classe`='$classe',`active`='$active',`destinataire`='$dest' WHERE `enfants`.`enfantid`='$enfantid'";
         $mysqli->query($query);
         $success = $mysqli->affected_rows;
         $mysqli->close();

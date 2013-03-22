@@ -239,7 +239,7 @@ if (isset($_GET['edit']) && $_GET['edit'] > 0) {
 		'		</tr>'.
 		'		<tr>'.
 		'			<td><label>DN CPS</label><span class="red">*</span><br /><input type="text" size="7" maxlength="7" name="txt_cps_enfant" id="txt_cps_enfant" onBlur="enf_validate(this.value, this.id);" value="'.$_SESSION['values']['txt_enfantCPS'].'" /><br/><span id="txt_cps_enfantFailed" class="'.$_SESSION['errors']['enfantCPS'].' red">Veuillez entrer un num&eacute;ro CPS valide.</span></td>'.
-		'			<td><label>Status</label><span class="red">*</span><br /><select name="slt_status_enfant" id="slt_status_enfant" onChange="enf_validate(this.value, this.id);">'.buildStatusCantine($_SESSION['values']['slt_enfantStatus']).'</select>'.
+		'			<td><label>Status</label><span class="red">*</span><br /><select name="slt_status_enfant" id="slt_status_enfant" onChange="switch_periode(this.value);">'.buildStatusCantine($_SESSION['values']['slt_enfantStatus']).'</select>'.
 		'			<br/><select name="slt_status_periode" id="slt_status_periode">'.buildStatusPeriode($_SESSION['values']['slt_enfantPeriode']).'</select></td>'.
 		'		</tr>'.
 		'		<tr>'.

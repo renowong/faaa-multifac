@@ -29,6 +29,7 @@ require_once('clients_top.php');
 				$('#historique').hide();
 				$('#avoirs').hide();
 				$('#showreject').hide();
+				$("#slt_status_periode").hide();
 				if (edit>0){
 					$('#divhistorique').show();
 					$('#divavoirs').show();
@@ -242,6 +243,7 @@ require_once('clients_top.php');
 					$("#slt_sexe_enfant").val(sexe);
 					$("#slt_status_enfant").val(status);
 					$("#slt_status_periode").val(status_periode);
+					if($("#slt_status_periode").val()>0){$("#slt_status_periode").show();}
 					
 					if(active=='1'){
 						$("#chk_actif_enfant").prop("checked", true);
@@ -312,6 +314,15 @@ require_once('clients_top.php');
 				});
 			});
 
+		}
+		
+		function switch_periode(value){
+			if(value=='15'||value=='16'){
+				$("#slt_status_periode").show();
+			}else{
+				$("#slt_status_periode").hide();
+				$("#slt_status_periode")[0].selectedIndex = 0;
+			}
 		}
 		</script>
 	</head>
