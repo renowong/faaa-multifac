@@ -224,6 +224,7 @@ require_once('clients_top.php');
 					var sexe = $child.find("sexe").text();
 					var cps = $child.find("cps").text();
 					var status = $child.find("status").text();
+					var status_periode = $child.find("status_periode").text();
 					var ecole = $child.find("ecole").text();
 					var classe = $child.find("classe").text();
 					var active = $child.find("active").text();
@@ -240,6 +241,7 @@ require_once('clients_top.php');
 					$("#slt_classe_enfant").val(classe);
 					$("#slt_sexe_enfant").val(sexe);
 					$("#slt_status_enfant").val(status);
+					$("#slt_status_periode").val(status_periode);
 					
 					if(active=='1'){
 						$("#chk_actif_enfant").prop("checked", true);

@@ -239,7 +239,8 @@ if (isset($_GET['edit']) && $_GET['edit'] > 0) {
 		'		</tr>'.
 		'		<tr>'.
 		'			<td><label>DN CPS</label><span class="red">*</span><br /><input type="text" size="7" maxlength="7" name="txt_cps_enfant" id="txt_cps_enfant" onBlur="enf_validate(this.value, this.id);" value="'.$_SESSION['values']['txt_enfantCPS'].'" /><br/><span id="txt_cps_enfantFailed" class="'.$_SESSION['errors']['enfantCPS'].' red">Veuillez entrer un num&eacute;ro CPS valide.</span></td>'.
-		'			<td><label>Status</label><span class="red">*</span><br /><select name="slt_status_enfant" id="slt_status_enfant" onChange="enf_validate(this.value, this.id);">'.buildStatusCantine($_SESSION['values']['slt_enfantStatus']).'</select></td>'.
+		'			<td><label>Status</label><span class="red">*</span><br /><select name="slt_status_enfant" id="slt_status_enfant" onChange="enf_validate(this.value, this.id);">'.buildStatusCantine($_SESSION['values']['slt_enfantStatus']).'</select>'.
+		'			<br/><select name="slt_status_periode" id="slt_status_periode">'.buildStatusPeriode($_SESSION['values']['slt_enfantPeriode']).'</select></td>'.
 		'		</tr>'.
 		'		<tr>'.
 		'			<td><label>Ecole</label><span class="red">*</span><br /><select name="slt_ecole_enfant" id="slt_ecole_enfant" onchange="load_classes(this.value,\'slt_classe_enfant\');enf_validate(this.value, this.id);">'.buildOptionsSchools($_SESSION['values']['slt_enfantEcole']).'</select></td>'.
@@ -321,6 +322,15 @@ function buildStatusCantine($s){
 		$list .= "<option value='".$row["idstatus"]."'$select>".$row["status"]."</option>";
 	}
 	$mysqli->close();
+	return $list;
+}
+
+function buildStatusPeriode($s){
+	$ar_periode = array("Non Applicable","1&egrave;re p&eacute;riode : ao&ucirc;t &agrave; d&eacute;cembre N","2&egrave;me p&eacute;riode : janv &agrave; mars N+1"," 3&egrave;me p&eacute;riode : avril &agrave; juin N+1");
+	for($i=0;$i<count($ar_periode);$i++){
+		if($s==$i){$select=" selected";}else{$select="";}
+		$list .= "<option value='".$i."'$select>".$ar_periode[$i]."</option>";
+	}
 	return $list;
 }
 

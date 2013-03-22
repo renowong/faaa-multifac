@@ -12,7 +12,7 @@ switch($type){
     case "select":
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
         $childid = $_POST["id"];
-        $query = "SELECT * FROM `".DB."`.`enfants` WHERE `enfantid`='$childid'";
+        $query = "SELECT * FROM `enfants` WHERE `enfantid`='$childid'";
         $result = $mysqli->query($query);
         $row = $result->fetch_array(MYSQLI_ASSOC);
         
@@ -26,6 +26,7 @@ switch($type){
         $output .='<ecole>'.$row['ecole'].'</ecole>';
         $output .='<classe>'.$row['classe'].'</classe>';
         $output .='<status>'.$row['status'].'</status>';
+	$output .='<status_periode>'.$row['status_periode'].'</status_periode>';
         $output .='<active>'.$row['active'].'</active>';
         $output .='<destinataire>'.$row['destinataire'].'</destinataire>';
         $output .='</child>';

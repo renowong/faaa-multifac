@@ -11,6 +11,7 @@ $_SESSION['values']['txt_enfantPrenom'] = $_POST['txt_prenom_enfant'];
 $_SESSION['values']['txt_enfantDN'] = $_POST['txt_dn_enfant'];
 $_SESSION['values']['txt_enfantCPS'] = $_POST['txt_cps_enfant'];
 $_SESSION['values']['slt_enfantStatus'] = $_POST['slt_status_enfant'];
+$_SESSION['values']['slt_enfantStatus_Periode'] = $_POST['slt_status_periode'];
 $_SESSION['values']['slt_enfantEcole'] = $_POST['slt_ecole_enfant'];
 $_SESSION['values']['slt_enfantClasse'] = $_POST['slt_classe_enfant'];
 $_SESSION['values']['slt_enfantSexe'] = $_POST['slt_sexe_enfant'];
@@ -57,6 +58,7 @@ function submit_data(){
         $cps = $_POST["txt_cps_enfant"];
         $sexe = $_POST["slt_sexe_enfant"];
         $status = $_POST["slt_status_enfant"];
+	$status_periode = $_POST["slt_status_periode"];
         $active = $_POST["chk_actif_enfant"];
         $dest = "off";  //deprecated
         if($active=="on"){$active="1";}else{$active="0";}
@@ -70,7 +72,7 @@ function submit_data(){
 		if($dest=='1'){uncheckdest($clientid);}else{
 		    if(!checkdest_exist($clientid)){$dest = '1';}
 		}
-		$query = "INSERT INTO `".DB."`.`enfants` (`enfantid`,`clientid`,`nom`,`prenom`,`ecole`,`classe`,`active`,`dn`,`cps`,`sexe`,`status`,`destinataire`) VALUES (NULL,'$clientid','$nom','$prenom','$ecole','$classe','1','$dn','$cps','$sexe','$status','$dest')";
+		$query = "INSERT INTO `".DB."`.`enfants` (`enfantid`,`clientid`,`nom`,`prenom`,`ecole`,`classe`,`active`,`dn`,`cps`,`sexe`,`status`,`status_periode`,`destinataire`) VALUES (NULL,'$clientid','$nom','$prenom','$ecole','$classe','1','$dn','$cps','$sexe','$status','$status_periode','$dest')";
 		$mysqli->query($query);
 		$success = $mysqli->affected_rows;
 		$mysqli->close();
@@ -84,7 +86,7 @@ function submit_data(){
         if($dest=='1'){uncheckdest($clientid);}else{
             if(!checkdest_exist($clientid,$enfantid)){$dest = '1';}
         }
-        $query = "UPDATE  `".DB."`.`enfants` SET `nom`='$nom',`prenom`='$prenom',`dn`='$dn',`cps`='$cps',`sexe`='$sexe',`status`='$status',`ecole`='$ecole',`classe`='$classe',`active`='$active',`destinataire`='$dest' WHERE `enfants`.`enfantid` =$enfantid";
+        $query = "UPDATE  `".DB."`.`enfants` SET `nom`='$nom',`prenom`='$prenom',`dn`='$dn',`cps`='$cps',`sexe`='$sexe',`status`='$status',`status_periode`='$status_periode',`ecole`='$ecole',`classe`='$classe',`active`='$active',`destinataire`='$dest' WHERE `enfants`.`enfantid` =$enfantid";
         $mysqli->query($query);
         $success = $mysqli->affected_rows;
         $mysqli->close();
