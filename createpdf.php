@@ -76,7 +76,8 @@ switch($typefacture){
 		}
 		
 		$result->close();
-				
+		
+		$duplicata = get_duplicata_status($idfacture);
 		
 	break;
 
@@ -226,12 +227,12 @@ switch($typefacture){
 
 
 
-genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$avoirobs,$edt,$eau);
+genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$avoirobs,$edt,$eau,$duplicata);
 
 $mysqli->close();
 
 
-function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$avoirobs,$edt,$eau){
+function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$avoirobs,$edt,$eau,$duplicata){
 	$xreg=-1.5;
 	$yreg=3.5;
 
@@ -572,6 +573,10 @@ switch($typefacture){
 		$pdf->MultiCell(187.6,4,utf8_decode('Merci de bien vouloir vous acquitter de la présente facture soit auprès de la Régie de la Commune de FAA\'A ou de nous faire parvenir votre règlement soit par chèque soit par virement à l\'ordre du Régisseur de recettes de la Mairie de FAA\'A, domicilié à l\'agence CCP Faa\'a centre, compte n°14168 00001 9024406F068 59'),0);
 
 	////////////////////////////////fin information////////////////////////////////////
+	
+	if($duplicata){
+		$pdf->Cell(89,10, 'DUPLICATA');
+	}
 
 	if($zip=='1'){
 		$pdf->Output("zippdf/".$nofacture.".pdf","F");
@@ -590,6 +595,21 @@ function get_typeclient($idfacture){
 	$mysqli->close();
 
         return $type;
+}
+
+function get_duplicata_status($idfacture){
+	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+        $result = $mysqli->query("SELECT `duplicata` FROM `factures_cantine` WHERE `idfacture`='$idfacture'");
+        $row = $result->fetch_row();
+        $status = $row[0];
+	
+	if($status=='0'){
+		$mysqli->query("UPDATE `factures_cantine` SET `duplicata`='1' WHERE `idfacture`='$idfacture'");
+	}
+	
+	$mysqli->close();
+
+        return $status;
 }
 
 ?>
