@@ -29,7 +29,12 @@ function updatedata($avoirid,$typefacture,$factureid,$avoir,$restearegler,$commu
 		$avoirleft = 0;
 		$appliedavoir = $avoir;
 	}
-	$query = "UPDATE `factures_cantine` SET  `avoir` =  '$appliedavoir', `restearegler` = '$difference', `avoir_on_id` = '$communeid' WHERE  `idfacture` = '$factureid'";
+	if($difference=='0'){
+		$query = "UPDATE `factures_cantine` SET  `avoir` =  '$appliedavoir', `restearegler` = '$difference', `avoir_on_id` = '$communeid', `reglement` = '1' WHERE  `idfacture` = '$factureid'";
+	}else{
+		$query = "UPDATE `factures_cantine` SET  `avoir` =  '$appliedavoir', `restearegler` = '$difference', `avoir_on_id` = '$communeid' WHERE  `idfacture` = '$factureid'";
+
+	}
 	$mysqli->query($query);
 	
 	$query = "UPDATE `avoirs` SET  `reste` =  '$avoirleft' WHERE  `idavoir` = '$avoirid'";
