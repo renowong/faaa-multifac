@@ -109,7 +109,8 @@ function getPaidFactures($id,$type){
 			" LEFT JOIN `paiements` ON `factures_cantine`.`idfacture`=`paiements`.`idfacture` WHERE `factures_cantine`.`reglement` = 1 AND `factures_cantine`.`acceptation` = 1 AND `factures_cantine`.`idclient` = $id ORDER BY `paiements`.`idpaiement` DESC LIMIT 10";
 			*/
 			
-			$query = "SELECT * FROM `factures_cantine` ".
+			$query = "SELECT `factures_cantine`.`idfacture`,`factures_cantine`.`communeid`,`factures_cantine`.`datefacture`,`factures_cantine`.`montantfcp` as `fmontantfcp`,`factures_cantine`.`montanteuro` as `fmontanteuro`,".
+			"`paiements`.`idpaiement`,`paiements`.`montantcfp` as `pmontantfcp`,`paiements`.`montanteuro` as `pmontanteuro`,`paiements`.`date_paiement`,`paiements`.`payeur` FROM `factures_cantine` ".
 			" LEFT JOIN `paiements` ON `factures_cantine`.`idfacture`=`paiements`.`idfacture` WHERE (`factures_cantine`.`montantfcp`>`factures_cantine`.`restearegler`) AND `factures_cantine`.`acceptation` = 1 AND `factures_cantine`.`idclient` = $id ORDER BY `paiements`.`idpaiement` DESC LIMIT 10";
 			
 			
@@ -120,12 +121,12 @@ function getPaidFactures($id,$type){
 			$comment = str_replace(" ; ","<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",$row["comment"]);
 			$enfant_prenom = "<br/>".getEnfantPrenom($row['idfacture']);
 			$output .= "<tr><td>$typef$enfant_prenom</td>".
-			"<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["montantfcp"])." FCP (soit ".$row["montanteuro"]." &euro;)<br/>";
+			"<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["fmontantfcp"])." FCP (soit ".$row["fmontanteuro"]." &euro;)<br/>";
 			if(isset($row['idpaiement'])){
-				$output .= "- R&eacute;gl&eacute;e la somme de <b>".trispace($row["montantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".french_date($row["date_paiement"]).")<br/>";
+				$output .= "- R&eacute;gl&eacute;e la somme de <b>".trispace($row["pmontantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".french_date($row["date_paiement"]).")<br/>";
 				$output .= "- Infos : $comment<br/>";
 			}else{
-				$output .= "- R&eacute;gl&eacute;e par bourse : $comment<br/>";
+				$output .= "- R&eacute;gl&eacute;e par bourse ou avoir (pas de quitance)<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$comment<br/>";
 			}
 			$output .= "- Obs: ".$row["obs"]."</td>".
 			"<td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=$typef\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
