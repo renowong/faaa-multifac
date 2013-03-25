@@ -110,7 +110,7 @@ function getPaidFactures($id,$type){
 			*/
 			
 			$query = "SELECT `factures_cantine`.`idfacture`,`factures_cantine`.`communeid`,`factures_cantine`.`datefacture`,`factures_cantine`.`montantfcp` as `fmontantfcp`,`factures_cantine`.`montanteuro` as `fmontanteuro`,".
-			"`paiements`.`idpaiement`,`paiements`.`montantcfp` as `pmontantfcp`,`paiements`.`montanteuro` as `pmontanteuro`,`paiements`.`date_paiement`,`paiements`.`payeur` FROM `factures_cantine` ".
+			"`paiements`.`idpaiement`,`paiements`.`montantcfp` as `pmontantfcp`,`paiements`.`montanteuro` as `pmontanteuro`,`paiements`.`date_paiement`,`paiements`.`mode`,`paiements`.`payeur` FROM `factures_cantine` ".
 			" LEFT JOIN `paiements` ON `factures_cantine`.`idfacture`=`paiements`.`idfacture` WHERE (`factures_cantine`.`montantfcp`>`factures_cantine`.`restearegler`) AND `factures_cantine`.`acceptation` = 1 AND `factures_cantine`.`idclient` = $id ORDER BY `paiements`.`idpaiement` DESC LIMIT 10";
 			
 			
