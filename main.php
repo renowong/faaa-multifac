@@ -2,6 +2,7 @@
 require_once('headers.php');
 require_once('global_functions.php');
 require_once('checksession.php');
+require_once('checkyear.php');
 
 if (!empty($_SESSION['client'])) {
 		$arCompte = getCompteDisplay();
