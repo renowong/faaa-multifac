@@ -123,7 +123,7 @@ function getPaidFactures($id,$type){
 			$output .= "<tr><td>$typef$enfant_prenom</td>".
 			"<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ".trispace($row["fmontantfcp"])." FCP (soit ".$row["fmontanteuro"]." &euro;)<br/>";
 			if(isset($row['idpaiement'])){
-				$output .= "- R&eacute;gl&eacute;e la somme de <b>".trispace($row["pmontantcfp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".french_date($row["date_paiement"]).")<br/>";
+				$output .= "- R&eacute;gl&eacute;e la somme de <b>".trispace($row["pmontantfcp"])." FCP</b> par ".strtoupper($row["payeur"])." (".translatemode($row["mode"])." le ".french_date($row["date_paiement"]).")<br/>";
 				$output .= "- Infos : $comment<br/>";
 			}else{
 				$output .= "- R&eacute;gl&eacute;e par bourse ou avoir (pas de quitance)<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$comment<br/>";
