@@ -354,9 +354,9 @@ foreach( $ar_tables as &$val ){
 			if($row["acceptation"]==0){$status="Refus&eacute;e";$reject="reject";}else{$status="Valid&eacute;e";$reject="";}
 		}
                 if($val['title']=="cantine"){
-				$output .= "<tbody class=\"$reject\"><td>".$val['title']."<br/>".getEnfantPrenom($row['idfacture'])."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">Facture du ".french_date($row["datefacture"])." montant de ";
+				$output .= "<tbody class=\"$reject\"><td>".$val['title']."<br/>".getEnfantPrenom($row['idfacture'])."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
 			}else{
-				$output .= "<tbody class=\"$reject\"><td>".$val['title']."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">Facture du ".french_date($row["datefacture"])." montant de ";
+				$output .= "<tbody class=\"$reject\"><td>".$val['title']."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
 				}
 		$output .= trispace($row["montantfcp"]);
 		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a><br/>Obs : ".$row["obs"]."</td><td>$status</td><td>$comment</td></tbody>";
