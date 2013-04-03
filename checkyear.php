@@ -2,12 +2,14 @@
 //include_once('config.php');
 
 $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-$query = "SELECT MAX(`id`), `chrono` FROM `chrono`";
+$query = "SELECT `chrono` FROM `chrono` WHERE `id` = (SELECT MAX(`id`) FROM `chrono`)";
 
 $result = $mysqli->query($query);
 $row = $result->fetch_row();
 
 $chronomax = $row[0];
+
+print $chronomax;
 
 $chronoyear = substr($chronomax,0,4);
 
