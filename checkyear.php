@@ -9,7 +9,7 @@ $row = $result->fetch_row();
 
 $chronomax = $row[0];
 
-print $chronomax;
+//print $chronomax;
 
 $chronoyear = substr($chronomax,0,4);
 
