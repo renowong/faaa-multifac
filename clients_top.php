@@ -249,8 +249,8 @@ if (isset($_GET['edit']) && $_GET['edit'] > 0) {
 		'			<td><label>Classe</label><span class="red">*</span><br /><select name="slt_classe_enfant" id="slt_classe_enfant" onChange="enf_validate(this.value, this.id);"></select></td>'.
 		'		</tr>'.
 		'		<tr>'.
-		'			<td><label>Date d\'entr&eacute;e</label><br /><input type="text" size="10" maxlength="10" name="txt_entree_enfant" id="txt_entree_enfant" value="'.$_SESSION['values']['txt_enfant_entree'].'" readonly /> <img src="img/close.png" height="16" width="16" onclick="reset_date(\'txt_entree_enfant\');" /></td>'.
-		'			<td><label>Date de sortie</label><br /><input type="text" size="10" maxlength="10" name="txt_sortie_enfant" id="txt_sortie_enfant" value="'.$_SESSION['values']['txt_enfant_sortie'].'" readonly /> <img src="img/close.png" height="16" width="16" onclick="reset_date(\'txt_sortie_enfant\');" /></td>'.
+		'			<td><label>Date d\'entr&eacute;e</label><br /><input type="text" size="10" maxlength="10" name="txt_entree_enfant" id="txt_entree_enfant" value="'.$_SESSION['values']['txt_enfant_entree'].'" readonly /> <a href="javascript:reset_date(\'txt_entree_enfant\');"><img src="img/close.png" style="vertical-align:middle;width:16px;height:16px;" /></a></td>'.
+		'			<td><label>Date de sortie</label><br /><input type="text" size="10" maxlength="10" name="txt_sortie_enfant" id="txt_sortie_enfant" value="'.$_SESSION['values']['txt_enfant_sortie'].'" readonly /> <a href="javascript:reset_date(\'txt_sortie_enfant\');"><img src="img/close.png" style="vertical-align:middle;width:16px;height:16px;" /></a></td>'.
 		'		</tr>'.
 		'		<tr>'.
 		'			<td colspan="2" style="text-align:right;"><input type="hidden" id="id_client_enfant" name="id_client_enfant" value="'.$_GET['edit'].'" /><input type="hidden" id="id_enfant" name="id_enfant" value="'.$_SESSION['values']['hid_enfantid'].'" />'.
