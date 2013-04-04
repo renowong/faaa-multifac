@@ -25,6 +25,8 @@ switch($type){
         $output .='<sexe>'.$row['sexe'].'</sexe>';
         $output .='<ecole>'.$row['ecole'].'</ecole>';
         $output .='<classe>'.$row['classe'].'</classe>';
+	$output .='<entree>'.$row['entree'].'</entree>';
+	$output .='<sortie>'.$row['sortie'].'</sortie>';
         $output .='<status>'.$row['status'].'</status>';
 	$output .='<status_periode>'.$row['status_periode'].'</status_periode>';
         $output .='<active>'.$row['active'].'</active>';

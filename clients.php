@@ -173,6 +173,8 @@ require_once('clients_top.php');
 				}
 				
 				$('#txt_dn_enfant').datepicker({inline: true,changeMonth: true,changeYear: true,minDate: "-18Y",maxDate: "0",yearRange: "-18:+0"});
+				$('#txt_entree_enfant').datepicker({inline: true,changeMonth: true,changeYear: true});
+				$('#txt_sortie_enfant').datepicker({inline: true,changeMonth: true,changeYear: true});
 			
 				//////jqueryui buttons/////
 				$( "input:submit,input:button,button" ).button();
@@ -228,6 +230,8 @@ require_once('clients_top.php');
 					var status_periode = $child.find("status_periode").text();
 					var ecole = $child.find("ecole").text();
 					var classe = $child.find("classe").text();
+					var entree = $child.find("entree").text();
+					var sortie = $child.find("sortie").text();
 					var active = $child.find("active").text();
 					var dest = $child.find("destinataire").text();
 					$("#slt_ecole_enfant").val(ecole);
@@ -240,6 +244,10 @@ require_once('clients_top.php');
 					$("#txt_cps_enfant").val(cps);
 					//alert(classe);
 					$("#slt_classe_enfant").val(classe);
+					entree = entree.split("-");
+					$("#txt_entree_enfant").val(entree[2]+"/"+entree[1]+"/"+entree[0]);
+					sortie = sortie.split("-");
+					$("#txt_sortie_enfant").val(sortie[2]+"/"+sortie[1]+"/"+sortie[0]);
 					$("#slt_sexe_enfant").val(sexe);
 					$("#slt_status_enfant").val(status);
 					$("#slt_status_periode").val(status_periode);
@@ -323,6 +331,11 @@ require_once('clients_top.php');
 				$("#slt_status_periode").hide();
 				$("#slt_status_periode")[0].selectedIndex = 0;
 			}
+		}
+		
+		function reset_date(input){
+			//alert(input);
+			$("#"+input).val("");
 		}
 		</script>
 	</head>

@@ -9,6 +9,8 @@ $validator = new Validate();
 $_SESSION['values']['txt_enfantNom'] = $_POST['txt_nom_enfant'];
 $_SESSION['values']['txt_enfantPrenom'] = $_POST['txt_prenom_enfant'];
 $_SESSION['values']['txt_enfantDN'] = $_POST['txt_dn_enfant'];
+$_SESSION['values']['txt_enfant_entree'] = $_POST['txt_entree_enfant'];
+$_SESSION['values']['txt_enfant_sortie'] = $_POST['txt_sortie_enfant'];
 $_SESSION['values']['txt_enfantCPS'] = $_POST['txt_cps_enfant'];
 $_SESSION['values']['slt_enfantStatus'] = $_POST['slt_status_enfant'];
 $_SESSION['values']['slt_enfantStatus_Periode'] = $_POST['slt_status_periode'];
@@ -55,6 +57,14 @@ function submit_data(){
         $dnvalue = $_POST["txt_dn_enfant"];
         $dnvalue = explode("/", $dnvalue);
         $dn = $dnvalue[2]."-".$dnvalue[1]."-".$dnvalue[0];
+	
+	$entreevalue = $_POST["txt_entree_enfant"];
+        $entreevalue = explode("/", $entreevalue);
+        $entree = $entreevalue[2]."-".$entreevalue[1]."-".$entreevalue[0];
+	$sortievalue = $_POST["txt_sortie_enfant"];
+        $sortievalue = explode("/", $sortievalue);
+        $sortie = $sortievalue[2]."-".$sortievalue[1]."-".$sortievalue[0];
+	
         $cps = $_POST["txt_cps_enfant"];
         $sexe = $_POST["slt_sexe_enfant"];
         $status = $_POST["slt_status_enfant"];
@@ -72,7 +82,7 @@ function submit_data(){
 		if($dest=='1'){uncheckdest($clientid);}else{
 		    if(!checkdest_exist($clientid)){$dest = '1';}
 		}
-		$query = "INSERT INTO `enfants` (`enfantid`,`clientid`,`nom`,`prenom`,`ecole`,`classe`,`active`,`dn`,`cps`,`sexe`,`status`,`status_periode`,`destinataire`) VALUES (NULL,'$clientid','$nom','$prenom','$ecole','$classe','1','$dn','$cps','$sexe','$status','$status_periode','$dest')";
+		$query = "INSERT INTO `enfants` (`enfantid`,`clientid`,`nom`,`prenom`,`ecole`,`classe`,`entree`,`sortie`,`active`,`dn`,`cps`,`sexe`,`status`,`status_periode`,`destinataire`) VALUES (NULL,'$clientid','$nom','$prenom','$ecole','$classe','$entree','$sortie','1','$dn','$cps','$sexe','$status','$status_periode','$dest')";
 		$mysqli->query($query);
 		$success = $mysqli->affected_rows;
 		$mysqli->close();
@@ -86,7 +96,7 @@ function submit_data(){
         if($dest=='1'){uncheckdest($clientid);}else{
             if(!checkdest_exist($clientid,$enfantid)){$dest = '1';}
         }
-        $query = "UPDATE  `enfants` SET `nom`='$nom',`prenom`='$prenom',`dn`='$dn',`cps`='$cps',`sexe`='$sexe',`status`='$status',`status_periode`='$status_periode',`ecole`='$ecole',`classe`='$classe',`active`='$active',`destinataire`='$dest' WHERE `enfants`.`enfantid`='$enfantid'";
+        $query = "UPDATE  `enfants` SET `nom`='$nom',`prenom`='$prenom',`dn`='$dn',`entree`='$entree',`sortie`='$sortie',`cps`='$cps',`sexe`='$sexe',`status`='$status',`status_periode`='$status_periode',`ecole`='$ecole',`classe`='$classe',`active`='$active',`destinataire`='$dest' WHERE `enfants`.`enfantid`='$enfantid'";
         $mysqli->query($query);
         $success = $mysqli->affected_rows;
         $mysqli->close();
