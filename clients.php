@@ -227,6 +227,7 @@ require_once('clients_top.php');
 					var sexe = $child.find("sexe").text();
 					var cps = $child.find("cps").text();
 					var status = $child.find("status").text();
+					var status_expires = $child.find("status_expires").text();
 					var status_periode = $child.find("status_periode").text();
 					var ecole = $child.find("ecole").text();
 					var classe = $child.find("classe").text();
@@ -250,8 +251,20 @@ require_once('clients_top.php');
 					$("#txt_sortie_enfant").val(sortie[2]+"/"+sortie[1]+"/"+sortie[0]);
 					$("#slt_sexe_enfant").val(sexe);
 					$("#slt_status_enfant").val(status);
-					$("#slt_status_periode").val(status_periode);
-					if($("#slt_status_periode").val()>0){$("#slt_status_periode").show();}
+					
+					//determiner si le status est expire
+					var dateParts = status_expires.split("-");
+					var jsDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+					var now = new Date();
+					//alert(status_periode);
+					if(now>jsDate){
+						$("#slt_status_periode").val(0);
+					}else{
+						$("#slt_status_periode").val(status_periode);
+					}
+					//fin
+					switch_periode(status);
+					//if($("#slt_status_periode").val()>0){$("#slt_status_periode").show();}
 					
 					if(active=='1'){
 						$("#chk_actif_enfant").prop("checked", true);

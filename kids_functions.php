@@ -28,6 +28,7 @@ switch($type){
 	$output .='<entree>'.$row['entree'].'</entree>';
 	$output .='<sortie>'.$row['sortie'].'</sortie>';
         $output .='<status>'.$row['status'].'</status>';
+	$output .='<status_expires>'.$row['status_expires'].'</status_expires>';
 	$output .='<status_periode>'.$row['status_periode'].'</status_periode>';
         $output .='<active>'.$row['active'].'</active>';
         $output .='<destinataire>'.$row['destinataire'].'</destinataire>';

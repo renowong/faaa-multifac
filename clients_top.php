@@ -332,7 +332,11 @@ function buildStatusCantine($s){
 }
 
 function buildStatusPeriode($s){
-	$ar_periode = array("Non Applicable","1&egrave;re p&eacute;riode : ao&ucirc;t &agrave; d&eacute;cembre N","2&egrave;me p&eacute;riode : janv &agrave; mars N+1"," 3&egrave;me p&eacute;riode : avril &agrave; juin N+1");
+	$thismonth = date("n");
+	if($thismonth>3){$nextyear2periode=1;}else{$nextyear2periode=0;}
+	if($thismonth>6){$nextyear3periode=1;}else{$nextyear3periode=0;}
+
+	$ar_periode = array("Expir\351","P&eacute;riode : ao&ucirc;t &agrave; d&eacute;cembre ".date("Y"),"P&eacute;riode : janv &agrave; mars ".(date("Y")+$nextyear2periode)," P&eacute;riode : avril &agrave; juin ".(date("Y")+$nextyear3periode));
 	for($i=0;$i<count($ar_periode);$i++){
 		if($s==$i){$select=" selected";}else{$select="";}
 		$list .= "<option value='".$i."'$select>".$ar_periode[$i]."</option>";

@@ -73,6 +73,25 @@ function submit_data(){
         $dest = "off";  //deprecated
         if($active=="on"){$active="1";}else{$active="0";}
         if($dest=="on"){$dest="1";}else{$dest="0";} //deprecated
+	
+	//determine date status expires depending on periode
+	$thismonth = date("n");
+	
+	switch($status_periode){
+		case 1:
+			$status_expires = date("Y")."-12-31";
+		break;
+		case 2:
+			if($thismonth>3){$nextyear=1;}else{$nextyear=0;}
+			$status_expires = date("Y")+$nextyear."-03-31";
+		break;
+		case 3:
+			if($thismonth>6){$nextyear=1;}else{$nextyear=0;}
+			$status_expires = date("Y")."-06-30";
+		break;
+		default:
+		$status_expires = "1997-01-01";
+	}
         
     
     switch($type){
@@ -82,7 +101,7 @@ function submit_data(){
 		if($dest=='1'){uncheckdest($clientid);}else{
 		    if(!checkdest_exist($clientid)){$dest = '1';}
 		}
-		$query = "INSERT INTO `enfants` (`enfantid`,`clientid`,`nom`,`prenom`,`ecole`,`classe`,`entree`,`sortie`,`active`,`dn`,`cps`,`sexe`,`status`,`status_periode`,`destinataire`) VALUES (NULL,'$clientid','$nom','$prenom','$ecole','$classe','$entree','$sortie','1','$dn','$cps','$sexe','$status','$status_periode','$dest')";
+		$query = "INSERT INTO `enfants` (`enfantid`,`clientid`,`nom`,`prenom`,`ecole`,`classe`,`entree`,`sortie`,`active`,`dn`,`cps`,`sexe`,`status`,`status_expires`,`status_periode`,`destinataire`) VALUES (NULL,'$clientid','$nom','$prenom','$ecole','$classe','$entree','$sortie','1','$dn','$cps','$sexe','$status','$status_expires','$status_periode','$dest')";
 		$mysqli->query($query);
 		$success = $mysqli->affected_rows;
 		$mysqli->close();
@@ -96,7 +115,7 @@ function submit_data(){
         if($dest=='1'){uncheckdest($clientid);}else{
             if(!checkdest_exist($clientid,$enfantid)){$dest = '1';}
         }
-        $query = "UPDATE  `enfants` SET `nom`='$nom',`prenom`='$prenom',`dn`='$dn',`entree`='$entree',`sortie`='$sortie',`cps`='$cps',`sexe`='$sexe',`status`='$status',`status_periode`='$status_periode',`ecole`='$ecole',`classe`='$classe',`active`='$active',`destinataire`='$dest' WHERE `enfants`.`enfantid`='$enfantid'";
+        $query = "UPDATE  `enfants` SET `nom`='$nom',`prenom`='$prenom',`dn`='$dn',`entree`='$entree',`sortie`='$sortie',`cps`='$cps',`sexe`='$sexe',`status`='$status',`status_expires`='$status_expires',`status_periode`='$status_periode',`ecole`='$ecole',`classe`='$classe',`active`='$active',`destinataire`='$dest' WHERE `enfants`.`enfantid`='$enfantid'";
         $mysqli->query($query);
         $success = $mysqli->affected_rows;
         $mysqli->close();
