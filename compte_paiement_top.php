@@ -37,7 +37,7 @@ function getAllFactures($id,$type){
 				$output .= "</td><td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=$typef\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
 				$output .= "<td style=\"text-align:center\"><a href=\"javascript:paiement('".$row["idfacture"]."','$typef')\"><img src=\"img/visa-icon.png\" height=\"32\" style=\"border:0px\"></a></td>";
 				if($row["cps"]=='1'){$check=" checked";}
-				$output .= "<td style=\"text-align:center\"><input type=\"checkbox\" id=\"chk_cps\" name=\"chk_cps\" value=\"".$row['idfacture']."\"$check /></td>";
+				$output .= "<td style=\"text-align:center\"><input title=\"Activer uniquement si le reste \340 payer est pour la CPS\" type=\"checkbox\" id=\"chk_cps\" name=\"chk_cps\" value=\"".$row['idfacture']."\"$check /></td>";
 				}
 				$result->close();
 				
