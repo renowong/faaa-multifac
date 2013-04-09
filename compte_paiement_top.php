@@ -29,7 +29,8 @@ function getAllFactures($id,$type){
 				$typef="cantine";
 				$comment = str_replace(" ; ","<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",$row["comment"]);
 				$enfant_prenom = "<br/>".getEnfantPrenom($row['idfacture']);
-				$output .= "<tr><td>$typef$enfant_prenom</td>";
+				if($row["cps"]=='1'){$classpurple=" class=\"purple\" title=\"Facture \340 r\351gler par la CPS\"";}
+				$output .= "<tr id=\"tr".$row['idfacture']."\"$classpurple><td>$typef$enfant_prenom</td>";
 				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de <b>".trispace($row["montantfcp"])." FCP</b> (soit ".$row["montanteuro"]." &euro;)";
 				if($row["restearegler"]!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : <b>".trispace($row["restearegler"])." FCP</b>";}
 				$output .= "<br/>Infos : ".$comment;

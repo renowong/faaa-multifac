@@ -16,8 +16,12 @@ require_once('compte_paiement_top.php');
 			
 			if($("#chk_cps").prop("checked")){
 				$.post("checkcps.php", { factureid:factureid, bool:"1" } );
+				$("#tr"+factureid).addClass("purple");
+				$("#tr"+factureid).prop("title","Facture \340 r\351gler par la CPS");
 			}else{
 				$.post("checkcps.php", { factureid:factureid, bool:"0" } );
+				$("#tr"+factureid).removeClass("purple");
+				$("#tr"+factureid).prop("title","");
 			}
 		});
 	});

@@ -239,6 +239,10 @@ input, select {
 	color: blue;
 }
 
+.purple {
+	background-color: Violet;
+}
+
 .right{
 	text-align:right;
 }
