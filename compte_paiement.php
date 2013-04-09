@@ -10,6 +10,18 @@ require_once('compte_paiement_top.php');
 	<head>
 		<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$graburljs.$jquery.$jqueryui.$message_div.$compte_div ?>
 	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#chk_cps").change(function(){
+			var factureid = $("#chk_cps").val();
+			
+			if($("#chk_cps").prop("checked")){
+				$.post("checkcps.php", { factureid:factureid, bool:"1" } );
+			}else{
+				$.post("checkcps.php", { factureid:factureid, bool:"0" } );
+			}
+		});
+	});
+	
 		function paiement(factureid,type){
 			window.location.href="paiement_comptant.php?id="+factureid+"&type="+type;
 		}
@@ -42,7 +54,7 @@ require_once('compte_paiement_top.php');
 
 		<table>
 			<tr>
-				<th>Type de Facture</th><th>Facture</th><th>Visualiser</th><th>Payer</th>
+				<th>Type de Facture</th><th>Facture</th><th>Visualiser</th><th>Payer</th><th>CPS</th>
 				<? echo $listfacture_avalider ?>
 			</tr>
 		</table>

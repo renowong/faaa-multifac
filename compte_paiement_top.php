@@ -22,7 +22,7 @@ function getAllFactures($id,$type){
 	
 	switch($type){
 		case "client":
-				$query = "SELECT * FROM `".DB."`.`factures_cantine` WHERE `reglement` = '0' AND `acceptation` = '1' AND `idclient` = $id";
+				$query = "SELECT * FROM `factures_cantine` WHERE `reglement` = '0' AND `acceptation` = '1' AND `idclient` = $id";
 				//echo $query;
 				$result = $mysqli->query($query);
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
@@ -36,10 +36,12 @@ function getAllFactures($id,$type){
 				$output .= "<br/>Obs : ".$row["obs"];
 				$output .= "</td><td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=$typef\" target=\"_blank\"><img src=\"img/pdf.png\" height=\"32\" style=\"border:0px\"></a></td>";
 				$output .= "<td style=\"text-align:center\"><a href=\"javascript:paiement('".$row["idfacture"]."','$typef')\"><img src=\"img/visa-icon.png\" height=\"32\" style=\"border:0px\"></a></td>";
+				if($row["cps"]=='1'){$check=" checked";}
+				$output .= "<td style=\"text-align:center\"><input type=\"checkbox\" id=\"chk_cps\" name=\"chk_cps\" value=\"".$row['idfacture']."\"$check /></td>";
 				}
 				$result->close();
 				
-				$query = "SELECT * FROM `".DB."`.`factures_amarrage` WHERE `factures_amarrage`.`type_client` = 'C' AND`reglement` = '0' AND `acceptation` = '1' AND `idclient` = $id";
+				$query = "SELECT * FROM `factures_amarrage` WHERE `factures_amarrage`.`type_client` = 'C' AND`reglement` = '0' AND `acceptation` = '1' AND `idclient` = $id";
 				//echo $query;
 				$result = $mysqli->query($query);
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
@@ -54,7 +56,7 @@ function getAllFactures($id,$type){
 		break;
 		
 		case "mandataire":
-				$query = "SELECT * FROM `".DB."`.`factures_etal` WHERE `reglement` = '0' AND `acceptation` = '1' AND `idclient` = $id";
+				$query = "SELECT * FROM `factures_etal` WHERE `reglement` = '0' AND `acceptation` = '1' AND `idclient` = $id";
 				//echo $query;
 				$result = $mysqli->query($query);
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
@@ -68,7 +70,7 @@ function getAllFactures($id,$type){
 				$result->close();
 
 				
-				$query = "SELECT * FROM `".DB."`.`factures_amarrage` WHERE `factures_amarrage`.`type_client` = 'M' AND`reglement` = '0' AND `acceptation` = '1' AND `idclient` = $id";
+				$query = "SELECT * FROM `factures_amarrage` WHERE `factures_amarrage`.`type_client` = 'M' AND`reglement` = '0' AND `acceptation` = '1' AND `idclient` = $id";
 				//echo $query;
 				$result = $mysqli->query($query);
 				while($row = $result->fetch_array(MYSQLI_ASSOC)){
