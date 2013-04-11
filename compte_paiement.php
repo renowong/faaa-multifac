@@ -58,7 +58,7 @@ require_once('compte_paiement_top.php');
 
 		<table>
 			<tr>
-				<th>Type de Facture</th><th>Facture</th><th>Visualiser</th><th>Payer</th><th>CPS</th>
+				<th>Type de Facture</th><th>Facture</th><th>PDF</th><th>Payer</th><th>CPS</th>
 				<? echo $listfacture_avalider ?>
 			</tr>
 		</table>
@@ -66,7 +66,7 @@ require_once('compte_paiement_top.php');
 		<h1>Factures derni&egrave;rement r&eacute;gl&eacute;es</h1><br/><br/>
 		<table>
 			<tr>
-				<th>Type de Facture</th><th>Facture</th><th>Facture</th><th>Re&ccedil;u</th>
+				<th>Type de Facture</th><th>Facture</th><th>PDF</th><th>Re&ccedil;u</th>
 				<? echo $listfacture_validees ?>
 			</tr>
 		</table>

@@ -348,7 +348,7 @@ function buildFacturesEnCoursTable($id,$ar_tables){
 //print_r($ar_tables);
     
     $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$output = "<table class=\"tblform\"><tbody><th>Type de Facture</th><th>Facture</th><th>Status</th><th>Commentaire</th></tbody>";
+	$output = "<table class=\"tblform\"><tbody><th>Type de Facture</th><th>Facture</th><th>PDF</th><th>Status</th><th>Commentaire</th></tbody>";
 
 foreach( $ar_tables as &$val ){
 
@@ -358,18 +358,19 @@ foreach( $ar_tables as &$val ){
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
 		//$comment = $row["comment"];
+		if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" height=\"32\" style=\"border:0px\">";}else{$pdf="<img src=\"img/dpdf.png\" height=\"32\" style=\"border:0px\">";}
 		$comment = str_replace(" ; ","<br/>",$row["comment"]);
 		if($row["validation"]==0) {$status="En cours de validation";$reject="";
 		}else{
 			if($row["acceptation"]==0){$status="Refus&eacute;e";$reject="reject";}else{$status="Valid&eacute;e";$reject="";}
 		}
                 if($val['title']=="cantine"){
-				$output .= "<tbody class=\"$reject\"><td>".$val['title']."<br/>".getEnfantPrenom($row['idfacture'])."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
+				$output .= "<tbody class=\"$reject\"><td>".$val['title']."<br/>".getEnfantPrenom($row['idfacture'])."</td><td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
 			}else{
-				$output .= "<tbody class=\"$reject\"><td>".$val['title']."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
+				$output .= "<tbody class=\"$reject\"><td>".$val['title']."</td><td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
 				}
 		$output .= trispace($row["montantfcp"]);
-		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a><br/>Obs : ".$row["obs"]."</td><td>$status</td><td>$comment</td></tbody>";
+		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)<br/>Obs : ".$row["obs"]."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">$pdf</a></td><td>$status</td><td>$comment</td></tbody>";
         }
     }  
 
@@ -382,22 +383,23 @@ foreach( $ar_tables as &$val ){
 function buildAvoirsTable($id){
     
     $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$output = "<table class=\"tblform\"><tbody><th>Montant</th><th>Reste</th><th>Status</th><th>Liaison</th>".
+	$output = "<table class=\"tblform\"><tbody><th>Montant</th><th>Reste</th><th>Status</th><th>Liaison</th><th>PDF</th>".
 	"<th>Date</th><th>Obs</th><th>Valideur</th><th>Obs valideur</th><th>Action</th></tbody>";
 	
 	$query = "SELECT `avoirs`.`idavoir`,`avoirs`.`montant`,`avoirs`.`reste`,`avoirs`.`validation`,`avoirs`.`acceptation`,`avoirs`.`idfacture`,`avoirs`.`date`,".
 	"`avoirs`.`obs`,`avoirs`.`obs_valideur`,`factures_cantine`.`datefacture`,`factures_cantine`.`datefacture`,".
-	"`factures_cantine`.`montantfcp`,`factures_cantine`.`montanteuro` FROM `avoirs` INNER JOIN `factures_cantine`".
+	"`factures_cantine`.`montantfcp`,`factures_cantine`.`montanteuro`,`factures_cantine`.`duplicata` FROM `avoirs` INNER JOIN `factures_cantine`".
 	"ON `avoirs`.`idfacture`=`factures_cantine`.`idfacture` ".
 	"WHERE `avoirs`.`idclient` = '$id' AND `avoirs`.`validation` = '0' ORDER BY date DESC, `idavoir` DESC limit 10";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
+		if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" height=\"32\" style=\"border:0px\">";}else{$pdf="<img src=\"img/dpdf.png\" height=\"32\" style=\"border:0px\">";}
 		$status="En cours de validation";
                 $output .= "<tbody><td>".trispace($row['montant'])." FCP</td>";
 		$output .= "<td>".trispace($row["reste"])." FCP</td><td>$status</td>";
-		$output .= "<td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=cantine\" target=\"_blank\">Facture du ".french_date($row["datefacture"])." - ";
+		$output .= "<td>Facture du ".french_date($row["datefacture"])." - ";
 		$output .= trispace($row["montantfcp"]);
-		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a></td><td>".french_date($row["date"])."</td>";
+		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=cantine\" target=\"_blank\">$pdf</a></td><td>".french_date($row["date"])."</td>";
 		$output .= "<td>".$row["obs"]."</td><td>".$row["userlogin"]."</td><td>".$row["obs_valideur"]."</td><td></td></tbody>";
         }
 	
@@ -408,13 +410,14 @@ function buildAvoirsTable($id){
 	"WHERE `avoirs`.`idclient` = '$id' ORDER BY date DESC, `idavoir` DESC limit 10";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
+		if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" height=\"32\" style=\"border:0px\">";}else{$pdf="<img src=\"img/dpdf.png\" height=\"32\" style=\"border:0px\">";}
 		if($row["acceptation"]=='0'){$status="Refus&eacute;e";}else{$status="Valid&eacute;e";$reject="";}
 		if($row["reste"]>'0' && $row["acceptation"]=='1'){$use="<button onclick=\"div_avoir('avoirs_use.php?idavoir=".$row["idavoir"]."&avoir=".$row["reste"]."');\">Utiliser</button>";}else{$use='';}
                 $output .= "<tbody><td>".trispace($row['montant'])." FCP</td>";
 		$output .= "<td>".trispace($row["reste"])." FCP</td><td>$status</td>";
-		$output .= "<td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=cantine\" target=\"_blank\">Facture du ".french_date($row["datefacture"])." - ";
+		$output .= "<td>Facture du ".french_date($row["datefacture"])." - ";
 		$output .= trispace($row["montantfcp"]);
-		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a></td><td>".french_date($row["date"])."</td>";
+		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=cantine\" target=\"_blank\">$pdf</a></td><td>".french_date($row["date"])."</td>";
 		$output .= "<td>".$row["obs"]."</td><td>".$row["userlogin"]."</td><td>".$row["obs_valideur"]."</td><td>$use</td></tbody>";
         }
 	$output .= "</table>";
