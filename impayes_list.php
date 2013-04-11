@@ -24,7 +24,7 @@ switch($set_range){
     break;
 }
 
-        $output = "<div style='display: inline-block; height:inherit; overflow:auto;margin: 0px auto;'><table><tr><th>Type de Facture</th><th>Client</th><th width=500px>Facture</th><th>Retard</th></tr>";
+        $output = "<div style='display: inline-block; height:inherit; overflow:auto;margin: 0px auto;'><table><tr><th>Type de Facture</th><th>Client</th><th width=500px>Facture</th><th>PDF</th><th>Retard</th></tr>";
         switch($type){
                 case "cantine":
                         $output .= getcantinelist($client,$range);
@@ -53,16 +53,17 @@ function getetallist($client,$range){
         $query = "SELECT * FROM `factures_etal` INNER JOIN `mandataires` ON `factures_etal`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_etal`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0' $range$client ORDER BY `datefacture` ASC";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-            
+            	if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
+
                 $datef = $row["datefacture"];
                 $dayslate = strtotime("now") - strtotime($datef);
                 $dayslate = floor($dayslate/86400);
                 
                 $type='etal';
                 $output .= "<tr><td>place et &eacute;tal</td><td><a href='mandataires.php?edit=".$row["mandataireid"]."&hideerrors=1'>".$row["mandataireprefix"]." ".$row["mandataireRS"]." / ".htmlentities($row["mandatairenom"])." ".htmlentities($row["mandataireprenom"])."</a></td>".
-                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
+                "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
-                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td><td class='center'>$dayslate jours</td></tr>";
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'>$dayslate jours</td></tr>";
         }
         return $output;
 }
@@ -73,16 +74,17 @@ function getamarragelist($client,$range){
         $query = "SELECT * FROM `factures_amarrage` INNER JOIN `clients` ON `factures_amarrage`.`idclient` = `clients`.`clientid` WHERE `factures_amarrage`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0' $range$client ORDER BY `datefacture` ASC";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-            
+                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
+
                 $datef = $row["datefacture"];
                 $dayslate = strtotime("now") - strtotime($datef);
                 $dayslate = floor($dayslate/86400);
             
                 $type='amarrage';
                 $output .= "<tr><td>$type<br/>".$row["navire"]."</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
-                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
+                "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
-                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td><td class='center'>$dayslate jours</td></tr>";
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'>$dayslate jours</td></tr>";
         }
         return $output;
 }
@@ -92,7 +94,8 @@ function getcantinelist($client,$range){
         $query = "SELECT * FROM `factures_cantine` INNER JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` WHERE `factures_cantine`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0' AND `cps` = '0' $range$client ORDER BY `datefacture` ASC";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-                
+                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
+
                 $datef = $row["datefacture"];
                 $dayslate = strtotime("now") - strtotime($datef);
                 $dayslate = floor($dayslate/86400);
@@ -100,9 +103,9 @@ function getcantinelist($client,$range){
                 $type='cantine';
                 $enfant_prenom = "<br/>".getEnfantPrenom($row['idfacture']);
                 $output .= "<tr><td>$type$enfant_prenom</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
-                "<td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
+                "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
-                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td>".
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td>".
                 "<td class='center'>$dayslate jours</td></tr>";
         }
         return $output;
