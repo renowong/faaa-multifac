@@ -358,7 +358,7 @@ foreach( $ar_tables as &$val ){
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
 		//$comment = $row["comment"];
-		if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" height=\"48\" style=\"border:0px\">";}else{$pdf="<img src=\"img/dpdf.png\" height=\"48\" style=\"border:0px\">";}
+		if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
 		$comment = str_replace(" ; ","<br/>",$row["comment"]);
 		if($row["validation"]==0) {$status="En cours de validation";$reject="";
 		}else{
@@ -393,7 +393,7 @@ function buildAvoirsTable($id){
 	"WHERE `avoirs`.`idclient` = '$id' AND `avoirs`.`validation` = '0' ORDER BY date DESC, `idavoir` DESC limit 10";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-		if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" height=\"48\" style=\"border:0px\">";}else{$pdf="<img src=\"img/dpdf.png\" height=\"48\" style=\"border:0px\">";}
+		if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
 		$status="En cours de validation";
                 $output .= "<tbody><td>".trispace($row['montant'])." FCP</td>";
 		$output .= "<td>".trispace($row["reste"])." FCP</td><td>$status</td>";
@@ -410,7 +410,7 @@ function buildAvoirsTable($id){
 	"WHERE `avoirs`.`idclient` = '$id' ORDER BY date DESC, `idavoir` DESC limit 10";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-		if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" height=\"48\" style=\"border:0px\">";}else{$pdf="<img src=\"img/dpdf.png\" height=\"48\" style=\"border:0px\">";}
+		if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
 		if($row["acceptation"]=='0'){$status="Refus&eacute;e";}else{$status="Valid&eacute;e";$reject="";}
 		if($row["reste"]>'0' && $row["acceptation"]=='1'){$use="<button onclick=\"div_avoir('avoirs_use.php?idavoir=".$row["idavoir"]."&avoir=".$row["reste"]."');\">Utiliser</button>";}else{$use='';}
                 $output .= "<tbody><td>".trispace($row['montant'])." FCP</td>";

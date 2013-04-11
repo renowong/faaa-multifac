@@ -264,6 +264,11 @@ td.collapsable{
 	font-size:xx-small;
 }
 
+.ico{
+	border:0px;
+	height:48px;
+}
+
 /*////////PSEUDO AND SPECIFICS/////////////////////////*/
 a.compte {
 	font-weight:bold;

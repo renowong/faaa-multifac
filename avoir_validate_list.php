@@ -23,7 +23,7 @@ function getavoirlist(){
         $type = "cantine";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" height=\"48\" style=\"border:0px\">";}else{$pdf="<img src=\"img/dpdf.png\" height=\"48\" style=\"border:0px\">";}
+                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
                 $output .= "<tr><td>".trispace($row["montant"])." FCP</td><td>".trispace($row["reste"])." FCP</td>".
                 "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
