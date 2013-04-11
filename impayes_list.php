@@ -89,7 +89,7 @@ function getamarragelist($client,$range){
 
 function getcantinelist($client,$range){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $query = "SELECT * FROM `factures_cantine` INNER JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` WHERE `factures_cantine`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0' $range$client ORDER BY `datefacture` ASC";
+        $query = "SELECT * FROM `factures_cantine` INNER JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` WHERE `factures_cantine`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0' AND `cps` = '0' $range$client ORDER BY `datefacture` ASC";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
                 
