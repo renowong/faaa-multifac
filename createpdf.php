@@ -138,7 +138,7 @@ switch($typefacture){
 
 	case "amarrage":
 		$titlefacture = "Facturation d'Amarrage";
-		$delib = "La présente facture est conforme à la délibération n°83/2010 du 16 décembre 2010 et n°46/2011 du 30 août 2011 adoptant les modalités d'organisation et de fonctionnement de la marina de Vaitupa.";
+		$delib = "La présente facture est conforme à la délibération n°46/2011 du 30 août 2011 adoptant les modalités d'organisation et de fonctionnement de la marina de Vaitupa.";
 		$typeclient = get_typeclient($idfacture);
 		
 		
