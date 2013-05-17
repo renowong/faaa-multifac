@@ -255,7 +255,7 @@ class Validate {
 	
 	private function validateNotahiti($value) { 
                 if ($value=='') return 0;
-                return (!preg_match('/^[0-9]{6}$/', $value)) ? 0 : 1;
+                return (!preg_match('/^[0-9a-zA-Z]{6}$/', $value)) ? 0 : 1;
         }
 
 	private function validateRC($value) {

@@ -66,7 +66,7 @@ require_once('mandataires_top.php');
 			
 			$('#txt_Notahiti').keypress(function(event) {
 				if(event.which=='0'||event.which=='8') return true;
-				return /^[0-9]+$/.test(String.fromCharCode(event.which));
+				return /^[0-9a-zA-Z]+$/.test(String.fromCharCode(event.which));
 			});
 			
 			$('#txt_IDTresor').keypress(function(event) {

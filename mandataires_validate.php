@@ -77,7 +77,7 @@ function enterdata($edit){
 			 "', `mandataireprefix`='".$_POST['box_Prefix']."', `mandataireRS`='".strtoupper($_POST['txt_RS']).
 			 "', `mandatairenom`='".strtoupper($_POST['txt_Nom'])."', `mandataireprenom`='".strtoupper($_POST['txt_Prenom']).
 			 "', `mandataireidtresor`='".$_POST['txt_IDTresor']."', `mandataireemail`='".strtolower($_POST['txt_Email']).
-			 "', `mandatairenotahiti`=".$notahiti.", `mandataireRC`='".$_POST['txt_RC'].
+			 "', `mandatairenotahiti`='".$notahiti."', `mandataireRC`='".$_POST['txt_RC'].
 			 "', `mandatairetelephone`='".$_POST['txt_Telephone']."', `mandatairetelephone2`='".$_POST['txt_Telephone2'].
 			 "', `mandatairefax`='".$_POST['txt_Fax']."', `mandatairebp`='".$_POST['txt_BP'].
 			 "', `mandatairecp`='".$_POST['txt_CP']."', `mandataireville`='".addslashes(strtoupper($_POST['txt_Ville'])).
