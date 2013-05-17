@@ -2,7 +2,7 @@
 function chiffre_en_lettre($montant, $devise1='', $devise2='')
 {
 	$montant = round($montant);
-	if(empty($devise1)) $dev1=' Francs FCP';
+	if(empty($devise1)) $dev1=' Francs';
 	else $dev1=$devise1;
 	if(empty($devise2)) $dev2='Centimes';
 	else $dev2=$devise2;
