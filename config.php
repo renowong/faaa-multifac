@@ -19,6 +19,11 @@ $ar_f_m = array(
                 "table" => "factures_etal",
                 "title" => "place et &eacute;tal",
                 "link" => "etal"
+              ),
+           1 => array(
+                "table" => "factures_amarrage",
+                "title" => "amarrage",
+                "link" => "amarrage"
               )
            );
 
@@ -32,7 +37,7 @@ $ar_f_c = array(
                 "table" => "factures_amarrage",
                 "title" => "amarrage",
                 "link" => "amarrage"
-              ),
+              )
            
            );
 
