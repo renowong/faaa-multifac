@@ -146,7 +146,7 @@ function getPaidFactures($id,$type){
 			
 			$query = "SELECT `factures_amarrage`.`idfacture`, `factures_amarrage`.`datefacture`, `factures_amarrage`.`communeid`, `factures_amarrage`.`montantfcp`, `factures_amarrage`.`montanteuro`, `factures_amarrage`.`navire`, `factures_amarrage`.`duplicata`".
 			", `paiements`.`date_paiement`, `paiements`.`payeur`, `paiements`.`mode`, `paiements`.`montantcfp`, `paiements`.`idpaiement`, `paiements`.`obs` FROM `".DB."`.`factures_amarrage` ".
-			" JOIN `".DB."`.`paiements` ON `factures_amarrage`.`idfacture`=`paiements`.`idfacture` WHERE `factures_amarrage`.`type_client` = 'C' AND `factures_amarrage`.`reglement` = '1' AND `factures_amarrage`.`acceptation` = '1' AND `factures_amarrage`.`idclient` = $id ORDER BY `paiements`.`idpaiement` DESC LIMIT 10";
+			" JOIN `".DB."`.`paiements` ON `factures_amarrage`.`idfacture`=`paiements`.`idfacture` WHERE `factures_amarrage`.`type_client` = 'C' AND (`factures_amarrage`.`montantfcp`>`factures_amarrage`.`restearegler`) AND `factures_amarrage`.`acceptation` = '1' AND `factures_amarrage`.`idclient` = $id ORDER BY `paiements`.`idpaiement` DESC LIMIT 10";
 			//echo $query;
 			$result = $mysqli->query($query);
 			while($row = $result->fetch_array(MYSQLI_ASSOC)){
@@ -164,7 +164,7 @@ function getPaidFactures($id,$type){
 		case "mandataire":
 			$query = "SELECT `factures_etal`.`idfacture`, `factures_etal`.`datefacture`, `factures_etal`.`communeid`, `factures_etal`.`montantfcp`, `factures_etal`.`montanteuro`".
 			", `paiements`.`date_paiement`, `paiements`.`payeur`, `paiements`.`mode`, `paiements`.`montantcfp`, `paiements`.`idpaiement`, `paiements`.`obs` FROM `".DB."`.`factures_etal` ".
-			" JOIN `".DB."`.`paiements` ON `factures_etal`.`idfacture`=`paiements`.`idfacture` WHERE `factures_etal`.`reglement` = 1 AND `factures_etal`.`acceptation` = 1 AND `factures_etal`.`idclient` = $id ORDER BY `paiements`.`idpaiement` DESC LIMIT 10";
+			" JOIN `".DB."`.`paiements` ON `factures_etal`.`idfacture`=`paiements`.`idfacture` WHERE (`factures_etal`.`montantfcp`>`factures_etal`.`restearegler`) AND `factures_etal`.`acceptation` = 1 AND `factures_etal`.`idclient` = $id ORDER BY `paiements`.`idpaiement` DESC LIMIT 10";
 			//echo $query;
 			$result = $mysqli->query($query);
 			while($row = $result->fetch_array(MYSQLI_ASSOC)){
@@ -179,7 +179,7 @@ function getPaidFactures($id,$type){
 			
 			$query = "SELECT `factures_amarrage`.`idfacture`, `factures_amarrage`.`datefacture`, `factures_amarrage`.`communeid`, `factures_amarrage`.`montantfcp`, `factures_amarrage`.`montanteuro`, `factures_amarrage`.`navire`".
 			", `paiements`.`date_paiement`, `paiements`.`payeur`, `paiements`.`mode`, `paiements`.`montantcfp`, `paiements`.`idpaiement`, `paiements`.`obs` FROM `".DB."`.`factures_amarrage` ".
-			" JOIN `".DB."`.`paiements` ON `factures_amarrage`.`idfacture`=`paiements`.`idfacture` WHERE `factures_amarrage`.`type_client` = 'M' AND `factures_amarrage`.`reglement` = '1' AND `factures_amarrage`.`acceptation` = '1' AND `factures_amarrage`.`idclient` = $id ORDER BY `paiements`.`idpaiement` DESC LIMIT 10";
+			" JOIN `".DB."`.`paiements` ON `factures_amarrage`.`idfacture`=`paiements`.`idfacture` WHERE `factures_amarrage`.`type_client` = 'M' AND (`factures_amarrage`.`montantfcp`>`factures_amarrage`.`restearegler`) AND `factures_amarrage`.`acceptation` = '1' AND `factures_amarrage`.`idclient` = $id ORDER BY `paiements`.`idpaiement` DESC LIMIT 10";
 			//echo $query;
 			$result = $mysqli->query($query);
 			while($row = $result->fetch_array(MYSQLI_ASSOC)){
