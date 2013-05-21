@@ -10,7 +10,10 @@ $prefixOptions = array("0" => "[S&eacute;lectionner]",
                                                  "SA" => "SA",
                                                  "EURL" => "EURL",
                                                  "SEM" => "SEM",
-                                                 "EPIC" => "EPIC");
+                                                 "EPIC" => "EPIC",
+                                                 "MR" => "MR",
+                                                 "MME" => "MME",
+                                                 "MLLE" => "MLLE");
 
 
 //###############################procedures#####################################
