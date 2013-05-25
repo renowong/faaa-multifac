@@ -30,7 +30,7 @@ function getAllFactures($id,$type){
 				if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
 				$comment = str_replace(" ; ","<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",$row["comment"]);
 				$enfant_prenom = "<br/>".getEnfantPrenom($row['idfacture']);
-				if($row["cps"]=='1'){$classpurple=" class=\"purple\" title=\"Facture \340 r\351gler par la CPS\"";}
+				if($row["cps"]=='1'){$classpurple=" class=\"purple\" title=\"Facture \340 r\351gler par la CPS\"";}else{$classpurple="";}
 				$output .= "<tr id=\"tr".$row['idfacture']."\"$classpurple><td>$typef$enfant_prenom</td>";
 				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de <b>".trispace($row["montantfcp"])." FCP</b> (soit ".$row["montanteuro"]." &euro;)";
 				if($row["restearegler"]!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : <b>".trispace($row["restearegler"])." FCP</b>";}
@@ -38,8 +38,8 @@ function getAllFactures($id,$type){
 				$output .= "<br/>Obs : ".$row["obs"];
 				$output .= "</td><td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=$typef\" target=\"_blank\">$pdf</a></td>";
 				$output .= "<td style=\"text-align:center\"><a href=\"javascript:paiement('".$row["idfacture"]."','$typef')\"><img src=\"img/visa-icon.png\" class=\"ico\"></a></td>";
-				if($row["cps"]=='1'){$check=" checked";}
-				$output .= "<td style=\"text-align:center\"><input title=\"Activer uniquement si le reste \340 payer est pour la CPS\" type=\"checkbox\" id=\"chk_cps\" name=\"chk_cps\" value=\"".$row['idfacture']."\"$check /></td>";
+				if($row["cps"]=='1'){$check=" checked";}else{$check=" ";}
+				$output .= "<td style=\"text-align:center\"><input title=\"Activer uniquement si le reste \340 payer est pour la CPS\" type=\"checkbox\" id=\"chk_cps_".$row['idfacture']."\" name=\"chk_cps_".$row['idfacture']."\" value=\"".$row['idfacture']."\"$check /></td>";
 				}
 				$result->close();
 				

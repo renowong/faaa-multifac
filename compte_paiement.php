@@ -11,10 +11,13 @@ require_once('compte_paiement_top.php');
 		<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$graburljs.$jquery.$jqueryui.$message_div.$compte_div ?>
 	<script type="text/javascript">
 	$(document).ready(function() {
-		$("#chk_cps").change(function(){
-			var factureid = $("#chk_cps").val();
+		$("[id^=chk_cps]").change(function(){
+			var id = event.target.id;
+			var factureid = $("#"+id).val();
 			
-			if($("#chk_cps").prop("checked")){
+			//alert(id);
+			if($("#"+id).prop("checked")){
+				
 				$.post("checkcps.php", { factureid:factureid, bool:"1" } );
 				$("#tr"+factureid).addClass("purple");
 				$("#tr"+factureid).prop("title","Facture \340 r\351gler par la CPS");
