@@ -99,7 +99,7 @@ switch($typefacture){
 			while($row = $result->fetch_array(MYSQLI_ASSOC)){
 				$datefacture = $row['datefacture'];
 				$nofacture = $row['communeid'];
-				$periode = $row['periode'];
+				$periode = html_entity_decode($row['periode'],ENT_QUOTES, "ISO-8859-1");
 				$facturevalidation = $row['validation'];
 				$client = $row['mandatairenom']." ".$row['mandataireprenom'];
 				$client = strtoupper($client);
@@ -158,9 +158,9 @@ switch($typefacture){
 			while($row = $result->fetch_array(MYSQLI_ASSOC)){
 				$datefacture = $row['datefacture'];
 				$nofacture = $row['communeid'];
-				$periode = $row['periode'];
+				$periode = html_entity_decode($row['periode'],ENT_QUOTES, "ISO-8859-1");
 				$facturevalidation = $row['validation'];
-				$client = html_entity_decode($row['clientnom']." ".$row['clientprenom'],ENT_QUOTES, "UTF-8");
+				$client = html_entity_decode($row['clientnom']." ".$row['clientprenom'],ENT_QUOTES, "ISO-8859-1");
 				$client = strtoupper($client);
 				$contact1 = "BP ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
 				$contact2 = $row['aroa']." / ".$row['quartier'];
@@ -191,9 +191,9 @@ switch($typefacture){
 			while($row = $result->fetch_array(MYSQLI_ASSOC)){
 				$datefacture = $row['datefacture'];
 				$nofacture = $row['communeid'];
-				$periode = $row['periode'];
+				$periode = html_entity_decode($row['periode'],ENT_QUOTES, "ISO-8859-1");
 				$facturevalidation = $row['validation'];
-				$client = html_entity_decode($row['mandatairenom']." ".$row['mandataireprenom'],ENT_QUOTES, "UTF-8");
+				$client = html_entity_decode($row['mandatairenom']." ".$row['mandataireprenom'],ENT_QUOTES, "ISO-8859-1");
 				$client = strtoupper($client);
 				$contact1 = "BP ".$row['mandatairebp']." - ".$row['mandatairecp']." ".$row['mandataireville'];
 				$contact2 = $row['aroa']." / ".$row['quartier'];
