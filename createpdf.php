@@ -79,6 +79,8 @@ switch($typefacture){
 		
 		$duplicata = get_duplicata_status($idfacture,'factures_cantine');
 		
+		$solde = get_solde($idfacture,$idclient,'factures_cantine');
+		
 	break;
 
 	case "etal":
@@ -134,6 +136,8 @@ switch($typefacture){
 		$result->close();
 		
 		$duplicata = get_duplicata_status($idfacture,'factures_etal');
+		
+		$solde = get_solde($idfacture,$idclient,'factures_etal');
 	break;
 
 	case "amarrage":
@@ -226,20 +230,22 @@ switch($typefacture){
 		$result->close();
 		
 		$duplicata = get_duplicata_status($idfacture,'factures_amarrage');
+		
+		$solde = get_solde($idfacture,$idclient,'factures_amarrage');
 	break;
 }
 
 
 
-genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$avoirobs,$edt,$eau,$duplicata);
+genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$avoirobs,$edt,$eau,$duplicata,$solde);
 
 $mysqli->close();
 
 
-function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$avoirobs,$edt,$eau,$duplicata){	
+function genpdf($typefacture,$titlefacture,$datefacture,$nofacture,$destinataire,$ecole,$classe,$client,$contact1,$contact2,$telephone,$fax,$details_array,$datelimite,$facturevalidation,$zip,$periode,$delib,$rs,$py,$lieu,$nav,$avoir,$avoirobs,$edt,$eau,$duplicata,$solde){	
 	$pdf=new FPDF('P','mm','A4');
 	$pdf->AddPage();
-	
+
 	if($duplicata){
 	$pdf->SetXY(10,100);
 	$pdf->image('fpdf/watermark.jpg');
@@ -419,7 +425,7 @@ switch($typefacture){
 	$pdf->SetFont('Arial','',10);
 	$ydet=0; //y position for details
 	$stotal=0;
-	$solde=0;
+	//$solde=0;
 	$total=0;
 	
 	switch($typefacture){
@@ -521,7 +527,7 @@ switch($typefacture){
 	$pdf->SetXY(166+$xreg,159+$yreg);
 	$pdf->Cell(32,5, utf8_decode(trispace($stotal)." F"),0,1,'R');
 	$pdf->SetXY(166+$xreg,164.5+$yreg);
-	//$pdf->Cell(32,5, utf8_decode($stotal." F"),0,1,'R'); //solde a payer
+	$pdf->Cell(32,5, utf8_decode(trispace($solde)." F"),0,1,'R'); //solde a payer
 	$pdf->SetXY(166+$xreg,170+$yreg);
 	$total=$stotal+$solde;
 	$pdf->Cell(32,5, utf8_decode(trispace($total)." F"),0,1,'R');
@@ -615,6 +621,22 @@ function get_duplicata_status($idfacture,$table){
 	$mysqli->close();
 
         return $status;
+}
+
+function get_solde($idfacture,$idclient,$table){
+	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+        $result = $mysqli->query("SELECT `restearegler` FROM `$table` WHERE `idfacture`<'$idfacture' AND `idclient`='$idclient' AND `reglement`='0'");
+        
+	$result_array = array();
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+            $result_array[] = $row;
+	}
+	$mysqli->close();
+    
+	foreach($result_array as &$value){
+		$solde += $value['restearegler'];
+	}
+	return $solde;
 }
 
 ?>
