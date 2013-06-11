@@ -11,7 +11,7 @@ require_once('compte_paiement_top.php');
 		<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$graburljs.$jquery.$jqueryui.$message_div.$compte_div ?>
 	<script type="text/javascript">
 	$(document).ready(function() {
-		$("[id^=chk_cps]").change(function(){
+		$("[id^=chk_cps]").change(function(event){
 			var id = event.target.id;
 			var factureid = $("#"+id).val();
 			
