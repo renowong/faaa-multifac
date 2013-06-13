@@ -625,7 +625,7 @@ function get_duplicata_status($idfacture,$table){
 
 function get_solde($idfacture,$idclient,$table){
 	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $result = $mysqli->query("SELECT `restearegler` FROM `$table` WHERE `idfacture`<'$idfacture' AND `idclient`='$idclient' AND `reglement`='0'");
+        $result = $mysqli->query("SELECT `restearegler`,`idfacture` FROM `$table` WHERE `idfacture`<'$idfacture' AND `idclient`='$idclient' AND `reglement`='0' AND `acceptation`='1'");
         
 	$result_array = array();
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
@@ -635,8 +635,43 @@ function get_solde($idfacture,$idclient,$table){
     
 	foreach($result_array as &$value){
 		$solde += $value['restearegler'];
+		
+		$montantpayecps = get_cps_paiements($value['idfacture']);
+		if(!$montantpayecps>0){
+			$solde -= get_bourse($value['idfacture']);
+		}
+		
 	}
 	return $solde;
+}
+
+function get_bourse($idfacture){
+	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+        $result = $mysqli->query("SELECT `status_cantine`.`valeur`,`status_cantine`.`MontantFCP`,`factures_cantine_details`.`quant` FROM `factures_cantine_details` INNER JOIN `status_cantine` ON `factures_cantine_details`.`idtarif`=`status_cantine`.`idstatus` WHERE `factures_cantine_details`.`idfacture`='$idfacture'");
+        
+	$result_array = array();
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+            $result_array[] = $row;
+	}
+	$mysqli->close();
+    
+	foreach($result_array as &$value){
+		$valpriseencharge = ($value['valeur']*$value['MontantFCP'])/100;
+		$quantite = $value['quant'];
+		$bourse += $valpriseencharge*$quantite;
+	}
+	return $bourse;
+}
+
+function get_cps_paiements($idfacture){
+	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+        $result = $mysqli->query("SELECT `montantcfp` FROM `paiements` WHERE `idfacture`='$idfacture' AND `payeur`='CPS'");
+        $row = $result->fetch_row();
+        $paiement = $row[0];
+	
+	$mysqli->close();
+
+	return $paiement;
 }
 
 ?>
