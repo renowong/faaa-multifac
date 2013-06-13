@@ -55,11 +55,23 @@ $today = date("Y-m-d");
 				" `idtarif`, `quant`, `idenfant`)".
 				" VALUES (NULL, '".$lastid."', '".$detail[0]."', '".$detail[1]."', '".$detail[3]."')";
 		$mysqli->query($query);
+                
+                if($detail[0]=='15'||$detail[0]=='16'||$detail[0]=='17'||$detail[0]=='18'){
+                    activate_bourse($lastid);
+                }
+                
 	}
 
 	$mysqli->close();
 
 	return $lastid;
+}
+
+function activate_bourse($idfacture){
+    $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+    $query = "UPDATE `factures_cantine` SET `bourse`='1' WHERE `idfacture`='$idfacture'";
+    $mysqli->query($query);
+    $mysqli->close();
 }
 
 ?>
