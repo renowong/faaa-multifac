@@ -56,9 +56,11 @@ $today = date("Y-m-d");
 				" VALUES (NULL, '".$lastid."', '".$detail[0]."', '".$detail[1]."', '".$detail[3]."')";
 		$mysqli->query($query);
                 
-                if($detail[0]=='1'||$detail[0]=='2'||$detail[0]=='3'||$detail[0]=='4'||$detail[0]=='15'||$detail[0]=='16'||$detail[0]=='17'||$detail[0]=='18'){
-                    activate_bourse($lastid);
-                }
+                //if($detail[0]=='1'||$detail[0]=='2'||$detail[0]=='3'||$detail[0]=='4'||$detail[0]=='15'||$detail[0]=='16'||$detail[0]=='17'||$detail[0]=='18'){
+                //    activate_bourse($lastid);
+                //}
+		// more elegant solution....
+		if(check_ifbourse($detail[0])) activate_bourse($lastid);
                 
 	}
 
@@ -72,6 +74,17 @@ function activate_bourse($idfacture){
     $query = "UPDATE `factures_cantine` SET `bourse`='1' WHERE `idfacture`='$idfacture'";
     $mysqli->query($query);
     $mysqli->close();
+}
+
+function check_ifbourse($idstatus){
+    $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+    $query = "SELECT `valeur` FROM `status_cantine` WHERE `idstatus`='$idstatus'";
+    $result = $mysqli->query($query);
+    $row = $result->fetch_array(MYSQLI_ASSOC);
+    $value = $row["valeur"];
+    $mysqli->close();
+    
+    if($value>0){return true;}else{return false;}
 }
 
 ?>
