@@ -56,7 +56,7 @@ $today = date("Y-m-d");
 				" VALUES (NULL, '".$lastid."', '".$detail[0]."', '".$detail[1]."', '".$detail[3]."')";
 		$mysqli->query($query);
                 
-                if($detail[0]=='15'||$detail[0]=='16'||$detail[0]=='17'||$detail[0]=='18'){
+                if($detail[0]=='1'||$detail[0]=='2'||$detail[0]=='3'||$detail[0]=='4'||$detail[0]=='15'||$detail[0]=='16'||$detail[0]=='17'||$detail[0]=='18'){
                     activate_bourse($lastid);
                 }
                 
