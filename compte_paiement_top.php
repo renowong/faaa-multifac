@@ -38,8 +38,8 @@ function getAllFactures($id,$type){
 				$output .= "<br/>Obs : ".$row["obs"];
 				$output .= "</td><td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=$typef\" target=\"_blank\">$pdf</a></td>";
 				$output .= "<td style=\"text-align:center\"><a href=\"javascript:paiement('".$row["idfacture"]."','$typef')\"><img src=\"img/visa-icon.png\" class=\"ico\"></a></td>";
-				if($row["bourse"]=='1'){$check=" checked";}else{$check=" ";}
-				$output .= "<td style=\"text-align:center\"><input type=\"checkbox\" $check disabled/></td>";
+				if($row["bourse"]=='1'){$check="<img src='img/checked.png' style='width:32px;height:32px;'/>";}else{$check=" ";}
+				$output .= "<td style=\"text-align:center;vertical-align:middle;\">$check</td>";
 				}
 				$result->close();
 				
