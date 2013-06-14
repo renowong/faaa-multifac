@@ -30,15 +30,26 @@ function getAllFactures($id,$type){
 				if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
 				$comment = str_replace(" ; ","<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",$row["comment"]);
 				$enfant_prenom = "<br/>".getEnfantPrenom($row['idfacture']);
-				if($row["bourse"]=='1'){$classpurple=" class=\"purple\" title=\"Facture b\351n\351ficiant d'une bourse\"";}else{$classpurple="";}
+				if($row["bourse"]=='1'){
+				   $classpurple = " class=\"purple\" title=\"Facture b\351n\351ficiant d'une bourse\"";
+				   $check = "<img src='img/checked.png' style='width:32px;height:32px;'/>";
+				   $montantbourse = get_bourse($row['idfacture']);
+				   $infobourse = "<br/>Prise en charge par la bourse pour un montant de <b>$montantbourse FCP</b>";
+				}else{
+				   $classpurple = "";
+				   $check = "";
+				   $montantbourse = "";
+				   $infobourse = "";
+				}
+				
 				$output .= "<tr id=\"tr".$row['idfacture']."\"$classpurple><td>$typef$enfant_prenom</td>";
-				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de <b>".trispace($row["montantfcp"])." FCP</b> (soit ".$row["montanteuro"]." &euro;)";
+				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de <b>".trispace($row["montantfcp"])." FCP</b> (soit ".$row["montanteuro"]." &euro;)".$infobourse;
 				if($row["restearegler"]!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : <b>".trispace($row["restearegler"])." FCP</b>";}
 				$output .= "<br/>Infos : ".$comment;
 				$output .= "<br/>Obs : ".$row["obs"];
 				$output .= "</td><td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=$typef\" target=\"_blank\">$pdf</a></td>";
 				$output .= "<td style=\"text-align:center\"><a href=\"javascript:paiement('".$row["idfacture"]."','$typef')\"><img src=\"img/visa-icon.png\" class=\"ico\"></a></td>";
-				if($row["bourse"]=='1'){$check="<img src='img/checked.png' style='width:32px;height:32px;'/>";}else{$check=" ";}
+				//if($row["bourse"]=='1'){$check="<img src='img/checked.png' style='width:32px;height:32px;'/>";}else{$check=" ";}
 				$output .= "<td style=\"text-align:center;vertical-align:middle;\">$check</td>";
 				}
 				$result->close();
@@ -232,6 +243,24 @@ function translatemode($input){
 		break;
 		}
 		return $mode;
+}
+
+function get_bourse($idfacture){
+	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+        $result = $mysqli->query("SELECT `status_cantine`.`valeur`,`status_cantine`.`MontantFCP`,`factures_cantine_details`.`quant` FROM `factures_cantine_details` INNER JOIN `status_cantine` ON `factures_cantine_details`.`idtarif`=`status_cantine`.`idstatus` WHERE `factures_cantine_details`.`idfacture`='$idfacture'");
+        
+	$result_array = array();
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+            $result_array[] = $row;
+	}
+	$mysqli->close();
+    
+	foreach($result_array as &$value){
+		$valpriseencharge = ($value['valeur']*$value['MontantFCP'])/100;
+		$quantite = $value['quant'];
+		$bourse += $valpriseencharge*$quantite;
+	}
+	return $bourse;
 }
 
 ?>
