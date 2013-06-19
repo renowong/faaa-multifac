@@ -27,22 +27,51 @@ switch($set_range){
         $output = "<div style='display: inline-block; height:inherit; overflow:auto;margin: 0px auto;'><table><tr><th>Type de Facture</th><th>Client</th><th width=500px>Facture</th><th>PDF</th><th>Retard</th></tr>";
         switch($type){
                 case "cantine":
-                        $output .= getcantinelist($client,$range);
+                        //$output .= getcantinelist($client,$range);
+			list($listc,$ar_ids_cantine)= getcantinelist($client,$range);
+			$output .= $listc;
                 break;
                 case "etal":
-                        $output .= getetallist($client,$range);
+                        //$output .= getetallist($client,$range);
+			list($liste,$ar_ids_etal)= getetallist($client,$range);
+			$output .= $liste;
                 break;
                 case "amarrage":
-                        $output .= getamarragelist($client,$range);
+                        //$output .= getamarragelist($client,$range);
+			list($lista,$ar_ids_amarrage)= getamarragelist($client,$range);
+			$output .= $lista;
                 break;
                 default:
-                        $output .= getcantinelist($client,$range);
-                        $output .= getetallist($client,$range);
-                        $output .= getamarragelist($client,$range);
+			//$output .= getcantinelist($client,$range);
+			//$output .= getetallist($client,$range);
+                        //$output .= getamarragelist($client,$range);
+			list($listc,$ar_ids_cantine)= getcantinelist($client,$range);
+			list($liste,$ar_ids_etal)= getetallist($client,$range);
+			list($lista,$ar_ids_amarrage)= getamarragelist($client,$range);
+			$output .= $listc;
+			$output .= $liste;
+			$output .= $lista;
                 break;
-        }  
-        $output .= "</table></div>";      
-
+        }
+	
+        $output .= "</table>";
+	foreach($ar_ids_cantine as &$id){
+	    $ids_cantine .= $id.",";
+	}
+	foreach($ar_ids_etal as &$id){
+	    $ids_etal .= $id.",";
+	}
+	foreach($ar_ids_amarrage as &$id){
+	    $ids_amarrage .= $id.",";
+	}
+	$ids_cantine = substr($ids_cantine,0,strlen($ids_cantine)-1);
+	$ids_etal = substr($ids_etal,0,strlen($ids_etal)-1);
+	$ids_amarrage = substr($ids_amarrage,0,strlen($ids_amarrage)-1);
+	$output .= "<input type='hidden' id='ids_cantine' name='ids_cantine' value='$ids_cantine' />";
+	$output .= "<input type='hidden' id='ids_etal' name='ids_etal' value='$ids_etal' />";
+	$output .= "<input type='hidden' id='ids_amarrage' name='ids_amarrage' value='$ids_amarrage' />";
+	$output .= "</div>";      
+	$output .= "<br/><button onClick=\"javascript:tocsv();\">Exporter</button>";
 print $output;
 
 
@@ -64,8 +93,11 @@ function getetallist($client,$range){
                 "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'>$dayslate jours</td></tr>";
-        }
-        return $output;
+        
+		$ar_ids[]=$row["idfacture"];
+	}
+	$mysqli->close();
+        return array($output,$ar_ids);
 }
 
 
@@ -85,8 +117,11 @@ function getamarragelist($client,$range){
                 "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'>$dayslate jours</td></tr>";
-        }
-        return $output;
+		
+		$ar_ids[]=$row["idfacture"];
+	}
+	$mysqli->close();
+        return array($output,$ar_ids);
 }
 
 function getcantinelist($client,$range){
@@ -107,8 +142,13 @@ function getcantinelist($client,$range){
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td>".
                 "<td class='center'>$dayslate jours</td></tr>";
+		
+		$ar_ids[]=$row["idfacture"];
         }
-        return $output;
+	$mysqli->close();
+        //return $output;
+	//print_r($ar_ids);
+	return array($output,$ar_ids);
 }
 
 function getEnfantPrenom($idfacture){

@@ -49,6 +49,15 @@ $login = $cUser->userlogin();
 		$("#list_validation").empty();
 		$("#list_validation").load("impayes_list.php?client="+client);
 	}
+	
+	function tocsv(){
+	    var ids_cantine = $("#ids_cantine").val();
+	    var ids_etal = $("#ids_etal").val();
+	    var ids_amarrage = $("#ids_amarrage").val();
+	    
+	    
+	    window.location="extract_impayes.php?ids_cantine="+ids_cantine+"&ids_etal="+ids_etal+"&ids_amarrage="+ids_amarrage;
+	}
 
 	function init(){
 		showCompte(<?php echo '"' . $arCompte[0] . '", "' . $arCompte[1] . '", "' . $arCompte[2] . '"' ?>);
