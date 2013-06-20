@@ -4,51 +4,169 @@ include_once('config.php');
 $ids_cantine = $_GET["ids_cantine"];
 $ids_etal = $_GET["ids_etal"];
 $ids_amarrage = $_GET["ids_amarrage"];
+$ids_amarrage_clients = separate_clients_mandataires($ids_amarrage,"C","factures_amarrage");
+$ids_amarrage_mandataires = separate_clients_mandataires($ids_amarrage,"M","factures_amarrage");
 
 writetocsv($ids_cantine,$ids_etal,$ids_amarrage);
 
 function writetocsv($ids_cantine,$ids_etal,$ids_amarrage){
     $fw = fopen('extract/impayes.csv', 'w');
 
-    $ar_cantine_details = get_details($ids_cantine,'factures_cantine');
+    if($ids_cantine!=="") $ar_cantine_details = get_details_cantine($ids_cantine,'factures_cantine');
+    if($ids_etal!=="") $ar_etal_details = get_details_mandataire($ids_etal,'factures_etal');
+    if($ids_amarrage_clients!=="") $ar_amarrage_clients_details = get_details_client($ids_amarrage,'factures_amarrage');
+    if($ids_amarrage_mandataires!=="") $ar_amarrage_mandataires_details = get_details_mandataire($ids_amarrage,'factures_amarrage');
 
-    fwrite($fw, "communeid;datefacture;montant;restearegler;periode/obs;nom;prenom;prenom2;telephone;telephone2;bp;cp;ville;commune;rib;obs;enfantnom;enfantprenom;ecole;classe;\n");
+    fwrite($fw, "type;communeid;datefacture;montant;restearegler;periode/obs;nom;prenom;telephone;telephone2;bp;cp;ville;commune;rib;obs;enfantnom;enfantprenom;ecole;classe;\n");
 
-
-
-    foreach($ar_cantine_details as &$ar){
-        fwrite($fw, $ar["communeid"].";");
-        fwrite($fw, $ar["datefacture"].";");
-        fwrite($fw, $ar["montantfcp"].";");
-        fwrite($fw, $ar["restearegler"].";");
-        fwrite($fw, html_entity_decode($ar['obs'].";",ENT_QUOTES, "ISO-8859-1"));
-        fwrite($fw, $ar["clientnom"].";");
-        fwrite($fw, $ar["clientprenom"].";");
-        fwrite($fw, $ar["clientprenom2"].";");
-        fwrite($fw, $ar["clienttelephone"].";");
-        fwrite($fw, $ar["clientfax"].";");
-        fwrite($fw, $ar["clientbp"].";");
-        fwrite($fw, $ar["clientcp"].";");
-        fwrite($fw, $ar["clientville"].";");
-        fwrite($fw, $ar["clientcommune"].";");
-        fwrite($fw, $ar["clientrib"].";");
-        $clientobs = preg_replace("/\r\n/", ' ', $ar["clientobs"]);
-        fwrite($fw, $clientobs.";");
-        
-        fwrite($fw, $ar["enfantnom"].";");
-        fwrite($fw, $ar["enfantprenom"].";");
-        fwrite($fw, $ar["ecole"].";");
-        fwrite($fw, $ar["classe"].";");
-        //fwrite($fw, $ar[""].";");
-        //fwrite($fw, $ar[""].";");
-        //fwrite($fw, $ar[""].";");
-        //fwrite($fw, $ar[""].";");
-        //fwrite($fw, $ar[""].";");
-        //fwrite($fw, $ar[""].";");
-        //fwrite($fw, $ar[""].";");
-        
-        fwrite($fw, "\n");
+    $ar_types_clients = array("ar_cantine_details","ar_amarrage_clients_details");
+    $ar_types_mandataires = array("ar_etal_details","ar_amarrage_mandataires_details");
+    
+    foreach($ar_types_clients as &$type){
+        foreach(${$type} as &$ar){
+            fwrite($fw, $ar["0"].";");
+            fwrite($fw, $ar["communeid"].";");
+            fwrite($fw, $ar["datefacture"].";");
+            fwrite($fw, $ar["montantfcp"].";");
+            fwrite($fw, $ar["restearegler"].";");
+            fwrite($fw, html_entity_decode($ar['obs'].";",ENT_QUOTES, "ISO-8859-1"));
+            fwrite($fw, $ar["clientnom"].";");
+            fwrite($fw, $ar["clientprenom"].";");
+            fwrite($fw, $ar["clienttelephone"].";");
+            fwrite($fw, $ar["clientfax"].";");
+            fwrite($fw, $ar["clientbp"].";");
+            fwrite($fw, $ar["clientcp"].";");
+            fwrite($fw, $ar["clientville"].";");
+            fwrite($fw, $ar["clientcommune"].";");
+            fwrite($fw, $ar["clientrib"].";");
+            $clientobs = preg_replace("/\r\n/", ' ', $ar["clientobs"]);
+            fwrite($fw, $clientobs.";");
+                        
+            if($type=="ar_cantine_details"){
+                fwrite($fw, $ar["enfantnom"].";");
+                fwrite($fw, $ar["enfantprenom"].";");
+                fwrite($fw, $ar["nomecole"].";");
+                fwrite($fw, $ar["classe"].";"); 
+            }
+            
+            fwrite($fw, "\n");
+        }
     }
+    
+    foreach($ar_types_mandataires as &$type){
+        foreach(${$type} as &$ar){
+            fwrite($fw, $ar["0"].";");
+            fwrite($fw, $ar["communeid"].";");
+            fwrite($fw, $ar["datefacture"].";");
+            fwrite($fw, $ar["montantfcp"].";");
+            fwrite($fw, $ar["restearegler"].";");
+            fwrite($fw, html_entity_decode($ar['obs'].";",ENT_QUOTES, "ISO-8859-1"));
+            fwrite($fw, $ar["mandatairenom"].";");
+            fwrite($fw, $ar["mandataireprenom"].";");
+            fwrite($fw, $ar["mandatairetelephone"].";");
+            fwrite($fw, $ar["mandatairefax"].";");
+            fwrite($fw, $ar["mandatairebp"].";");
+            fwrite($fw, $ar["mandatairecp"].";");
+            fwrite($fw, $ar["mandataireville"].";");
+            fwrite($fw, $ar["mandatairecommune"].";");
+            fwrite($fw, $ar["mandatairerib"].";");
+            $mandataireobs = preg_replace("/\r\n/", ' ', $ar["mandataireobs"]);
+            fwrite($fw, $mandataireobs.";");
+            fwrite($fw, "\n");
+        }
+    }
+    
+    
+    //foreach($ar_cantine_details as &$ar){
+    //    fwrite($fw, $ar["0"].";");
+    //    fwrite($fw, $ar["communeid"].";");
+    //    fwrite($fw, $ar["datefacture"].";");
+    //    fwrite($fw, $ar["montantfcp"].";");
+    //    fwrite($fw, $ar["restearegler"].";");
+    //    fwrite($fw, html_entity_decode($ar['obs'].";",ENT_QUOTES, "ISO-8859-1"));
+    //    fwrite($fw, $ar["clientnom"].";");
+    //    fwrite($fw, $ar["clientprenom"].";");
+    //    fwrite($fw, $ar["clienttelephone"].";");
+    //    fwrite($fw, $ar["clientfax"].";");
+    //    fwrite($fw, $ar["clientbp"].";");
+    //    fwrite($fw, $ar["clientcp"].";");
+    //    fwrite($fw, $ar["clientville"].";");
+    //    fwrite($fw, $ar["clientcommune"].";");
+    //    fwrite($fw, $ar["clientrib"].";");
+    //    $clientobs = preg_replace("/\r\n/", ' ', $ar["clientobs"]);
+    //    fwrite($fw, $clientobs.";");
+    //    
+    //    fwrite($fw, $ar["enfantnom"].";");
+    //    fwrite($fw, $ar["enfantprenom"].";");
+    //    fwrite($fw, $ar["nomecole"].";");
+    //    fwrite($fw, $ar["classe"].";"); 
+    //    fwrite($fw, "\n");
+    //}
+    //
+    //foreach($ar_etal_details as &$ar){
+    //    fwrite($fw, $ar["0"].";");
+    //    fwrite($fw, $ar["communeid"].";");
+    //    fwrite($fw, $ar["datefacture"].";");
+    //    fwrite($fw, $ar["montantfcp"].";");
+    //    fwrite($fw, $ar["restearegler"].";");
+    //    fwrite($fw, html_entity_decode($ar['obs'].";",ENT_QUOTES, "ISO-8859-1"));
+    //    fwrite($fw, $ar["mandatairenom"].";");
+    //    fwrite($fw, $ar["mandataireprenom"].";");
+    //    fwrite($fw, $ar["mandatairetelephone"].";");
+    //    fwrite($fw, $ar["mandatairefax"].";");
+    //    fwrite($fw, $ar["mandatairebp"].";");
+    //    fwrite($fw, $ar["mandatairecp"].";");
+    //    fwrite($fw, $ar["mandataireville"].";");
+    //    fwrite($fw, $ar["mandatairecommune"].";");
+    //    fwrite($fw, $ar["mandatairerib"].";");
+    //    $mandataireobs = preg_replace("/\r\n/", ' ', $ar["mandataireobs"]);
+    //    fwrite($fw, $clientobs.";");
+    //    fwrite($fw, "\n");
+    //}
+    //
+    //foreach($ar_amarrage_mandataires_details as &$ar){
+    //    fwrite($fw, $ar["0"].";");
+    //    fwrite($fw, $ar["communeid"].";");
+    //    fwrite($fw, $ar["datefacture"].";");
+    //    fwrite($fw, $ar["montantfcp"].";");
+    //    fwrite($fw, $ar["restearegler"].";");
+    //    fwrite($fw, html_entity_decode($ar['obs'].";",ENT_QUOTES, "ISO-8859-1"));
+    //    fwrite($fw, $ar["mandatairenom"].";");
+    //    fwrite($fw, $ar["mandataireprenom"].";");
+    //    fwrite($fw, $ar["mandatairetelephone"].";");
+    //    fwrite($fw, $ar["mandatairefax"].";");
+    //    fwrite($fw, $ar["mandatairebp"].";");
+    //    fwrite($fw, $ar["mandatairecp"].";");
+    //    fwrite($fw, $ar["mandataireville"].";");
+    //    fwrite($fw, $ar["mandatairecommune"].";");
+    //    fwrite($fw, $ar["mandatairerib"].";");
+    //    $mandataireobs = preg_replace("/\r\n/", ' ', $ar["mandataireobs"]);
+    //    fwrite($fw, $clientobs.";");
+    //    fwrite($fw, "\n");
+    //}
+    //
+    //    foreach($ar_amarrage_clients_details as &$ar){
+    //    fwrite($fw, $ar["0"].";");
+    //    fwrite($fw, $ar["communeid"].";");
+    //    fwrite($fw, $ar["datefacture"].";");
+    //    fwrite($fw, $ar["montantfcp"].";");
+    //    fwrite($fw, $ar["restearegler"].";");
+    //    fwrite($fw, html_entity_decode($ar['obs'].";",ENT_QUOTES, "ISO-8859-1"));
+    //    fwrite($fw, $ar["clientnom"].";");
+    //    fwrite($fw, $ar["clientprenom"].";");
+    //    fwrite($fw, $ar["clienttelephone"].";");
+    //    fwrite($fw, $ar["clientfax"].";");
+    //    fwrite($fw, $ar["clientbp"].";");
+    //    fwrite($fw, $ar["clientcp"].";");
+    //    fwrite($fw, $ar["clientville"].";");
+    //    fwrite($fw, $ar["clientcommune"].";");
+    //    fwrite($fw, $ar["clientrib"].";");
+    //    $clientobs = preg_replace("/\r\n/", ' ', $ar["clientobs"]);
+    //    fwrite($fw, $clientobs.";");
+    //    fwrite($fw, "\n");
+    //}
+
+    
     
     fclose($fw);
     
@@ -56,17 +174,76 @@ function writetocsv($ids_cantine,$ids_etal,$ids_amarrage){
     output_file('extract/impayes.csv','impayes.csv','csv');
 }
   
-function get_details($ids,$table){
+function get_details_cantine($ids,$table){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
                 
         $query = "SELECT `factures_cantine`.`datefacture`,`factures_cantine`.`communeid`,`factures_cantine`.`montantfcp`,`factures_cantine`.`restearegler`,`factures_cantine`.`obs`,".
-        " `clients`.`clientnom`,`clients`.`clientprenom`,`clients`.`clientprenom2`,`clients`.`clienttelephone`,`clients`.`clientfax`,`clients`.`clientbp`,`clients`.`clientcp`,`clients`.`clientville`,`clients`.`clientcommune`,`clients`.`clientrib`,`clients`.`obs` as `clientobs`,".
-        " `enfants`.`nom` as `enfantnom`,`enfants`.`prenom` as `enfantprenom`,`enfants`.`ecole`,`classe`".
+        " `clients`.`clientnom`,`clients`.`clientprenom`,`clients`.`clienttelephone`,`clients`.`clientfax`,`clients`.`clientbp`,`clients`.`clientcp`,`clients`.`clientville`,`clients`.`clientcommune`,`clients`.`clientrib`,`clients`.`obs` as `clientobs`,".
+        " `enfants`.`nom` as `enfantnom`,`enfants`.`prenom` as `enfantprenom`,`classe`,`ecoles_faaa`.`nomecole`".
         " FROM `factures_cantine`".
         " RIGHT JOIN `clients` ON `factures_cantine`.`idclient`=`clients`.`clientid`".
         " INNER JOIN `factures_cantine_details` ON `factures_cantine`.`idfacture`=`factures_cantine_details`.`idfacture`".
         " RIGHT JOIN `enfants` ON `factures_cantine_details`.`idenfant`=`enfants`.`enfantid`".
+        " RIGHT JOIN `ecoles_faaa` ON `enfants`.`ecole`=`ecoles_faaa`.`ecoleid`".
         " WHERE `factures_cantine`.`idfacture` IN ($ids)";
+        
+        $result = $mysqli->query($query);
+
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+                array_unshift($row,$table);
+                $result_array[] = $row;
+	}
+        
+	$mysqli->close();
+	return $result_array;
+}
+
+function get_details_client($ids,$table){
+        $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+                
+        $query = "SELECT `$table`.`datefacture`,`$table`.`communeid`,`$table`.`montantfcp`,`$table`.`restearegler`,`$table`.`obs`,".
+        " `clients`.`clientnom`,`clients`.`clientprenom`,`clients`.`clienttelephone`,`clients`.`clientfax`,`clients`.`clientbp`,`clients`.`clientcp`,`clients`.`clientville`,`clients`.`clientcommune`,`clients`.`clientrib`,`clients`.`obs` as `clientobs`".
+        " FROM `$table`".
+        " RIGHT JOIN `clients` ON `$table`.`idclient`=`clients`.`clientid`".
+        " WHERE `$table`.`idfacture` IN ($ids)";
+        
+        $result = $mysqli->query($query);
+
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+                array_unshift($row,$table);
+                $result_array[] = $row;
+	}
+        
+	$mysqli->close();
+        //print($query);
+	return $result_array;
+}
+
+function get_details_mandataire($ids,$table){
+        $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+                
+        $query = "SELECT `$table`.`datefacture`,`$table`.`communeid`,`$table`.`montantfcp`,`$table`.`restearegler`,`$table`.`obs`,".
+        " `mandataires`.`mandatairenom`,`mandataires`.`mandataireprenom`,`mandataires`.`mandatairetelephone`,`mandataires`.`mandatairefax`,`mandataires`.`mandatairebp`,`mandataires`.`mandatairecp`,`mandataires`.`mandataireville`,`mandataires`.`mandatairecommune`,`mandataires`.`mandatairerib`,`mandataires`.`obs` as `mandataireobs`".
+        " FROM `$table`".
+        " RIGHT JOIN `mandataires` ON `$table`.`idclient`=`mandataires`.`mandataireid`".
+        " WHERE `$table`.`idfacture` IN ($ids)";
+        
+        $result = $mysqli->query($query);
+
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+                array_unshift($row,$table);
+                $result_array[] = $row;
+	}
+        
+	$mysqli->close();
+        //print($query);
+	return $result_array;
+}
+
+function separate_clients_mandataires($ids,$type,$table){
+        $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+                
+        $query = "SELECT `idfacture` FROM `$table` WHERE `idfacture` IN ($ids) AND `type_client`='$type'";
         
         $result = $mysqli->query($query);
 
@@ -75,7 +252,7 @@ function get_details($ids,$table){
 	}
         
 	$mysqli->close();
-       
+        //print($query);
 	return $result_array;
 }
 
