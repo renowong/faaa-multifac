@@ -55,9 +55,25 @@ $login = $cUser->userlogin();
 	    var ids_etal = $("#ids_etal").val();
 	    var ids_amarrage = $("#ids_amarrage").val();
 	    
-	    
-	    window.location="extract_impayes.php?ids_cantine="+ids_cantine+"&ids_etal="+ids_etal+"&ids_amarrage="+ids_amarrage;
+	    postwith("extract_impayes.php",{ids_cantine:ids_cantine, ids_etal:ids_etal, ids_amarrage:ids_amarrage});
+	      
+	    //window.location="extract_impayes.php?ids_cantine="+ids_cantine+"&ids_etal="+ids_etal+"&ids_amarrage="+ids_amarrage;
 	}
+	
+	function postwith (to,p) {
+	    var myForm = document.createElement("form");
+	    myForm.method="post" ;
+	    myForm.action = to ;
+	    for (var k in p) {
+	      var myInput = document.createElement("input") ;
+	      myInput.setAttribute("name", k) ;
+	      myInput.setAttribute("value", p[k]);
+	      myForm.appendChild(myInput) ;
+	    }
+	    document.body.appendChild(myForm) ;
+	    myForm.submit() ;
+	    document.body.removeChild(myForm) ;
+	  }
 
 	function init(){
 		showCompte(<?php echo '"' . $arCompte[0] . '", "' . $arCompte[1] . '", "' . $arCompte[2] . '"' ?>);

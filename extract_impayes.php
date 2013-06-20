@@ -1,9 +1,9 @@
 <?php
 include_once('config.php');
 
-$ids_cantine = $_GET["ids_cantine"];
-$ids_etal = $_GET["ids_etal"];
-$ids_amarrage = $_GET["ids_amarrage"];
+$ids_cantine = $_POST["ids_cantine"];
+$ids_etal = $_POST["ids_etal"];
+$ids_amarrage = $_POST["ids_amarrage"];
 $ids_amarrage_clients = separate_clients_mandataires($ids_amarrage,"C","factures_amarrage");
 $ids_amarrage_mandataires = separate_clients_mandataires($ids_amarrage,"M","factures_amarrage");
 
