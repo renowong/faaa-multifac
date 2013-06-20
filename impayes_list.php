@@ -89,12 +89,12 @@ function getetallist($client,$range){
                 $dayslate = floor($dayslate/86400);
                 
                 $type='etal';
-                $output .= "<tr><td>place et &eacute;tal</td><td><a href='mandataires.php?edit=".$row["mandataireid"]."&hideerrors=1'>".$row["mandataireprefix"]." ".$row["mandataireRS"]." / ".htmlentities($row["mandatairenom"])." ".htmlentities($row["mandataireprenom"])."</a></td>".
+                $output .= "<tr><td>place et &eacute;tal</td><td>MANDATAIRE : <a href='mandataires.php?edit=".$row["mandataireid"]."&hideerrors=1'>".$row["mandataireprefix"]." ".$row["mandataireRS"]." / ".htmlentities($row["mandatairenom"])." ".htmlentities($row["mandataireprenom"])."</a></td>".
                 "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'>$dayslate jours</td></tr>";
         
-		$ar_ids[]=$row["idfacture"];
+		$ar_ids[].=$row["idfacture"];
 	}
 	$mysqli->close();
         return array($output,$ar_ids);
@@ -118,8 +118,27 @@ function getamarragelist($client,$range){
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'>$dayslate jours</td></tr>";
 		
-		$ar_ids[]=$row["idfacture"];
+		$ar_ids[].=$row["idfacture"];
 	}
+	
+        $query = "SELECT * FROM `factures_amarrage` INNER JOIN `mandataires` ON `factures_amarrage`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_amarrage`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0' $range$mandataire ORDER BY `datefacture` ASC";
+        $result = $mysqli->query($query);
+        while($row = $result->fetch_array(MYSQLI_ASSOC)){
+                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
+
+                $datef = $row["datefacture"];
+                $dayslate = strtotime("now") - strtotime($datef);
+                $dayslate = floor($dayslate/86400);
+            
+                $type='amarrage';
+                $output .= "<tr><td>$type<br/>".$row["navire"]."</td><td>MANDATAIRE : <a href='mandataires.php?edit=".$row["mandataireid"]."&hideerrors=1'>".$row["mandatairecivilite"]." ".strtoupper(htmlentities($row["mandatairenom"]))." ".strtoupper(htmlentities($row["mandataireprenom"]))." ".strtoupper(htmlentities($row["mandataireprenom2"]))."</a></td>".
+                "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
+                $output .= trispace($row["montantfcp"]);
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'>$dayslate jours</td></tr>";
+		
+		$ar_ids[].=$row["idfacture"];
+	}
+	
 	$mysqli->close();
         return array($output,$ar_ids);
 }
@@ -143,7 +162,7 @@ function getcantinelist($client,$range){
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td>".
                 "<td class='center'>$dayslate jours</td></tr>";
 		
-		$ar_ids[]=$row["idfacture"];
+		$ar_ids[].=$row["idfacture"];
         }
 	$mysqli->close();
         //return $output;
