@@ -64,7 +64,7 @@ function writetocsv($ids_cantine,$ids_etal,$ids_amarrage){
             fwrite($fw, $ar["mandatairenom"].";");
             fwrite($fw, $ar["mandataireprenom"].";");
             fwrite($fw, $ar["mandatairetelephone"].";");
-            fwrite($fw, $ar["mandatairefax"].";");
+            fwrite($fw, $ar["mandatairetelephone2"].";");
             fwrite($fw, $ar["mandatairebp"].";");
             fwrite($fw, $ar["mandatairecp"].";");
             fwrite($fw, $ar["mandataireville"].";");
@@ -223,7 +223,7 @@ function get_details_mandataire($ids,$table){
         $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
                 
         $query = "SELECT `$table`.`datefacture`,`$table`.`communeid`,`$table`.`montantfcp`,`$table`.`restearegler`,`$table`.`obs`,".
-        " `mandataires`.`mandatairenom`,`mandataires`.`mandataireprenom`,`mandataires`.`mandatairetelephone`,`mandataires`.`mandatairefax`,`mandataires`.`mandatairebp`,`mandataires`.`mandatairecp`,`mandataires`.`mandataireville`,`mandataires`.`mandatairecommune`,`mandataires`.`mandatairerib`,`mandataires`.`obs` as `mandataireobs`".
+        " `mandataires`.`mandatairenom`,`mandataires`.`mandataireprenom`,`mandataires`.`mandatairetelephone`,`mandataires`.`mandatairetelephone2`,`mandataires`.`mandatairebp`,`mandataires`.`mandatairecp`,`mandataires`.`mandataireville`,`mandataires`.`mandatairecommune`,`mandataires`.`mandatairerib`,`mandataires`.`obs` as `mandataireobs`".
         " FROM `$table`".
         " RIGHT JOIN `mandataires` ON `$table`.`idclient`=`mandataires`.`mandataireid`".
         " WHERE `$table`.`idfacture` IN ($ids)";
