@@ -82,7 +82,7 @@ function getetallist($client,$range){
         $query = "SELECT * FROM `factures_etal` INNER JOIN `mandataires` ON `factures_etal`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_etal`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0' $range$client ORDER BY `datefacture` ASC";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-            	if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
+            	if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" alt=\"original\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" alt=\"duplicata\" class=\"ico\">";}
 
                 $datef = $row["datefacture"];
                 $dayslate = strtotime("now") - strtotime($datef);
@@ -106,7 +106,7 @@ function getamarragelist($client,$range){
         $query = "SELECT * FROM `factures_amarrage` INNER JOIN `clients` ON `factures_amarrage`.`idclient` = `clients`.`clientid` WHERE `factures_amarrage`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0' AND `type_client`='C' $range$client ORDER BY `datefacture` ASC";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
+                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" alt=\"original\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" alt=\"duplicata\" class=\"ico\">";}
 
                 $datef = $row["datefacture"];
                 $dayslate = strtotime("now") - strtotime($datef);
@@ -124,7 +124,7 @@ function getamarragelist($client,$range){
         $query = "SELECT * FROM `factures_amarrage` INNER JOIN `mandataires` ON `factures_amarrage`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_amarrage`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0' AND `type_client`='M' $range$mandataire ORDER BY `datefacture` ASC";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
+                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" alt=\"original\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" alt=\"duplicata\" class=\"ico\">";}
 
                 $datef = $row["datefacture"];
                 $dayslate = strtotime("now") - strtotime($datef);
@@ -148,7 +148,7 @@ function getcantinelist($client,$range){
         $query = "SELECT * FROM `factures_cantine` INNER JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` WHERE `factures_cantine`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0' AND `bourse` = '0' $range$client ORDER BY `datefacture` ASC";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
+                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" alt=\"original\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" alt=\"duplicata\" class=\"ico\">";}
 
                 $datef = $row["datefacture"];
                 $dayslate = strtotime("now") - strtotime($datef);

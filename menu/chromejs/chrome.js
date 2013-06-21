@@ -19,7 +19,7 @@
 
 var cssdropdown={
 disappeardelay: 250, //set delay in miliseconds before menu disappears onmouseout
-dropdownindicator: '<img src="menu/chrometheme/down.gif" border="0" />', //specify full HTML to add to end of each menu item with a drop down menu
+dropdownindicator: '<img src="menu/chrometheme/down.gif" alt="down" border="0" />', //specify full HTML to add to end of each menu item with a drop down menu
 enablereveal: [true, 5], //enable swipe effect? [true/false, steps (Number of animation steps. Integer between 1-20. Smaller=faster)]
 enableiframeshim: 1, //enable "iframe shim" in IE5.5 to IE7? (1=yes, 0=no)
 
@@ -175,8 +175,8 @@ startchrome:function(){
 	for (var ids=0; ids<arguments.length; ids++){
 		var menuitems=document.getElementById(arguments[ids]).getElementsByTagName("a")
 		for (var i=0; i<menuitems.length; i++){
-			if (menuitems[i].getAttribute("rel")){
-				var relvalue=menuitems[i].getAttribute("rel")
+			if (menuitems[i].getAttribute("data-menu")){
+				var relvalue=menuitems[i].getAttribute("data-menu")
 				var asscdropdownmenu=document.getElementById(relvalue)
 				this.addEvent(asscdropdownmenu, function(){cssdropdown.clearhidemenu()}, "mouseover")
 				this.addEvent(asscdropdownmenu, function(e){cssdropdown.dynamichide(this, e)}, "mouseout")
@@ -187,7 +187,7 @@ startchrome:function(){
 				this.addEvent(menuitems[i], function(e){ //show drop down menu when main menu items are mouse over-ed
 					if (!cssdropdown.isContained(this, e)){
 						var evtobj=window.event || e
-						cssdropdown.dropit(this, evtobj, this.getAttribute("rel"))
+						cssdropdown.dropit(this, evtobj, this.getAttribute("data-menu"))
 					}
 				}, "mouseover")
 				this.addEvent(menuitems[i], function(e){cssdropdown.dynamichide(this, e)}, "mouseout") //hide drop down menu when main menu items are mouse out

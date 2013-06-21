@@ -194,7 +194,7 @@ require_once('facture_etal_top.php');
 						<input type="text" maxlength="2" name="txt_quantite" id="txt_quantite" />
 					</td>
 					<td>
-						<image src="img/plus.png" class="mousehand" onClick="addtoarray();" />
+						<img src="img/plus.png" alt="plussign" class="mousehand" onClick="addtoarray();" />
 					</td>
 				</tr>
 			</tbody>

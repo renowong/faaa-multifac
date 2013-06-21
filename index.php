@@ -87,7 +87,7 @@ require_once('headers.php');
 	<body onload="showMessage();$('#login').focus();">
 		<div id="message" ></div>
 		<div id="dialog-form" title="Multifacturation version <?php echo VERSION ?>">
-		<img src="img/community-users-icon.png"/><br/><br/>
+		<img src="img/community-users-icon.png" alt="users-icon"/><br/><br/>
 			<div style="text-align:right;">
 				Utilisateur : <input type="text" name="login" id="login" value="" maxlength="10" size="20" /><br/><br/>
 				Mot de passe : <input type="password" name="password" id="password"value="" maxlength="10" size="20" />

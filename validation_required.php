@@ -128,7 +128,7 @@ $login = $cUser->userlogin();
 				<button onclick="filter_byclient();">Filtrer par client</button>
 		<br/><br/>
 		
-		<div id="list_validation" name="list_validation" style="height:600px;"></div>
+		<div id="list_validation" style="height:600px;"></div>
 		
 
 		

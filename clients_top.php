@@ -36,7 +36,7 @@ $kids_list = getAllKids($_GET['edit']);
 
 if($facture_en_cours>0){
 	$actiflock = "style='visibility:hidden;'";
-	$totalfactures = $facture_en_cours." facture(s) en cours. <a href='javascript:reaffectfactures();'><img src='img/reaffect.png' style='vertical-align:middle;' title='Cliquez pour transf&eacute;rer les factures &agrave; un autre compte' /></a>";
+	$totalfactures = $facture_en_cours." facture(s) en cours. <a href='javascript:reaffectfactures();'><img src='img/reaffect.png' alt='reaffecter' style='vertical-align:middle;' title='Cliquez pour transf&eacute;rer les factures &agrave; un autre compte' /></a>";
 }elseif($kids_list>0){
 	$actiflock = "style='visibility:hidden;'";
 }
@@ -78,7 +78,7 @@ function setPersistData($id){
 
 function buildOptions($options, $selectedOption) {
 	foreach ($options as $value => $text) {
-		if ($value == $selectedOption) {
+		if ($value === $selectedOption) {
 			echo '<option value="' . $value . '" selected="selected">' . $text . '</option>';
 		} else {
 			echo '<option value="' . $value . '">' . $text . '</option>';
@@ -206,7 +206,7 @@ function getLieu($type){
 
 	while($row = $result->fetch_array(MYSQLI_ASSOC)){
 		($row['lieustatus']==0 ? $class="class='crossed'" : $class="");
-		($row['lieuprincipal']==1 ? $home="<img src='img/home.png' title='R&eacute;sidence principale' /> " : $home="");
+		($row['lieuprincipal']==1 ? $home="<img src='img/home.png' alt='home' title='R&eacute;sidence principale' /> " : $home="");
 		$output .= $home."<a $class href='lieux.php?edit=".$row['lieuid']."&hideerrors=1'>".$row['Type']." &agrave; ".$row['Rue']." ".$row['Quartier']."</a><br/><br/>";
 	}
 	
@@ -219,7 +219,7 @@ function getLieu($type){
 
 function buildAnnexesTable(){
 if (isset($_GET['edit']) && $_GET['edit'] > 0) {
-	$output = '<td><div id="divconjoint" name="divconjoint"></div>'.
+	$output = '<td><div id="divconjoint"></div>'.
 		'<form id="frmkids" name="frmkids" method="post" action="kids_validate.php?validationType=php">'.
 		'<table id="tblenfants" class="tblform">'.
 		'	<thead>'.
@@ -249,8 +249,8 @@ if (isset($_GET['edit']) && $_GET['edit'] > 0) {
 		'			<td><label>Classe</label><span class="red">*</span><br /><select name="slt_classe_enfant" id="slt_classe_enfant" onChange="enf_validate(this.value, this.id);"></select></td>'.
 		'		</tr>'.
 		'		<tr>'.
-		'			<td><label>Date d\'entr&eacute;e</label><br /><input type="text" size="10" maxlength="10" name="txt_entree_enfant" id="txt_entree_enfant" value="'.$_SESSION['values']['txt_enfant_entree'].'" readonly /> <a href="javascript:reset_date(\'txt_entree_enfant\');"><img src="img/close.png" style="vertical-align:middle;width:16px;height:16px;" /></a></td>'.
-		'			<td><label>Date de sortie</label><br /><input type="text" size="10" maxlength="10" name="txt_sortie_enfant" id="txt_sortie_enfant" value="'.$_SESSION['values']['txt_enfant_sortie'].'" readonly /> <a href="javascript:reset_date(\'txt_sortie_enfant\');"><img src="img/close.png" style="vertical-align:middle;width:16px;height:16px;" /></a></td>'.
+		'			<td><label>Date d\'entr&eacute;e</label><br /><input type="text" size="10" maxlength="10" name="txt_entree_enfant" id="txt_entree_enfant" value="'.$_SESSION['values']['txt_enfant_entree'].'" readonly /> <a href="javascript:reset_date(\'txt_entree_enfant\');"><img src="img/close.png" alt="close" style="vertical-align:middle;width:16px;height:16px;" /></a></td>'.
+		'			<td><label>Date de sortie</label><br /><input type="text" size="10" maxlength="10" name="txt_sortie_enfant" id="txt_sortie_enfant" value="'.$_SESSION['values']['txt_enfant_sortie'].'" readonly /> <a href="javascript:reset_date(\'txt_sortie_enfant\');"><img src="img/close.png" alt="close" style="vertical-align:middle;width:16px;height:16px;" /></a></td>'.
 		'		</tr>'.
 		'		<tr>'.
 		'			<td colspan="2" style="text-align:right;"><input type="hidden" id="id_client_enfant" name="id_client_enfant" value="'.$_GET['edit'].'" /><input type="hidden" id="id_enfant" name="id_enfant" value="'.$_SESSION['values']['hid_enfantid'].'" />'.
@@ -258,7 +258,7 @@ if (isset($_GET['edit']) && $_GET['edit'] > 0) {
 		'		</tr>'.			
 		'		<tr>'.
 		'			<td colspan="2"><label>Liste des enfants</label>';
-		if(getAllKids($_GET['edit'])>0) $output .='<a href="javascript:reaffectkid();"><img style="vertical-align:middle;" src="img/reaffect.png" title="Cliquez pour une r&eacute;affection vers un autre parent"/></a></td>';
+		if(getAllKids($_GET['edit'])>0) $output .='<a href="javascript:reaffectkid();"><img alt="reaffectation" style="vertical-align:middle;" src="img/reaffect.png" title="Cliquez pour une r&eacute;affection vers un autre parent"/></a></td>';
 		$output .= '		</tr>'.
 		'		<tr>'.
 		'			<td colspan="2"><div id="list_enfants"></div></td>'.
@@ -348,7 +348,7 @@ function buildFacturesEnCoursTable($id,$ar_tables){
 //print_r($ar_tables);
     
     $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$output = "<table class=\"tblform\"><tbody><th>Type de Facture</th><th>Facture</th><th>PDF</th><th>Status</th><th>Commentaire</th></tbody>";
+	$output = "<table class=\"tblform\"><tbody><tr><th>Type de Facture</th><th>Facture</th><th>PDF</th><th>Status</th><th>Commentaire</th></tr></tbody>";
 
 foreach( $ar_tables as &$val ){
 
@@ -358,19 +358,19 @@ foreach( $ar_tables as &$val ){
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
 		//$comment = $row["comment"];
-		if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
+		if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" alt=\"original\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" alt=\"duplicata\" class=\"ico\">";}
 		$comment = str_replace(" ; ","<br/>",$row["comment"]);
 		if($row["validation"]==0) {$status="En cours de validation";$reject="";
 		}else{
 			if($row["acceptation"]==0){$status="Refus&eacute;e";$reject="reject";}else{$status="Valid&eacute;e";$reject="";}
 		}
                 if($val['title']=="cantine"){
-				$output .= "<tbody class=\"$reject\"><td>".$val['title']."<br/>".getEnfantPrenom($row['idfacture'])."</td><td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
+				$output .= "<tbody class=\"$reject\"><tr><td>".$val['title']."<br/>".getEnfantPrenom($row['idfacture'])."</td><td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
 			}else{
-				$output .= "<tbody class=\"$reject\"><td>".$val['title']."</td><td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
+				$output .= "<tbody class=\"$reject\"><tr><td>".$val['title']."</td><td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
 				}
 		$output .= trispace($row["montantfcp"]);
-		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)<br/>Obs : ".$row["obs"]."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">$pdf</a></td><td>$status</td><td>$comment</td></tbody>";
+		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)<br/>Obs : ".$row["obs"]."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">$pdf</a></td><td>$status</td><td>$comment</td></tr></tbody>";
         }
     }  
 
@@ -383,8 +383,8 @@ foreach( $ar_tables as &$val ){
 function buildAvoirsTable($id){
     
     $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$output = "<table class=\"tblform\"><tbody><th>Montant</th><th>Reste</th><th>Status</th><th>Liaison</th><th>PDF</th>".
-	"<th>Date</th><th>Obs</th><th>Valideur</th><th>Obs valideur</th><th>Action</th></tbody>";
+	$output = "<table class=\"tblform\"><tbody><tr><th>Montant</th><th>Reste</th><th>Status</th><th>Liaison</th><th>PDF</th>".
+	"<th>Date</th><th>Obs</th><th>Valideur</th><th>Obs valideur</th><th>Action</th></tr></tbody>";
 	
 	$query = "SELECT `avoirs`.`idavoir`,`avoirs`.`montant`,`avoirs`.`reste`,`avoirs`.`validation`,`avoirs`.`acceptation`,`avoirs`.`idfacture`,`avoirs`.`date`,".
 	"`avoirs`.`obs`,`avoirs`.`obs_valideur`,`factures_cantine`.`datefacture`,`factures_cantine`.`datefacture`,".
@@ -393,7 +393,7 @@ function buildAvoirsTable($id){
 	"WHERE `avoirs`.`idclient` = '$id' AND `avoirs`.`validation` = '0' ORDER BY date DESC, `idavoir` DESC limit 10";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-		if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
+		if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" alt=\"original\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" alt=\"duplicata\" class=\"ico\">";}
 		$status="En cours de validation";
                 $output .= "<tbody><td>".trispace($row['montant'])." FCP</td>";
 		$output .= "<td>".trispace($row["reste"])." FCP</td><td>$status</td>";
@@ -410,7 +410,7 @@ function buildAvoirsTable($id){
 	"WHERE `avoirs`.`idclient` = '$id' ORDER BY date DESC, `idavoir` DESC limit 10";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-		if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
+		if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" alt=\"original\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" alt=\"duplicata\" class=\"ico\">";}
 		if($row["acceptation"]=='0'){$status="Refus&eacute;e";}else{$status="Valid&eacute;e";$reject="";}
 		if($row["reste"]>'0' && $row["acceptation"]=='1'){$use="<button onclick=\"div_avoir('avoirs_use.php?idavoir=".$row["idavoir"]."&avoir=".$row["reste"]."');\">Utiliser</button>";}else{$use='';}
                 $output .= "<tbody><td>".trispace($row['montant'])." FCP</td>";

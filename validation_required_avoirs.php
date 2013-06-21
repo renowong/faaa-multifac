@@ -80,7 +80,7 @@ $userid = $cUser->userid();
 		<br/>
 		<h1>Module de validation des avoirs</h1><br/>
 		
-		<div id="list_validation" name="list_validation" style="height:600px;"></div>
+		<div id="list_validation" style="height:600px;"></div>
 		
 		
 <div id="dialog-form" title="Rejeter l'avoir">

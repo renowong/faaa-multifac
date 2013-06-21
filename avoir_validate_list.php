@@ -23,14 +23,14 @@ function getavoirlist(){
         $type = "cantine";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
+                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" alt=\"original\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" alt=\"duplicata\" class=\"ico\">";}
                 $output .= "<tr><td>".trispace($row["montant"])." FCP</td><td>".trispace($row["reste"])." FCP</td>".
                 "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td>".french_date($row['date'])."</td>".
                 "<td>".$row['obs']."</td><td style=\"text-align:center\"><a href=\"javascript:validate('".$row["idavoir"]."',true)\">".
-                "<img src=\"img/checked.png\" height=\"32\" style=\"border:0px\"></a> / <a href=\"javascript:validate('".$row["idavoir"]."',false)\">".
-                "<img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
+                "<img src=\"img/checked.png\" alt=\"checked\" height=\"32\" style=\"border:0px\"></a> / <a href=\"javascript:validate('".$row["idavoir"]."',false)\">".
+                "<img src=\"img/close.png\" alt=\"close\" height=\"32\" style=\"border:0px\"></a></td></tr>";
         }
         return $output;
 }

@@ -253,7 +253,7 @@ require_once('lieux_top.php');
 									 </td>
 								</tr>
 								<tr>
-									<td colspan="2" align="right">
+									<td colspan="2" style="text-align:right;">
 										<!--Reset-->
 										<input class="submit" type="button" onClick="window.location='<?php echo $_SERVER['PHP_SELF'] ?>?reset=1';" value="Annuler" name="raz" />
 										<!--Submit-->

@@ -197,7 +197,7 @@ function buildLieuTable(){
 
 function buildOptions($options, $selectedOption) {
         foreach ($options as $value => $text) {
-                if ($value == $selectedOption) {
+                if ($value === $selectedOption) {
                         echo '<option value="' . $value . '" selected="selected">' . $text . '</option>';
                 } else {
                         echo '<option value="' . $value . '">' . $text . '</option>';
@@ -209,7 +209,7 @@ function buildFacturesEnCoursTable($id,$ar_tables){
 //print_r($ar_tables);
     
     $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$output = "<table class=\"tblform\"><tbody><th>Type de Facture</th><th>Facture</th><th>Status</th><th>Commentaire</th></tbody>";
+	$output = "<table class=\"tblform\"><tbody><tr><th>Type de Facture</th><th>Facture</th><th>Status</th><th>Commentaire</th></tr></tbody>";
 
 foreach( $ar_tables as &$val ){
         $query = "SELECT * FROM `".$val['table']."` WHERE `idclient` = $id ORDER BY datefacture DESC, idfacture DESC limit 30";
@@ -220,9 +220,9 @@ foreach( $ar_tables as &$val ){
 		}else{
 			if($row["acceptation"]==0){$status="Refus&eacute;e";$reject="reject";}else{$status="Valid&eacute;e";$reject="";}
 		}
-                $output .= "<tbody class=\"$reject\"><td>".$val['title']."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">Facture du ".$row["datefacture"]." montant de ";
+                $output .= "<tbody class=\"$reject\"><tr><td>".$val['title']."</td><td><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=".$val['link']."\" target=\"_blank\">Facture du ".$row["datefacture"]." montant de ";
 		$output .= trispace($row["montantfcp"]);
-		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a></td><td>$status</td><td>$comment</td></tbody>";
+		$output .= " FCP (soit ".$row["montanteuro"]." &euro;)</a></td><td>$status</td><td>$comment</td></tr></tbody>";
         }
     }  
 

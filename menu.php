@@ -19,13 +19,13 @@ $menu;
 //echo $arCompte[2]; ///echo type de client
 $menu = "<div class='chromestyle' id='chromemenu'>".
 "<ul>".
-"<li><a href='#' rel='dropmenu0'>Accueil</a></li>".
-"<li><a href='#' rel='dropmenu1'>Nouveau</a></li>".
-"<li><a href='#' rel='dropmenu2'>Comptes</a></li>";
-if (!empty($_SESSION['client'])) $menu .="<li><a href='#' rel='dropmenu3'>Facturation</a></li>";
-if ($svc=="REG"||$admin) $menu .="<li><a href='#' rel='dropmenu4'>R&egrave;glement</a></li>";
-if ($svc=="REG"||$admin) $menu .= "<li><a href='#' rel='dropmenu5'>Extractions</a></li>";
-$menu .= "<li><a href='#' rel='dropmenu6'>Administration</a></li>".
+"<li><a href='#' data-menu='dropmenu0'>Accueil</a></li>".
+"<li><a href='#' data-menu='dropmenu1'>Nouveau</a></li>".
+"<li><a href='#' data-menu='dropmenu2'>Comptes</a></li>";
+if (!empty($_SESSION['client'])) $menu .="<li><a href='#' data-menu='dropmenu3'>Facturation</a></li>";
+if ($svc=="REG"||$admin) $menu .="<li><a href='#' data-menu='dropmenu4'>R&egrave;glement</a></li>";
+if ($svc=="REG"||$admin) $menu .= "<li><a href='#' data-menu='dropmenu5'>Extractions</a></li>";
+$menu .= "<li><a href='#' data-menu='dropmenu6'>Administration</a></li>".
 "</ul>".
 "</div>";
 
@@ -65,7 +65,7 @@ $menu .= "</div>";
 $menu .= "<div id='dropmenu4' class='dropmenudiv' style='width: 150px;'>";
 if ($arCompte[2]=="client" || $arCompte[2]=="mandataire") $menu .= "<a href='compte_paiement.php'>En attente</a>";
 $menu .= "<a href='impayes.php'>Impay&eacute;s</a>";
-$menu .= "<a href='paiement_comptant.php?id=0&type=repas'>Tickets cantine</a>";
+$menu .= "<a href='paiement_comptant.php?id=0&amp;type=repas'>Tickets cantine</a>";
 $menu .= "</div>";
 
 //<!--5rd drop down menu -->

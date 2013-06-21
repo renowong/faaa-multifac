@@ -157,7 +157,7 @@ require_once('mandataires_top.php');
 		<br/><br/>
 		<h1><?php echo $legend ?></h1>
 		<div id="accounttoggle">
-			<button href="#" id="toggleaccount">Cacher</button>                                                  
+			<button id="toggleaccount">Cacher</button>                                                  
 		</div>
         <div id="compte">
 		<table>
@@ -176,7 +176,7 @@ require_once('mandataires_top.php');
 								<tr>
                                                                         <td>
                                                                                 <!--Prefix-->
-                                                                                <label for="txt_Prefix">Pr&eacute;fix<span class="red">*</span></label><br />
+                                                                                <label for="box_Prefix">Pr&eacute;fix<span class="red">*</span></label><br />
 										<select class="input" name="box_Prefix" id="box_Prefix" onchange="validate(this.value, this.id);">
                                                                                 	<?php buildOptions($prefixOptions, $_SESSION['values']['box_Prefix']) ?>
 										</select>
@@ -356,7 +356,7 @@ require_once('mandataires_top.php');
 									</td>
 								</tr>	
 								<tr>
-									<td colspan="2" align="right">
+									<td colspan="2" style="text-align:right;">
 										<!--Reset-->
 										<input class="submit" type="button" onClick="window.location='<?php echo $_SERVER['PHP_SELF'] ?>?reset=1';" value="Annuler" name="raz" />
 										<!--Submit-->
@@ -373,7 +373,7 @@ require_once('mandataires_top.php');
 		 </table>
 		</div>
 		<div id="divhistorique">
-			<h1>Historique des derni&egrave;res factures</h1> <button href="#" id="togglehistory">Afficher</button> <button href="#" id="showreject">Afficher les rejets</button>	
+			<h1>Historique des derni&egrave;res factures</h1> <button id="togglehistory">Afficher</button> <button id="showreject">Afficher les rejets</button>	
 			<div id="historique">
 				<?php 
 				if (isset($_GET['edit'])) echo buildFacturesEnCoursTable($_GET['edit'],$ar_f_m);

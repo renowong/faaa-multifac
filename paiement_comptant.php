@@ -250,7 +250,7 @@ require_once('paiement_comptant_top.php');
 		<table>
 			<tr>
 				<td>
-					<table name="title" id="title">
+					<table id="title">
 						<tr>
 							<td>
 								<?php echo $info[0] ?>
@@ -350,7 +350,7 @@ require_once('paiement_comptant_top.php');
 								</td>
 							</tr>
 							<tr> 
-								<td colspan="2" align="right"> 
+								<td colspan="2" style="text-align:right;"> 
 									<!--Submit--> 
 									<input class="submit" type="submit" onclick="fconfirm();" value="Valider" name="submit" /> 
 								</td> 

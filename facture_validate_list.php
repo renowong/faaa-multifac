@@ -62,10 +62,10 @@ function getetalvalidate($client){
                 $output .= "<tr><td>place et &eacute;tal</td><td><a href='mandataires.php?edit=".$row["mandataireid"]."&hideerrors=1'>".$row["mandataireprefix"]." ".$row["mandataireRS"]." / ".htmlentities($row["mandatairenom"])." ".htmlentities($row["mandataireprenom"])."</a></td>".
                 "<td>Devis ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
-                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td style=\"text-align:center\"><a href='createpdf.php?idfacture=".$row['idfacture']."&type=etal' target='_blank'><img src=\"img/pdf.png\" class=\"ico\"></a></td>".
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td style=\"text-align:center\"><a href='createpdf.php?idfacture=".$row['idfacture']."&type=etal' target='_blank'><img src=\"img/pdf.png\" alt=\"pdf\" class=\"ico\"></a></td>".
                 "<td style=\"text-align:center\"><a href=\"javascript:validate('etal','".$row["idfacture"]."',true)\">".
-                "<img src=\"img/checked.png\" height=\"32\" style=\"border:0px\"></a> / <a href=\"javascript:validate('etal','".$row["idfacture"]."',false)\">".
-                "<img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
+                "<img src=\"img/checked.png\" alt=\"checked\" height=\"32\" style=\"border:0px\"></a> / <a href=\"javascript:validate('etal','".$row["idfacture"]."',false)\">".
+                "<img src=\"img/close.png\" alt=\"close\" height=\"32\" style=\"border:0px\"></a></td></tr>";
         }
         return $output;
 }
@@ -75,12 +75,12 @@ function getetallist($client){
         $query = "SELECT * FROM `".DB."`.`factures_etal` INNER JOIN `mandataires` ON `factures_etal`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_etal`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0'$client";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
+                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" alt=\"original\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" alt=\"duplicata\" class=\"ico\">";}
                 $type='etal';
                 $output .= "<tr><td>place et &eacute;tal</td><td><a href='mandataires.php?edit=".$row["mandataireid"]."&hideerrors=1'>".$row["mandataireprefix"]." ".$row["mandataireRS"]." / ".htmlentities($row["mandatairenom"])." ".htmlentities($row["mandataireprenom"])."</a></td>".
                 "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
-                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'><a href=\"javascript:devalidate('$type','".$row["idfacture"]."')\"><img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'><a href=\"javascript:devalidate('$type','".$row["idfacture"]."')\"><img src=\"img/close.png\" alt=\"close\" height=\"32\" style=\"border:0px\"></a></td></tr>";
         }
         return $output;
 }
@@ -94,10 +94,10 @@ function getamarragevalidate($client){
                 $output .= "<tr><td>$type<br/>".$row["navire"]."</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
                 "<td>Devis ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
-                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td style=\"text-align:center\"><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'><img src=\"img/pdf.png\" class=\"ico\"></a></td>".
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td style=\"text-align:center\"><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'><img src=\"img/pdf.png\" alt=\"pdf\" class=\"ico\"></a></td>".
                 "<td style=\"text-align:center\"><a href=\"javascript:validate('$type','".$row["idfacture"]."',true)\">".
-                "<img src=\"img/checked.png\" height=\"32\" style=\"border:0px\"></a> / <a href=\"javascript:validate('$type','".$row["idfacture"]."',false)\">".
-                "<img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
+                "<img src=\"img/checked.png\" alt=\"checked\" height=\"32\" style=\"border:0px\"></a> / <a href=\"javascript:validate('$type','".$row["idfacture"]."',false)\">".
+                "<img src=\"img/close.png\" alt=\"close\" height=\"32\" style=\"border:0px\"></a></td></tr>";
         }
         
         $query = "SELECT * FROM `".DB."`.`factures_amarrage` INNER JOIN `mandataires` ON `factures_amarrage`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_amarrage`.`validation` = '0' AND `factures_amarrage`.`type_client` = 'M'$client";
@@ -107,10 +107,10 @@ function getamarragevalidate($client){
                 $output .= "<tr><td>$type</td><td><a href='mandataires.php?edit=".$row["mandataireid"]."&hideerrors=1'>".$row["mandataireprefix"]." ".$row["mandataireRS"]." ".strtoupper(htmlentities($row["mandatairenom"]))." ".strtoupper(htmlentities($row["mandataireprenom"]))."</a></td>".
                 "<td>Devis ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
-                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td style=\"text-align:center\"><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'><img src=\"img/pdf.png\" class=\"ico\"></a></td>".
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td style=\"text-align:center\"><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'><img src=\"img/pdf.png\" alt=\"pdf\" class=\"ico\"></a></td>".
                 "<td style=\"text-align:center\"><a href=\"javascript:validate('$type','".$row["idfacture"]."',true)\">".
-                "<img src=\"img/checked.png\" height=\"32\" style=\"border:0px\"></a> / <a href=\"javascript:validate('$type','".$row["idfacture"]."',false)\">".
-                "<img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
+                "<img src=\"img/checked.png\" alt=\"checked\" height=\"32\" style=\"border:0px\"></a> / <a href=\"javascript:validate('$type','".$row["idfacture"]."',false)\">".
+                "<img src=\"img/close.png\" alt=\"close\" height=\"32\" style=\"border:0px\"></a></td></tr>";
         }
         
         return $output;
@@ -121,12 +121,12 @@ function getamarragelist($client){
         $query = "SELECT * FROM `".DB."`.`factures_amarrage` INNER JOIN `clients` ON `factures_amarrage`.`idclient` = `clients`.`clientid` WHERE `factures_amarrage`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0'$client";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
+                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" alt=\"original\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" alt=\"duplicata\" class=\"ico\">";}
                 $type='amarrage';
                 $output .= "<tr><td>$type<br/>".$row["navire"]."</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
                 "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
-                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'><a href=\"javascript:devalidate('$type','".$row["idfacture"]."')\"><img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'><a href=\"javascript:devalidate('$type','".$row["idfacture"]."')\"><img src=\"img/close.png\" alt=\"close\" height=\"32\" style=\"border:0px\"></a></td></tr>";
         }
         return $output;
 }
@@ -141,10 +141,10 @@ function getcantinevalidate($client){
                 $output .= "<tr><td>$type$enfant_prenom</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
                 "<td>Devis ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
-                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td style=\"text-align:center\"><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'><img src=\"img/pdf.png\" class=\"ico\"></a></td>".
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td style=\"text-align:center\"><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'><img src=\"img/pdf.png\" alt=\"pdf\" class=\"ico\"></a></td>".
                 "<td style=\"text-align:center\"><a href=\"javascript:validate('$type','".$row["idfacture"]."',true)\">".
-                "<img src=\"img/checked.png\" height=\"32\" style=\"border:0px\"></a> / <a href=\"javascript:validate('$type','".$row["idfacture"]."',false)\">".
-                "<img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
+                "<img src=\"img/checked.png\" alt=\"checked\" height=\"32\" style=\"border:0px\"></a> / <a href=\"javascript:validate('$type','".$row["idfacture"]."',false)\">".
+                "<img src=\"img/close.png\" alt=\"close\" height=\"32\" style=\"border:0px\"></a></td></tr>";
         }
         return $output;
 }
@@ -154,14 +154,14 @@ function getcantinelist($client){
         $query = "SELECT * FROM `".DB."`.`factures_cantine` INNER JOIN `clients` ON `factures_cantine`.`idclient` = `clients`.`clientid` WHERE `factures_cantine`.`validation` = '1' AND `acceptation` = '1' AND `reglement` = '0'$client";
         $result = $mysqli->query($query);
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
-                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" class=\"ico\">";}
+                if($row["duplicata"]=='0'){$pdf="<img src=\"img/opdf.png\" alt=\"original\" class=\"ico\">";}else{$pdf="<img src=\"img/dpdf.png\" alt=\"duplicata\" class=\"ico\">";}
                 $type='cantine';
                 $enfant_prenom = "<br/>".getEnfantPrenom($row['idfacture']);
                 $output .= "<tr><td>$type$enfant_prenom</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</td>".
                 "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</a></td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td>".
-                "<td class='center'><a href=\"javascript:devalidate('$type','".$row["idfacture"]."')\"><img src=\"img/close.png\" height=\"32\" style=\"border:0px\"></a></td></tr>";
+                "<td class='center'><a href=\"javascript:devalidate('$type','".$row["idfacture"]."')\"><img src=\"img/close.png\" alt=\"close\" height=\"32\" style=\"border:0px\"></a></td></tr>";
         }
         return $output;
 }

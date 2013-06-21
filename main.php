@@ -65,7 +65,7 @@ $admin = $cUser->userisadmin();
 		Bienvenue dans votre logiciel de multifacturation.</h1>
 		
 		<table style="width:50em">
-			<th><div id="thtitle">Chiffres du moment -- </div></th>
+			<tr><th><div id="thtitle">Chiffres du moment -- </div></th></tr>
 			<tr>
 				<td>
 					<div id="validation_div" style="padding:10px;"></div>

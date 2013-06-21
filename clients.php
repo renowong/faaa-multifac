@@ -361,7 +361,7 @@ require_once('clients_top.php');
 		<!-- Form -->
 		<h1><?php echo $legend ?></h1>
 		<div id="accounttoggle">
-			<button href="#" id="toggleaccount">Cacher</button>                                                  
+			<button id="toggleaccount">Cacher</button>                                                  
 		</div>
         <div id="compte">
 		<table>
@@ -370,7 +370,7 @@ require_once('clients_top.php');
 					<form name="frmRegistration" action="clients_validate.php?validationType=php<? echo $edit ?>" method="POST">
 						<table id="tblclient" class="tblform">
 							<tbody>
-								<th colspan="2">Donn&eacute;es du compte</th>
+								<tr><th colspan="2">Donn&eacute;es du compte</th></tr>
 								<tr>
 									<td title="Option d&eacute;sactiv&eacute;e lorsque des factures sont en cours ou la liste des enfants n'est pas vide.">
 										<!--Status-->
@@ -571,7 +571,7 @@ require_once('clients_top.php');
 									</td>
 								</tr>	
 								<tr>
-									<td colspan="3" align="right">
+									<td colspan="2" style="text-align:right;">
 										<!--Reset-->
 										<input class="submit" type="button" onClick="window.location='<?php print $_SERVER['PHP_SELF'] ?>?reset=1&edit=<?php print $_GET['edit'] ?>';" value="Annuler" name="raz" />
 										<!--Submit-->
@@ -588,7 +588,7 @@ require_once('clients_top.php');
 		</table>
 		</div>
 		<div id="divhistorique">
-			<h1>Status des factures li&eacute;es au compte</h1> <button href="#" id="togglehistory">Afficher</button> <button href="#" id="showreject">Afficher les rejets</button>	
+			<h1>Status des factures li&eacute;es au compte</h1> <button id="togglehistory">Afficher</button> <button id="showreject">Afficher les rejets</button>	
 			<div id="historique">
 				<?php 
 				if (isset($_GET['edit'])) echo buildFacturesEnCoursTable($_GET['edit'],$ar_f_c);
@@ -597,7 +597,7 @@ require_once('clients_top.php');
 			</div>
 		</div>
 		<div id="divavoirs">
-			<h1>Avoirs</h1> <button href="#" id="toggleavoirs">Afficher</button> <button onclick="div_avoir('avoirs.php');">Ajouter</button>	
+			<h1>Avoirs</h1> <button id="toggleavoirs">Afficher</button> <button onclick="div_avoir('avoirs.php');">Ajouter</button>	
 			<div id="avoirs">
 				<?php 
 				if (isset($_GET['edit'])) echo buildAvoirsTable($_GET['edit']);
@@ -606,8 +606,8 @@ require_once('clients_top.php');
 			</div>
 		</div>
 		<br/><br/>
-		<div id="opaquediv" name="opaquediv" style="position:absolute;top:0px;width:100%;height:100%;z-index:20;">
-			<div style="background-color:white;" id="div_avoir" name="div_avoir" />
+		<div id="opaquediv" style="position:absolute;top:0px;width:100%;height:100%;z-index:20;">
+			<div style="background-color:white;" id="div_avoir" ></div>
 		</div>
 	</body>
 </html>

@@ -161,7 +161,7 @@ if (isset($_POST['box_search'])) {
 					$warningmsg = "des factures !";
 				break;
 			}
-			print "<img src='img/warning.png'/> <h1>ATTENTION, vous &ecirc;tes en r&eacute;affection $warningmsg</h1>";
+			print "<img src='img/warning.png' alt='warning'/> <h1>ATTENTION, vous &ecirc;tes en r&eacute;affection $warningmsg</h1>";
 			?>
 		</div>
 		<!-- Suggestions -->

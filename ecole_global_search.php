@@ -195,7 +195,7 @@ require_once('ecole_global_search_top.php');
 			</tr>
 		</table><hr/>
 		<button class="check">Tout Cocher</button>
-		<div id="opaquediv" name="opaquediv" style="position:absolute;top:0px;width:100%;height:100%;z-index:20;">
+		<div id="opaquediv" style="position:absolute;top:0px;width:100%;height:100%;z-index:20;">
 			<div id="confirm" class="ui-widget-content">
 			<div id="confirm-text"></div>
 			<input type="checkbox" name="chk_print0" id="chk_print0" /> Cocher pour imprimer les factures &agrave; 0 Frs.<br/><br/>
