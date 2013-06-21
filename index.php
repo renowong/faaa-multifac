@@ -6,6 +6,7 @@ include_once('config.php');
 require_once('headers.php');
 
 ?>
+<!DOCTYPE html>
 <html lang="fr">
 	<head>
 		<?php echo $title.$icon.$charset.$defaultcss.$graburljs.$jquery.$jqueryui.$message_div ?>
@@ -90,8 +91,14 @@ require_once('headers.php');
 		<img src="img/community-users-icon.png" alt="users-icon"/><br/><br/>
 			<div style="text-align:right;">
 				Utilisateur : <input type="text" name="login" id="login" value="" maxlength="10" size="20" /><br/><br/>
-				Mot de passe : <input type="password" name="password" id="password"value="" maxlength="10" size="20" />
+				Mot de passe : <input type="password" name="password" id="password" value="" maxlength="10" size="20" />
 			</div>
+			
 		</div>
+
+		<div id="html5" style="position:relative;top:50px;">
+		    Application Certifi&eacute;e<br/><br/><img src="img/HTML5.png" alt="html5"/>
+		</div>
+		
 	</body>
-<html lang="fr">
+</html>
