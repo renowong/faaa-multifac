@@ -4,18 +4,22 @@ include_once('config.php');
 $ids_cantine = $_POST["ids_cantine"];
 $ids_etal = $_POST["ids_etal"];
 $ids_amarrage = $_POST["ids_amarrage"];
-$ids_amarrage_clients = separate_clients_mandataires($ids_amarrage,"C","factures_amarrage");
-$ids_amarrage_mandataires = separate_clients_mandataires($ids_amarrage,"M","factures_amarrage");
+if($ids_amarrage!==''){
+    $ids_amarrage_clients = separate_clients_mandataires($ids_amarrage,"C","factures_amarrage");
+    $ids_amarrage_mandataires = separate_clients_mandataires($ids_amarrage,"M","factures_amarrage");
+}
 
-writetocsv($ids_cantine,$ids_etal,$ids_amarrage);
 
-function writetocsv($ids_cantine,$ids_etal,$ids_amarrage){
+writetocsv($ids_cantine,$ids_etal,$ids_amarrage_clients,$ids_amarrage_mandataires);
+
+function writetocsv($ids_cantine,$ids_etal,$ids_amarrage_clients,$ids_amarrage_mandataires){
     $fw = fopen('extract/impayes.csv', 'w');
 
-    if($ids_cantine!=="") $ar_cantine_details = get_details_cantine($ids_cantine,'factures_cantine');
-    if($ids_etal!=="") $ar_etal_details = get_details_mandataire($ids_etal,'factures_etal');
-    if($ids_amarrage_clients!=="") $ar_amarrage_clients_details = get_details_client($ids_amarrage,'factures_amarrage');
-    if($ids_amarrage_mandataires!=="") $ar_amarrage_mandataires_details = get_details_mandataire($ids_amarrage,'factures_amarrage');
+    if(strlen($ids_cantine)>0) $ar_cantine_details = get_details_cantine($ids_cantine,'factures_cantine');
+    if(strlen($ids_etal)>0) $ar_etal_details = get_details_mandataire($ids_etal,'factures_etal');
+    //print ($ids_amarrage_clients);
+    if(strlen($ids_amarrage_clients)>0) $ar_amarrage_clients_details = get_details_client($ids_amarrage_clients,'factures_amarrage');
+    if(strlen($ids_amarrage_mandataires)>0) $ar_amarrage_mandataires_details = get_details_mandataire($ids_amarrage_mandataires,'factures_amarrage');
 
     fwrite($fw, "type;communeid;datefacture;montant;restearegler;periode/obs;nom;prenom;telephone;telephone2;bp;cp;ville;commune;rib;obs;enfantnom;enfantprenom;ecole;classe;\n");
 
@@ -75,97 +79,6 @@ function writetocsv($ids_cantine,$ids_etal,$ids_amarrage){
             fwrite($fw, "\n");
         }
     }
-    
-    
-    //foreach($ar_cantine_details as &$ar){
-    //    fwrite($fw, $ar["0"].";");
-    //    fwrite($fw, $ar["communeid"].";");
-    //    fwrite($fw, $ar["datefacture"].";");
-    //    fwrite($fw, $ar["montantfcp"].";");
-    //    fwrite($fw, $ar["restearegler"].";");
-    //    fwrite($fw, html_entity_decode($ar['obs'].";",ENT_QUOTES, "ISO-8859-1"));
-    //    fwrite($fw, $ar["clientnom"].";");
-    //    fwrite($fw, $ar["clientprenom"].";");
-    //    fwrite($fw, $ar["clienttelephone"].";");
-    //    fwrite($fw, $ar["clientfax"].";");
-    //    fwrite($fw, $ar["clientbp"].";");
-    //    fwrite($fw, $ar["clientcp"].";");
-    //    fwrite($fw, $ar["clientville"].";");
-    //    fwrite($fw, $ar["clientcommune"].";");
-    //    fwrite($fw, $ar["clientrib"].";");
-    //    $clientobs = preg_replace("/\r\n/", ' ', $ar["clientobs"]);
-    //    fwrite($fw, $clientobs.";");
-    //    
-    //    fwrite($fw, $ar["enfantnom"].";");
-    //    fwrite($fw, $ar["enfantprenom"].";");
-    //    fwrite($fw, $ar["nomecole"].";");
-    //    fwrite($fw, $ar["classe"].";"); 
-    //    fwrite($fw, "\n");
-    //}
-    //
-    //foreach($ar_etal_details as &$ar){
-    //    fwrite($fw, $ar["0"].";");
-    //    fwrite($fw, $ar["communeid"].";");
-    //    fwrite($fw, $ar["datefacture"].";");
-    //    fwrite($fw, $ar["montantfcp"].";");
-    //    fwrite($fw, $ar["restearegler"].";");
-    //    fwrite($fw, html_entity_decode($ar['obs'].";",ENT_QUOTES, "ISO-8859-1"));
-    //    fwrite($fw, $ar["mandatairenom"].";");
-    //    fwrite($fw, $ar["mandataireprenom"].";");
-    //    fwrite($fw, $ar["mandatairetelephone"].";");
-    //    fwrite($fw, $ar["mandatairefax"].";");
-    //    fwrite($fw, $ar["mandatairebp"].";");
-    //    fwrite($fw, $ar["mandatairecp"].";");
-    //    fwrite($fw, $ar["mandataireville"].";");
-    //    fwrite($fw, $ar["mandatairecommune"].";");
-    //    fwrite($fw, $ar["mandatairerib"].";");
-    //    $mandataireobs = preg_replace("/\r\n/", ' ', $ar["mandataireobs"]);
-    //    fwrite($fw, $clientobs.";");
-    //    fwrite($fw, "\n");
-    //}
-    //
-    //foreach($ar_amarrage_mandataires_details as &$ar){
-    //    fwrite($fw, $ar["0"].";");
-    //    fwrite($fw, $ar["communeid"].";");
-    //    fwrite($fw, $ar["datefacture"].";");
-    //    fwrite($fw, $ar["montantfcp"].";");
-    //    fwrite($fw, $ar["restearegler"].";");
-    //    fwrite($fw, html_entity_decode($ar['obs'].";",ENT_QUOTES, "ISO-8859-1"));
-    //    fwrite($fw, $ar["mandatairenom"].";");
-    //    fwrite($fw, $ar["mandataireprenom"].";");
-    //    fwrite($fw, $ar["mandatairetelephone"].";");
-    //    fwrite($fw, $ar["mandatairefax"].";");
-    //    fwrite($fw, $ar["mandatairebp"].";");
-    //    fwrite($fw, $ar["mandatairecp"].";");
-    //    fwrite($fw, $ar["mandataireville"].";");
-    //    fwrite($fw, $ar["mandatairecommune"].";");
-    //    fwrite($fw, $ar["mandatairerib"].";");
-    //    $mandataireobs = preg_replace("/\r\n/", ' ', $ar["mandataireobs"]);
-    //    fwrite($fw, $clientobs.";");
-    //    fwrite($fw, "\n");
-    //}
-    //
-    //    foreach($ar_amarrage_clients_details as &$ar){
-    //    fwrite($fw, $ar["0"].";");
-    //    fwrite($fw, $ar["communeid"].";");
-    //    fwrite($fw, $ar["datefacture"].";");
-    //    fwrite($fw, $ar["montantfcp"].";");
-    //    fwrite($fw, $ar["restearegler"].";");
-    //    fwrite($fw, html_entity_decode($ar['obs'].";",ENT_QUOTES, "ISO-8859-1"));
-    //    fwrite($fw, $ar["clientnom"].";");
-    //    fwrite($fw, $ar["clientprenom"].";");
-    //    fwrite($fw, $ar["clienttelephone"].";");
-    //    fwrite($fw, $ar["clientfax"].";");
-    //    fwrite($fw, $ar["clientbp"].";");
-    //    fwrite($fw, $ar["clientcp"].";");
-    //    fwrite($fw, $ar["clientville"].";");
-    //    fwrite($fw, $ar["clientcommune"].";");
-    //    fwrite($fw, $ar["clientrib"].";");
-    //    $clientobs = preg_replace("/\r\n/", ' ', $ar["clientobs"]);
-    //    fwrite($fw, $clientobs.";");
-    //    fwrite($fw, "\n");
-    //}
-
     
     
     fclose($fw);
@@ -253,7 +166,12 @@ function separate_clients_mandataires($ids,$type,$table){
         
 	$mysqli->close();
         //print($query);
-	return $result_array;
+    
+        foreach($result_array as &$id){
+            $output .= $id["idfacture"].",";
+        }
+        $output = substr($output,0,strlen($output)-1);
+        return $output;
 }
 
 function output_file($file, $name, $mime_type='')
