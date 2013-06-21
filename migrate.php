@@ -3,9 +3,9 @@ require_once('headers.php');
 require_once('global_functions.php');
 require_once('migrate_top.php');
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 
-<html>
+<html lang="fr">
 	<head>
 	<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$jquery.$jqueryui.$message_div.$compte_div ?>
 	<script type="text/javascript">
@@ -105,16 +105,16 @@ require_once('migrate_top.php');
 	</head>
 	<body>
 		<? include_once('menu.php'); ?>
-		<div name="message" id="message" ></div>
-		<div name="compte_div" id="compte_div" ></div>
-		<div name="version" id="version">version <?php echo VERSION ?></div>
+		<div id="message" ></div>
+		<div id="compte_div"></div>
+		<div id="version">version <?php echo VERSION ?></div>
 		<br/>
 		<table>
 			<tr>
 				<td>
 					<h1>Historique</h1>
 					<p class="italique">Cliquez pour revenir en arri&egrave;re</p>
-					<div name="history" id="history" </div>
+					<div id="history" </div>
 				</td>
 				<td>
 					<h1>A Migrer ---</h1>
@@ -133,8 +133,8 @@ require_once('migrate_top.php');
 			</tr>
 		</table><hr/>
 		<button class="check">Tout Cocher</button>
-		<div name="results" id="results"/>
-		<div name="version" id="version">version <?php echo VERSION ?></div>
+		<div id="results"/>
+		<div id="version">version <?php echo VERSION ?></div>
 	</body>
 </html>
 

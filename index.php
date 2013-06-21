@@ -6,7 +6,7 @@ include_once('config.php');
 require_once('headers.php');
 
 ?>
-<html>
+<html lang="fr">
 	<head>
 		<?php echo $title.$icon.$charset.$defaultcss.$graburljs.$jquery.$jqueryui.$message_div ?>
 
@@ -85,7 +85,7 @@ require_once('headers.php');
 		</script>
 	</head>
 	<body onload="showMessage();$('#login').focus();">
-		<div name="message" id="message" ></div>
+		<div id="message" ></div>
 		<div id="dialog-form" title="Multifacturation version <?php echo VERSION ?>">
 		<img src="img/community-users-icon.png"/><br/><br/>
 			<div style="text-align:right;">
@@ -94,4 +94,4 @@ require_once('headers.php');
 			</div>
 		</div>
 	</body>
-<html>
+<html lang="fr">

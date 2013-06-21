@@ -6,9 +6,9 @@ require_once('clients_top.php');
 (isset($_GET['edit']) ? $edit="&edit=".$_GET['edit'] : $edit="");
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 
-<html>
+<html lang="fr">
 	<head>
 		<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$clientjs.$retrieve_rues_js.$graburljs.$jquery.$jqueryui.$message_div.$compte_div.$kids_valid ?>
 		<link rel="stylesheet" href="chosen/chosen.css" />
@@ -354,9 +354,9 @@ require_once('clients_top.php');
 	</head>
 	<body>
 		<? include_once('menu.php'); ?>
-		<div name="message" id="message" ></div>
-		<div name="compte_div" id="compte_div" ></div>
-		<div name="version" id="version">version <?php echo VERSION ?></div>
+		<div id="message" ></div>
+		<div id="compte_div"></div>
+		<div id="version">version <?php echo VERSION ?></div>
 		<br/><br/>
 		<!-- Form -->
 		<h1><?php echo $legend ?></h1>
@@ -368,7 +368,7 @@ require_once('clients_top.php');
 			<tr>
 				<td>
 					<form name="frmRegistration" action="clients_validate.php?validationType=php<? echo $edit ?>" method="POST">
-						<table name="tblclient" id="tblclient" class="tblform">
+						<table id="tblclient" class="tblform">
 							<tbody>
 								<th colspan="2">Donn&eacute;es du compte</th>
 								<tr>

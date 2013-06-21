@@ -32,9 +32,9 @@ function buildFacturesEnCoursTable($id){
 
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 
-<html>
+<html lang="fr">
 	<head>
 	
 	<script type="text/javascript">
@@ -73,7 +73,7 @@ function buildFacturesEnCoursTable($id){
 
 	</head>
 	<body>
-		<div name="message" id="message" ></div>
+		<div id="message" ></div>
 		<h1>Module d'application d'un avoir</h1>
 		
 		<form id="form_avoir" name="form_avoir">

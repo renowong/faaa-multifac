@@ -2,7 +2,7 @@
 include_once('config.php');
 $id = $_GET["id"];
 
-$output = '<table name="tblconjoint" id="tblconjoint" class="tblform" style="width:100%;">'.
+$output = '<table id="tblconjoint" class="tblform" style="width:100%;">'.
 				'	<thead>'.
 				'		<tr>'.
 				'			<th>Conjoint</th>'.

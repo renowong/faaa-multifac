@@ -7,9 +7,9 @@ require_once('lieux_top.php');
 (isset($_GET['edit']) ? $edit="&edit=".$_GET['edit'] : $edit="");
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 
-<html>
+<html lang="fr">
 	<head>
 		<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$graburljs.$compte_div.$lieuxjs.$jquery.$jqueryui.$message_div ?>
         <link rel="stylesheet" href="chosen/chosen.css" />
@@ -107,16 +107,16 @@ require_once('lieux_top.php');
 	</head>
 	<body onload="init();">
 		<? include_once('menu.php'); ?>
-		<div name="message" id="message" ></div>
-		<div name="compte_div" id="compte_div"></div>
-		<div name="version" id="version">version <?php echo VERSION ?></div>
+		<div id="message" ></div>
+		<div id="compte_div"></div>
+		<div id="version">version <?php echo VERSION ?></div>
 		<br/><br/>
 		<h1><?php echo $legend ?></h1>
 		<table>
 			<tr>
 				<td>
 					<form name="frmRegistration" id="frmRegistration" action="lieux_validate.php?validationType=php<? echo $edit ?>" method="POST">
-						<table name="tbllieu" id="tbllieu" class="tblform">
+						<table id="tbllieu" class="tblform">
 							<tbody>
 								<tr>
 									<td>

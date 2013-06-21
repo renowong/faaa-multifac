@@ -4,9 +4,9 @@ require_once('global_functions.php');
 require_once('paiement_comptant_top.php');
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 
-<html>
+<html lang="fr">
 	<head>
 		<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$graburljs.$compte_div.$jquery.$jqueryui.$message_div ?>
 
@@ -242,9 +242,9 @@ require_once('paiement_comptant_top.php');
 		<div id="dialog-confirm" title="Demande de confirmation">
 		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Valider le paiement ?</p>
 		</div>
-		<div name="message" id="message" ></div>
-		<div name="compte_div" id="compte_div"></div>
-		<div name="version" id="version">version <?php echo VERSION ?></div>
+		<div id="message" ></div>
+		<div id="compte_div"></div>
+		<div id="version">version <?php echo VERSION ?></div>
 		<br/><br/>
 		<h1><?php echo $legend ?></h1>
 		<table>
@@ -257,7 +257,7 @@ require_once('paiement_comptant_top.php');
 							</td>
 						</tr>
 					</table>
-					<table name="tblpaiement" id="tblpaiement" class="tblform">
+					<table id="tblpaiement" class="tblform">
 						<tbody>
 							<tr> 
 								<td colspan="2">

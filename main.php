@@ -13,9 +13,9 @@ if (!empty($_SESSION['client'])) {
 $cUser = unserialize($_SESSION['user']);
 $admin = $cUser->userisadmin();
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 
-<html>
+<html lang="fr">
 	<head>
 	<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$jquery.$jqueryui.$message_div.$compte_div ?>
 	<script type="text/javascript">
@@ -58,9 +58,9 @@ $admin = $cUser->userisadmin();
 	</head>
 	<body>
 		<? include_once('menu.php'); ?>
-		<div name="message" id="message" ></div>
-		<div name="compte_div" id="compte_div" ></div>
-		<div name="version" id="version">version <?php echo VERSION ?></div>
+		<div id="message" ></div>
+		<div id="compte_div"></div>
+		<div id="version">version <?php echo VERSION ?></div>
 		<h1>
 		Bienvenue dans votre logiciel de multifacturation.</h1>
 		

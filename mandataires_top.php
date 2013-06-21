@@ -173,7 +173,7 @@ function getLieu($type){
 
 function buildLieuTable(){
 	if (isset($_GET['edit']) && $_GET['edit'] > 0) {
-	$output = '<td><table name="tbllieu" id="tbllieu" class="tblform">'.
+	$output = '<td><table id="tbllieu" class="tblform">'.
 				'	<thead>'.
 				'		<tr>'.
 				'			<th>Lieux</th>'.

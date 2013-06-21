@@ -3,9 +3,9 @@ require_once('headers.php');
 require_once('global_functions.php');
 require_once('compte_top.php');
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 
-<html>
+<html lang="fr">
 	<head>
 		<?php echo $title.$icon.$charset.$nocache.$defaultcss.$chromecss.$graburljs.$compte_div.$compte_valid.$jquery.$jqueryui.$message_div ?>
 		<script type="text/javascript">
@@ -55,9 +55,9 @@ require_once('compte_top.php');
 	</head>
 	<body onload="init();">
 		<? include_once('menu.php'); ?>
-		<div name="message" id="message" ></div>
-		<div name="compte_div" id="compte_div" ></div>
-		<div name="version" id="version">version <?php echo VERSION ?></div>
+		<div id="message" ></div>
+		<div id="compte_div"></div>
+		<div id="version">version <?php echo VERSION ?></div>
 		<br/><br/>
 		<h1><?php echo $legend ?></h1><br/>
 		<?php if ($admin) buildComptes() ?>
@@ -66,7 +66,7 @@ require_once('compte_top.php');
 				<td>
 					<form name="frmRegistration" action="compte_validate.php?validationType=php" method="POST">
 						<input type="hidden" name="userid" value="<?php echo $userid ?>" />
-						<table name="tblcompte" id="tblcompte" class="tblform">
+						<table id="tblcompte" class="tblform">
 							<tbody>
 								<tr>
 									<td>

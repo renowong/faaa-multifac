@@ -221,7 +221,7 @@ function buildAnnexesTable(){
 if (isset($_GET['edit']) && $_GET['edit'] > 0) {
 	$output = '<td><div id="divconjoint" name="divconjoint"></div>'.
 		'<form id="frmkids" name="frmkids" method="post" action="kids_validate.php?validationType=php">'.
-		'<table name="tblenfants" id="tblenfants" class="tblform">'.
+		'<table id="tblenfants" class="tblform">'.
 		'	<thead>'.
 		'		<tr>'.
 		'			<th colspan="2">Enfants</th>'.
@@ -261,11 +261,11 @@ if (isset($_GET['edit']) && $_GET['edit'] > 0) {
 		if(getAllKids($_GET['edit'])>0) $output .='<a href="javascript:reaffectkid();"><img style="vertical-align:middle;" src="img/reaffect.png" title="Cliquez pour une r&eacute;affection vers un autre parent"/></a></td>';
 		$output .= '		</tr>'.
 		'		<tr>'.
-		'			<td colspan="2"><div name="list_enfants" id="list_enfants"></div></td>'.
+		'			<td colspan="2"><div id="list_enfants"></div></td>'.
 		'		</tr>'.
 		'	</tbody>'.
 		'</table></form>'.
-		'<table name="tbllieu" id="tbllieu" class="tblform" style="width:100%;">'.
+		'<table id="tbllieu" class="tblform" style="width:100%;">'.
 		'	<thead>'.
 		'		<tr>'.
 		'			<th>Lieux</th>'.

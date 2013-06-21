@@ -1,7 +1,7 @@
 <?php
 $title="<title>Multifacturation Mairie de Faa'a</title>\n";
 $icon="\t\t<link rel='SHORTCUT ICON' href='img/favicon.ico' type='image/x-icon' />\n";
-$charset="\t\t<meta http-equiv='Content-Type' content='text/html; charset=windows-1252'>\n";
+$charset="\t\t<meta charset='utf-8'>\n";
 $nocache="\t\t<meta http-equiv='pragma' content='no-cache' />\n";
 $defaultcss="\t\t<link rel='stylesheet' type='text/css' href='css/intranet.css' />\n";
 $chromecss="\t\t<link rel='stylesheet' type='text/css' href='menu/chrometheme/chromestyle.css' />\n\t\t<script type='text/javascript' src='menu/chromejs/chrome.js'></script>\n";

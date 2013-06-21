@@ -5,9 +5,9 @@ require_once('facture_amarrage_top.php');
 
 $comptetype = getCompteType();
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 
-<html>
+<html lang="fr">
 	<head>
 		<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$jquery.$jqueryui.$message_div.$graburljs.$compte_div ?>
 
@@ -182,16 +182,16 @@ $comptetype = getCompteType();
 		<div id="dialog-confirm" title="Demande de confirmation">
 		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Cr&eacute;er le devis ?</p>
 		</div>
-		<div name="message" id="message" ></div>
-		<div name="version" id="version">version <?php echo VERSION ?></div>
-		<div name="invalidation" id="invalidation"><?php echo $InValidationList ?></div>
-		<div name="compte_div" id="compte_div"></div>
+		<div id="message" ></div>
+		<div id="version">version <?php echo VERSION ?></div>
+		<div id="invalidation"><?php echo $InValidationList ?></div>
+		<div id="compte_div"></div>
 		
 		<br/><br/>
 		<!-- Form -->
 		<h1><?php echo $legend ?> <a href="delibs/<?php echo $deliblink2 ?>.pdf" target="_blank">(D&eacute;lib&eacute;ration <?php echo $deliblink2 ?>)</a> et <a href="delibs/<?php echo $deliblink ?>.pdf" target="_blank">(D&eacute;lib&eacute;ration <?php echo $deliblink ?>)</a></h1>
 
-		<table name="tblcantine" id="tblcantine" class="tblform">
+		<table id="tblcantine" class="tblform">
 			<tbody>
 				<tr>
 					<td>
@@ -255,7 +255,7 @@ $comptetype = getCompteType();
 			</tbody>
 		</table>
 		<br/>
-		<div name="details" id="details" ></div>
+		<div id="details"></div>
 	</body>
 </html>
 

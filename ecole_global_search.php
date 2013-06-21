@@ -4,9 +4,9 @@ require_once('global_functions.php');
 require_once('ecole_global_search_top.php');
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 
-<html>
+<html lang="fr">
 	<head>
 	<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$jquery.$jqueryui.$message_div.$compte_div.$graburljs ?>
 	
@@ -167,16 +167,16 @@ require_once('ecole_global_search_top.php');
 	</head>
 	<body>
 		<? include_once('menu.php'); ?>
-		<div name="message" id="message"></div>
-		<div name="seeall" id="seeall"></div>
-		<div name="compte_div" id="compte_div"></div>
-		<div name="version" id="version">version <?php echo VERSION ?></div>
+		<div id="message"></div>
+		<div id="seeall"></div>
+		<div id="compte_div"></div>
+		<div id="version">version <?php echo VERSION ?></div>
 		<br/>
 		<table>
 			<tr>
 				<td>
 					<h1>Derni&egrave;res &eacute;ditions</h1>
-					<div name="ziplist" id="ziplist" />
+					<div id="ziplist" />
 				</td>
 				<td>
 					<h1>Recherche par Ecole</h1>
@@ -197,7 +197,7 @@ require_once('ecole_global_search_top.php');
 		<button class="check">Tout Cocher</button>
 		<div id="opaquediv" name="opaquediv" style="position:absolute;top:0px;width:100%;height:100%;z-index:20;">
 			<div id="confirm" class="ui-widget-content">
-			<div name="confirm-text" id="confirm-text"></div>
+			<div id="confirm-text"></div>
 			<input type="checkbox" name="chk_print0" id="chk_print0" /> Cocher pour imprimer les factures &agrave; 0 Frs.<br/><br/>
 			<button value="false">Non</button> <button value="true">Oui</button>
 		</div>
@@ -209,8 +209,8 @@ require_once('ecole_global_search_top.php');
 		</div>
 		
 		
-		<div name="results" id="results"></div>
-		<div name="version" id="version">version <?php echo VERSION ?></div>
+		<div id="results"></div>
+		<div id="version">version <?php echo VERSION ?></div>
 	
 	</body>
 </html>

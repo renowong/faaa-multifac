@@ -4,9 +4,9 @@ require_once('global_functions.php');
 require_once('compte_paiement_top.php');
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 
-<html>
+<html lang="fr">
 	<head>
 		<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$graburljs.$jquery.$jqueryui.$message_div.$compte_div ?>
 	<script type="text/javascript">
@@ -53,11 +53,11 @@ require_once('compte_paiement_top.php');
 	</head>
 	<body onload="init();">
 		<? include_once('menu.php'); ?>
-		<div name="message" id="message" ></div>
-		<div name="compte_div" id="compte_div"></div>
+		<div id="message" ></div>
+		<div id="compte_div"></div>
 		<br/><br/>
 		<h1>Module de r&egrave;glement des factures</h1><br/><br/>
-		<div name="version" id="version">version <?php echo VERSION ?></div>
+		<div id="version">version <?php echo VERSION ?></div>
 
 		<table>
 			<tr>

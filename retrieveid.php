@@ -39,9 +39,9 @@ if (isset($_POST['box_search'])) {
 }
 ?>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 
-<html>
+<html lang="fr">
 	<head>
 	<?php echo $title.$icon.$charset.$nocache.$defaultcss.$chromecss.$graburljs.$compte_div.$jquery.$jqueryui.$message_div ?>
 		<link rel="stylesheet" href="chosen/chosen.css" />
@@ -147,11 +147,11 @@ if (isset($_POST['box_search'])) {
 		<div id="dialog-confirm" title="Demande de confirmation">
 		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><div id="modaltext"></div></p>
 		</div>
-		<div name="message" id="message" ><? echo $message ?></div>
-		<div name="compte_div" id="compte_div" ></div>
-		<div name="version" id="version">version <?php echo VERSION ?></div>
+		<div id="message"><? echo $message ?></div>
+		<div id="compte_div"></div>
+		<div id="version">version <?php echo VERSION ?></div>
 		<br/><br/>
-		<div name="warning" id="warning" style="margin:auto;width:600px;background-color:yellow;border:red solid 10px;padding:10px;">
+		<div id="warning" style="margin:auto;width:600px;background-color:yellow;border:red solid 10px;padding:10px;">
 			<?php
 			switch ($_GET['type']){
 				case "kid":

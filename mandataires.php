@@ -7,9 +7,9 @@ require_once('mandataires_top.php');
 (isset($_GET['edit']) ? $edit="&edit=".$_GET['edit'] : $edit="");
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 
-<html>
+<html lang="fr">
 	<head>
 		<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$mandatairejs.$retrieve_rues_js.$graburljs.$compte_div.$jquery.$jqueryui.$message_div ?>
 
@@ -151,9 +151,9 @@ require_once('mandataires_top.php');
 	</head>
 	<body onload="init();">
 		<? include_once('menu.php'); ?>
-		<div name="message" id="message" ></div>
-		<div name="compte_div" id="compte_div" ></div>
-		<div name="version" id="version">version <?php echo VERSION ?></div>
+		<div id="message" ></div>
+		<div id="compte_div"></div>
+		<div id="version">version <?php echo VERSION ?></div>
 		<br/><br/>
 		<h1><?php echo $legend ?></h1>
 		<div id="accounttoggle">
@@ -164,7 +164,7 @@ require_once('mandataires_top.php');
 			<tr>
 				<td>
 					<form name="frmRegistration" action="mandataires_validate.php?validationType=php<? echo $edit ?>" method="POST">
-						<table name="tblmandataire" id="tblmandataire" class="tblform">
+						<table id="tblmandataire" class="tblform">
 							<tbody>
 								<tr>
 									<td colspan="2">
