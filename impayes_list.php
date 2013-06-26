@@ -24,7 +24,7 @@ switch($set_range){
     break;
 }
 
-        $output = "<div style='display: inline-block; height:inherit; overflow:auto;margin: 0px auto;'><table><tr><th>Type de Facture</th><th>Client</th><th width=500px>Facture</th><th>PDF</th><th>Retard</th></tr>";
+        $output = "<div style='display: inline-block; height:inherit; overflow:auto;margin: 0px auto;'><table><tr><th>Type de Facture</th><th>Client</th><th width=500px>Facture</th><th>PDF</th><th>Retard</th><th>Courrier</th></tr>";
         switch($type){
                 case "cantine":
                         //$output .= getcantinelist($client,$range);
@@ -92,7 +92,8 @@ function getetallist($client,$range){
                 $output .= "<tr><td>place et &eacute;tal</td><td>MANDATAIRE : <a href='mandataires.php?edit=".$row["mandataireid"]."&hideerrors=1'>".$row["mandataireprefix"]." ".$row["mandataireRS"]." / ".htmlentities($row["mandatairenom"])." ".htmlentities($row["mandataireprenom"])."</a></td>".
                 "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
-                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'>$dayslate jours</td></tr>";
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'>$dayslate jours</td>".
+		"<td><a href='create_relance.php?idfacture=".$row['idfacture']."&type=$type&montant=".$row["montantfcp"]."&communeid=".$row["communeid"]."&date=".$row["datefacture"]."' target='_blank'><img src='img/gmail.png' /></a></td></tr>";
         
 		$ar_ids[].=$row["idfacture"];
 	}
@@ -116,7 +117,8 @@ function getamarragelist($client,$range){
                 $output .= "<tr><td>$type<br/>".$row["navire"]."</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
                 "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
-                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'>$dayslate jours</td></tr>";
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'>$dayslate jours</td>".
+		"<td><a href='create_relance.php?idfacture=".$row['idfacture']."&type=$type&montant=".$row["montantfcp"]."&communeid=".$row["communeid"]."&date=".$row["datefacture"]."' target='_blank'><img src='img/gmail.png' /></a></td></tr>";
 		
 		$ar_ids[].=$row["idfacture"];
 	}
@@ -134,7 +136,8 @@ function getamarragelist($client,$range){
                 $output .= "<tr><td>$type<br/>".$row["navire"]."</td><td>MANDATAIRE : <a href='mandataires.php?edit=".$row["mandataireid"]."&hideerrors=1'>".$row["mandatairecivilite"]." ".strtoupper(htmlentities($row["mandatairenom"]))." ".strtoupper(htmlentities($row["mandataireprenom"]))." ".strtoupper(htmlentities($row["mandataireprenom2"]))."</a></td>".
                 "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
-                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'>$dayslate jours</td></tr>";
+                $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'>$dayslate jours</td>".
+		"<td><a href='create_relance.php?idfacture=".$row['idfacture']."&type=$type&montant=".$row["montantfcp"]."&communeid=".$row["communeid"]."&date=".$row["datefacture"]."' target='_blank'><img src='img/gmail.png' /></a></td></tr>";
 		
 		$ar_ids[].=$row["idfacture"];
 	}
@@ -160,7 +163,7 @@ function getcantinelist($client,$range){
                 "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td>".
-                "<td class='center'>$dayslate jours</td></tr>";
+                "<td class='center'>$dayslate jours</td><td><a href='create_relance.php?idfacture=".$row['idfacture']."&type=$type&montant=".$row["montantfcp"]."&communeid=".$row["communeid"]."&date=".$row["datefacture"]."' target='_blank'><img src='img/gmail.png' /></a></td></tr>";
 		
 		$ar_ids[].=$row["idfacture"];
         }
