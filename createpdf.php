@@ -56,13 +56,14 @@ switch($typefacture){
 		
 		
 		//next get information on the destinataire
-		$query = "SELECT  `enfants`.`nom`,`enfants`.`prenom`,`enfants`.`classe`,`ecoles_faaa`.`nomecole` FROM `enfants` RIGHT JOIN `ecoles_faaa` ON `enfants`.`ecole`=`ecoles_faaa`.`ecoleid` WHERE `enfants`.`enfantid` ='".$details_array[0]['enfantid']."'";
+		$query = "SELECT  `enfants`.`enfantid`,`enfants`.`nom`,`enfants`.`prenom`,`enfants`.`classe`,`ecoles_faaa`.`nomecole` FROM `enfants` RIGHT JOIN `ecoles_faaa` ON `enfants`.`ecole`=`ecoles_faaa`.`ecoleid` WHERE `enfants`.`enfantid` ='".$details_array[0]['enfantid']."'";
 		$result = $mysqli->query($query);
 			while($row = $result->fetch_array(MYSQLI_ASSOC)){
 				$destinataire = $row['nom']." ".$row['prenom'];
 				$destinataire = html_entity_decode($destinataire, ENT_QUOTES);
 				$ecole = $row['nomecole'];
 				$classe = $row['classe'];
+				$idenfant = $row['enfantid'];
 				}
 				
 		$d=$details_array[0]['Delib'];
@@ -79,7 +80,7 @@ switch($typefacture){
 		
 		$duplicata = get_duplicata_status($idfacture,'factures_cantine');
 		
-		$solde = get_solde($idfacture,$idclient,'factures_cantine');
+		$solde = get_solde($idfacture,$idclient,'factures_cantine',$idenfant);
 		
 	break;
 
@@ -623,9 +624,15 @@ function get_duplicata_status($idfacture,$table){
         return $status;
 }
 
-function get_solde($idfacture,$idclient,$table){
+function get_solde($idfacture,$idclient,$table,$idenfant){
 	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $result = $mysqli->query("SELECT `restearegler`,`idfacture` FROM `$table` WHERE `idfacture`<'$idfacture' AND `idclient`='$idclient' AND `reglement`='0' AND `acceptation`='1'");
+	
+	if($idenfant>0){
+		$result = $mysqli->query("SELECT `$table`.`restearegler`,`$table`.`idfacture` FROM `$table` INNER JOIN `".$table."_details` ON `$table`.`idfacture`=`".$table."_details`.`idfacture` WHERE `$table`.`idfacture`<'$idfacture' AND `$table`.`idclient`='$idclient' AND `$table`.`reglement`='0' AND `$table`.`acceptation`='1' AND `".$table."_details`.`idenfant`='$idenfant'");
+	}else{
+		$result = $mysqli->query("SELECT `restearegler`,`idfacture` FROM `$table` WHERE `idfacture`<'$idfacture' AND `idclient`='$idclient' AND `reglement`='0' AND `acceptation`='1'");
+	}
+        
         
 	$result_array = array();
         while($row = $result->fetch_array(MYSQLI_ASSOC)){
