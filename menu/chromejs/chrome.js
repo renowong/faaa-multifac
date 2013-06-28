@@ -131,7 +131,7 @@ hideshim:function(){
 
 isContained:function(m, e){
 	var e=window.event || e
-	var c=e.relatedTarget || ((e.type=="mouseover")? e.fromElement : e.toElement)
+	var c=e.dataatedTarget || ((e.type=="mouseover")? e.fromElement : e.toElement)
 	while (c && c!=m)try {c=c.parentNode} catch(e){c=m}
 	if (c==m)
 		return true
@@ -175,9 +175,9 @@ startchrome:function(){
 	for (var ids=0; ids<arguments.length; ids++){
 		var menuitems=document.getElementById(arguments[ids]).getElementsByTagName("a")
 		for (var i=0; i<menuitems.length; i++){
-			if (menuitems[i].getAttribute("data-menu")){
-				var relvalue=menuitems[i].getAttribute("data-menu")
-				var asscdropdownmenu=document.getElementById(relvalue)
+			if (menuitems[i].getAttribute("data")){
+				var datavalue=menuitems[i].getAttribute("data")
+				var asscdropdownmenu=document.getElementById(datavalue)
 				this.addEvent(asscdropdownmenu, function(){cssdropdown.clearhidemenu()}, "mouseover")
 				this.addEvent(asscdropdownmenu, function(e){cssdropdown.dynamichide(this, e)}, "mouseout")
 				this.addEvent(asscdropdownmenu, function(){cssdropdown.delayhidemenu()}, "click")
@@ -187,7 +187,7 @@ startchrome:function(){
 				this.addEvent(menuitems[i], function(e){ //show drop down menu when main menu items are mouse over-ed
 					if (!cssdropdown.isContained(this, e)){
 						var evtobj=window.event || e
-						cssdropdown.dropit(this, evtobj, this.getAttribute("data-menu"))
+						cssdropdown.dropit(this, evtobj, this.getAttribute("data"))
 					}
 				}, "mouseover")
 				this.addEvent(menuitems[i], function(e){cssdropdown.dynamichide(this, e)}, "mouseout") //hide drop down menu when main menu items are mouse out
