@@ -5,15 +5,32 @@ require_once('global_functions.php');
 
 $idfacture = $_GET['idfacture'];
 $typefacture = $_GET['type'];
-$montant = $_GET['montant'];
+$montant = trispace($_GET['montant']);
 $nofacture = $_GET['communeid'];
-$datefacture = $_GET['date'];
+$datefacture = reverse_date_to_normal($_GET['date']);
 
 $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
 
 switch($typefacture){
 	case "cantine":
-		
+	    $query = "SELECT `clients`.`clientcivilite`,`clients`.`clientnom`,`clients`.`clientprenom`,`clients`.`clientbp`,`clients`.`clientcp`,`clients`.`clientville` FROM `clients` INNER JOIN `factures_cantine` ON `factures_cantine`.`idclient` = `clients`.`clientid` WHERE `factures_cantine`.`idfacture` = '$idfacture'";
+	    $result = $mysqli->query($query);
+	    $row = $result->fetch_array(MYSQLI_ASSOC);
+	    $client = $row["clientnom"]." ".$row["clientprenom"];
+	    $contact = "BP ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
+	    
+	    switch($row["clientcivilite"]){
+		case "Mr":
+		    $civilite = "Monsieur";
+		break;
+		case "Mme":
+		    $civilite = "Madame";
+		break;
+		case "Mlle":
+		    $civilite = "Mademoiselle";
+		break;
+	    }
+
 	break;
 
 	case "etal":
@@ -27,98 +44,144 @@ switch($typefacture){
 
 
 
-genpdf($typefacture,$datefacture,$nofacture,$client,$contact1,$contact2,$telephone,$fax);
+
+genpdf($typefacture,$datefacture,$nofacture,$montant,$civilite,$client,$contact);
 
 $mysqli->close();
 
 
-function genpdf($typefacture,$datefacture,$nofacture,$client,$contact1,$contact2,$telephone,$fax){	
-	$pdf=new FPDF('P','mm','A4');
+function genpdf($typefacture,$datefacture,$nofacture,$montant,$civilite,$client,$contact){	
+	$pdf=new FPDF("P","mm","A4");
 	$pdf->AddPage();
+	$pdf->SetMargins(20,20);
+	$today = date("d/m/Y");
+	$pdf->AddFont("Arialb","","arialb.php");
+	//$pdf->AddFont("Courier","","arialb.php");
 
-
-	$xreg=-1.5;
-	$yreg=3.5;
 	/////////////////////////////////////en tete////////////////////////////////////////
 	//logo
-	$pdf->Image('img/logo.jpg',16.5+$xreg,21+$yreg,21,18,'jpg');
+	$pdf->SetXY(18,24);
+	
+	$X=$pdf->GetX();
+	$Y=$pdf->GetY();
+	
+	$pdf->Image("img/logo.jpg",$X,$Y,23,19,"jpg");
 
-	//Commune de Faa'a
-	//$pdf->Image('img/communedefaaa.png',38.5+$xreg,21+$yreg,50,3.2,'png');
-	$pdf->AddFont('Arialb','','arialb.php');
-	$pdf->SetFont('Arialb','',13);
-	$pdf->SetXY(37.5+$xreg,17.5+$yreg);
-	$pdf->Cell(55,10,utf8_decode('COMMUNE DE FAA\'A'));
+	//Commune de Faa"a
+	$pdf->SetXY(42,22);
+	$X=$pdf->GetX();
+	$Y=$pdf->GetY();
+	
+    	$pdf->SetFont("Arialb","",13);
 
-	//Direction des affaires financière
-	$pdf->SetXY(37.5+$xreg,22.5+$yreg);
-	$pdf->SetFont('Arial','B',12);
-	$pdf->Cell(55,10,utf8_decode('Direction des Affaires Financières'));
+	$pdf->Cell(55,10,utf8_decode("COMMUNE DE FAA'A"));
+    
+	$pdf->SetXY($X+1,$Y+8);
+	$pdf->SetFont("Arial","",12);
+	$pdf->Cell(55,5,utf8_decode("N°       /DAF/FTR-Régie-hp"),1,1,"C");
+	//$X=$pdf->GetX();
+	$Y=$pdf->GetY();
+	$pdf->SetXY($X,$Y);
+	
+	$pdf->SetFont("Arial","",9);
+	$pdf->Cell(55,5,utf8_decode("Affaire suivie par : Hinatini Parker"),0,1);
+	
+	$Y=$pdf->GetY();
+	$pdf->SetXY($X,$Y);
 
-	$pdf->SetXY(37.5+$xreg,26.5+$yreg);
-	$pdf->SetFont('Arial','B',10);
-	$pdf->Cell(55,10,utf8_decode('Service Facturation, Taxes et Recouvrement'));
+	$pdf->SetFont("Arial","",9);
+	$pdf->Cell(55,3,utf8_decode("Téléphone : 800 960 poste 421"),0,0);
 
-	$pdf->SetXY(37.5+$xreg,30.2+$yreg);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(55,10,utf8_decode('Tél.: 800.954'));
-
-	$pdf->SetXY(37.5+$xreg,33.5+$yreg);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(55,10,utf8_decode('BP 60.002 - 98702 Faa\'a Centre'));
-
-	$pdf->SetXY(37.5+$xreg,37+$yreg);
-	$pdf->SetFont('Arial','',9);
-	$pdf->Cell(55,10,utf8_decode('E-mail : facturation@mairiefaaa.pf'));
 	///////////////////////////////////fin en tete/////////////////////////////////////
 	///////////////////////////////////colonne droite/////////////////////////////////
-	//facture
-	$pdf->SetLineWidth(0.4);
-	//$pdf->Image('img/facture.png',156+$xreg,20.5+$yreg,23,3.2,'png');
-	$pdf->SetFont('Arialb','',13);
-	$pdf->SetXY(138+$xreg,17.5+$yreg);
-	if($facturevalidation){
-		$pdf->Cell(62,7,utf8_decode('FACTURE'),1,1,'C');
-	}else{
-		$pdf->Cell(62,7,utf8_decode('DEVIS'),1,1,'C');
-	}
-	//$pdf->Rect(138+$xreg,18.5+$yreg,62,7);
-
-	//date d'édition
-	$pdf->SetXY(139+$xreg,33+$yreg);
-	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(55,10,utf8_decode('Date d\'édition : ').$datefacture);
-
-	//n.facture
-	$pdf->SetXY(139+$xreg,37+$yreg);
-	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(55,10,utf8_decode('N° facture : ').$nofacture);
+	
+	//Date
+	$pdf->SetXY($X+100,$Y);
+	$pdf->SetFont("Arial","",10);
+	$pdf->Cell(55,3,"Faa'a le ".$today,0);
 
 
 
 	///////////////////////////////////fin colonne droite////////////////////////////
 
-	/////////////////////////////////details//////////////////////////////////////
+	/////////////////////////////////info exp/dest //////////////////////////////////////
+	//Le Maire
+	$pdf->SetY(60);
+	$pdf->SetFont("times","",18);
+	$pdf->Cell(0,10,"Le Maire",0,1,"C");
+	//Destinataire
+	$pdf->SetY(70);
+	$pdf->SetFont("Arial","",10);
+	$pdf->Multicell(0,5,utf8_decode("à\n$civilite $client\n$contact"),0,"C");
+	$currentY = $pdf->GetY();
+	$pdf->SetY($currentY+10);
+	$pdf->SetFont("Arialb","U",10);
+	$pdf->Cell(20,5,utf8_decode("Objet :"),0,0,"L");
+	$pdf->SetFont("Arialb","",10);
+	$pdf->Cell(0,5,utf8_decode("Relance des factures impayées"),0,1,"L");
+	$pdf->SetFont("Arial","U",10);
+	$pdf->Cell(20,5,utf8_decode("N/Réf :"),0,0,"L");
+	$pdf->SetFont("Arial","",10);
+	$pdf->Cell(0,5,utf8_decode("Facture $typefacture N° $nofacture du $datefacture"),0,1,"L");
+	
+	$Y = $pdf->GetY();
+	$pdf->SetY($Y+20);
+	
+	$text = "$civilite,\n\nJe vous informe que, sauf erreur de ma part, votre extrait de compte ci-joint présente un impayé ".
+	"envers la Commune de FAA'A d'un montant de $montant FCP au titre de la (des) $typefacture.\n\n".
+	"Aussi, je vous demande de bien vouloir vous rapprocher de la Régie municipale pour vous acquitter de la somme due.\n\n".
+	"A défaut de réponse de votre part dans un délai de 45 jours à compter de la date du présent courrier,".
+	"votre dossier sera transmis en contentieux à la Trésorerie des Iles du Vent, des Australes et des Archipels pour commandement de payer.\n\n".
+	"La Régie reste à votre disposition au 800.960 poste 421 pour toute entente préalable avant poursuite.\n\n".
+	"Je vous prie d'agréer, $civilite, l'expression de mes salutations distinguées";
+	
+	$pdf->Multicell(0,5,utf8_decode($text),0,"L");
+	
+	$pdf->Image("img/marianne.jpg",150,220,31,31,"jpg");
 
 	////////////////////////////////information////////////////////////////////////
-
-	$pdf->SetLineWidth(0.4);
-	$pdf->Rect(12+$xreg,222+$yreg,187.6,35);
-	$pdf->SetXY(12+$xreg,222+$yreg);
-	$pdf->SetFont('Arial','BU',10);
-	$pdf->Cell(187.6,5,'Pour votre information :',0);
-	$pdf->SetXY(12+$xreg,227.5+$yreg);
-	$pdf->SetFont('Arial','BI',10);
-	$pdf->MultiCell(187.6,4,utf8_decode($delib),0);
-		$pdf->SetXY(12+$xreg,245+$yreg);
-		$pdf->SetFont('Arial','I',10);
-		$pdf->MultiCell(187.6,4,utf8_decode('Merci de bien vouloir vous acquitter de la présente facture soit auprès de la Régie de la Commune de FAA\'A ou de nous faire parvenir votre règlement soit par chèque soit par virement à l\'ordre du Régisseur de recettes de la Mairie de FAA\'A, domicilié à l\'agence CCP Faa\'a centre, compte n°14168 00001 9024406F068 59'),0);
+	
+	$pdf->Line(20,273,190,273);
+	$pdf->SetXY(20,273);
+	$pdf->SetFont("Arial","",7);
+	$pdf->Cell(0,3,utf8_decode("PK 4 côté mer - BP 60 002 - 98702 Faa’a Centre - Tahiti / Tél. : (689) 800 960 - Télécopie : (689) 834 890 - E-mail : mairiefaaa@mail.pf
+"),0,0,"C");
 
 	////////////////////////////////fin information////////////////////////////////////
 	
 	
 	$pdf->Output();	
 	
+}
+
+function getchrono(){
+        $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+        $result = $mysqli->query("SELECT MAX(`chrono`) FROM `chrono_relance`");
+        $row = $result->fetch_row();
+        $chrono = $row[0];
+
+	$mysqli->close();
+
+        $newchrono = updatechrono($chrono);
+
+        return $newchrono;
+}
+
+function updatechrono($currentchrono){
+	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+	$chronoyear = substr($currentchrono, 0, 4);
+	$thisyear = date("Y");
+
+	if($chronoyear===$thisyear){
+		$newchrono = $currentchrono+1;
+		$mysqli->query("UPDATE `chrono_relance` SET `chrono`=$newchrono WHERE `chrono`=$currentchrono");
+	}else{
+		$newchrono = $thisyear."00001";
+		$mysqli->query("INSERT INTO `chrono_relance` (`chrono`) VALUES ($newchrono)");
+
+	}
+	$mysqli->close();
+	return $newchrono;
 }
 
 
