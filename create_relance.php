@@ -5,9 +5,12 @@ require_once('global_functions.php');
 
 $idfacture = $_GET['idfacture'];
 $typefacture = $_GET['type'];
+$table = $_GET['table'];
 $montant = trispace($_GET['montant']);
 $nofacture = $_GET['communeid'];
+$lastrelancedate = $_GET['relancedate'];
 $datefacture = reverse_date_to_normal($_GET['date']);
+$chrono = updatechrono($table,$idfacture);
 
 $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
 
@@ -18,7 +21,6 @@ switch($typefacture){
 	    $row = $result->fetch_array(MYSQLI_ASSOC);
 	    $client = $row["clientnom"]." ".$row["clientprenom"];
 	    $contact = "BP ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
-	    
 	    switch($row["clientcivilite"]){
 		case "Mr":
 		    $civilite = "Monsieur";
@@ -30,11 +32,17 @@ switch($typefacture){
 		    $civilite = "Mademoiselle";
 		break;
 	    }
-
+	    $client = $civilite." ".$client;
+	    
 	break;
 
 	case "etal":
-		
+	    $query = "SELECT `mandataires`.`mandataireprefix`,`mandataires`.`mandataireRS`,`mandataires`.`mandatairenom`,`mandataires`.`mandataireprenom`,`mandataires`.`mandatairebp`,`mandataires`.`mandatairecp`,`mandataires`.`mandataireville` FROM `mandataires` INNER JOIN `factures_etal` ON `factures_etal`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_etal`.`idfacture` = '$idfacture'";
+	    $result = $mysqli->query($query);
+	    $row = $result->fetch_array(MYSQLI_ASSOC);
+	    $client = $row["mandataireprefix"]." ".$row["mandataireRS"]."\nAttn : ".$row["mandatairenom"]." ".$row["mandataireprenom"];
+	    $contact = "BP ".$row['mandatairebp']." - ".$row['mandatairecp']." ".$row['mandataireville'];
+	    $civilite = "Monsieur, Madame";
 	break;
 
 	case "amarrage":
@@ -44,13 +52,12 @@ switch($typefacture){
 
 
 
-
-genpdf($typefacture,$datefacture,$nofacture,$montant,$civilite,$client,$contact);
+genpdf($typefacture,$datefacture,$nofacture,$montant,$civilite,$client,$contact,$chrono);
 
 $mysqli->close();
 
 
-function genpdf($typefacture,$datefacture,$nofacture,$montant,$civilite,$client,$contact){	
+function genpdf($typefacture,$datefacture,$nofacture,$montant,$civilite,$client,$contact,$chrono){	
 	$pdf=new FPDF("P","mm","A4");
 	$pdf->AddPage();
 	$pdf->SetMargins(20,20);
@@ -78,7 +85,7 @@ function genpdf($typefacture,$datefacture,$nofacture,$montant,$civilite,$client,
     
 	$pdf->SetXY($X+1,$Y+8);
 	$pdf->SetFont("Arial","",12);
-	$pdf->Cell(55,5,utf8_decode("N°       /DAF/FTR-Régie-hp"),1,1,"C");
+	$pdf->Cell(55,5,utf8_decode("N° $chrono/DAF/FTR-Régie-hp"),1,1,"C");
 	//$X=$pdf->GetX();
 	$Y=$pdf->GetY();
 	$pdf->SetXY($X,$Y);
@@ -112,7 +119,7 @@ function genpdf($typefacture,$datefacture,$nofacture,$montant,$civilite,$client,
 	//Destinataire
 	$pdf->SetY(70);
 	$pdf->SetFont("Arial","",10);
-	$pdf->Multicell(0,5,utf8_decode("à\n$civilite $client\n$contact"),0,"C");
+	$pdf->Multicell(0,5,utf8_decode("à\n$client\n$contact"),0,"C");
 	$currentY = $pdf->GetY();
 	$pdf->SetY($currentY+10);
 	$pdf->SetFont("Arialb","U",10);
@@ -154,34 +161,12 @@ function genpdf($typefacture,$datefacture,$nofacture,$montant,$civilite,$client,
 	
 }
 
-function getchrono(){
-        $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-        $result = $mysqli->query("SELECT MAX(`chrono`) FROM `chrono_relance`");
-        $row = $result->fetch_row();
-        $chrono = $row[0];
-
-	$mysqli->close();
-
-        $newchrono = updatechrono($chrono);
-
-        return $newchrono;
-}
-
-function updatechrono($currentchrono){
+function updatechrono($table,$idfacture){
 	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
-	$chronoyear = substr($currentchrono, 0, 4);
-	$thisyear = date("Y");
-
-	if($chronoyear===$thisyear){
-		$newchrono = $currentchrono+1;
-		$mysqli->query("UPDATE `chrono_relance` SET `chrono`=$newchrono WHERE `chrono`=$currentchrono");
-	}else{
-		$newchrono = $thisyear."00001";
-		$mysqli->query("INSERT INTO `chrono_relance` (`chrono`) VALUES ($newchrono)");
-
-	}
+	$mysqli->query("INSERT INTO `chrono_relance` (`table`,`idfacture`,`date`) VALUES ('$table','$idfacture',NOW())");
+	$lastid = $mysqli->insert_id;
 	$mysqli->close();
-	return $newchrono;
+	return $lastid;
 }
 
 

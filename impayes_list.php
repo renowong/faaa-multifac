@@ -93,7 +93,7 @@ function getetallist($client,$range){
                 "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'>$dayslate jours</td>".
-		"<td><a href='create_relance.php?idfacture=".$row['idfacture']."&type=$type&montant=".$row["montantfcp"]."&communeid=".$row["communeid"]."&date=".$row["datefacture"]."' target='_blank'><img src='img/gmail.png' /></a></td></tr>";
+		"<td><a href='create_relance.php?idfacture=".$row['idfacture']."&type=$type&table=factures_etal&montant=".$row["montantfcp"]."&communeid=".$row["communeid"]."&date=".$row["datefacture"]."' target='_blank'><img src='img/gmail.png' /></a></td></tr>";
         
 		$ar_ids[].=$row["idfacture"];
 	}
@@ -118,7 +118,7 @@ function getamarragelist($client,$range){
                 "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'>$dayslate jours</td>".
-		"<td><a href='create_relance.php?idfacture=".$row['idfacture']."&type=$type&montant=".$row["montantfcp"]."&communeid=".$row["communeid"]."&date=".$row["datefacture"]."' target='_blank'><img src='img/gmail.png' /></a></td></tr>";
+		"<td><a href='create_relance.php?idfacture=".$row['idfacture']."&type=$type&table=factures_amarrage&montant=".$row["montantfcp"]."&communeid=".$row["communeid"]."&date=".$row["datefacture"]."' target='_blank'><img src='img/gmail.png' /></a></td></tr>";
 		
 		$ar_ids[].=$row["idfacture"];
 	}
@@ -137,7 +137,7 @@ function getamarragelist($client,$range){
                 "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td><td class='center'>$dayslate jours</td>".
-		"<td><a href='create_relance.php?idfacture=".$row['idfacture']."&type=$type&montant=".$row["montantfcp"]."&communeid=".$row["communeid"]."&date=".$row["datefacture"]."' target='_blank'><img src='img/gmail.png' /></a></td></tr>";
+		"<td><a href='create_relance.php?idfacture=".$row['idfacture']."&type=$type&table=factures_amarrage&montant=".$row["montantfcp"]."&communeid=".$row["communeid"]."&date=".$row["datefacture"]."' target='_blank'><img src='img/gmail.png' /></a></td></tr>";
 		
 		$ar_ids[].=$row["idfacture"];
 	}
@@ -159,11 +159,21 @@ function getcantinelist($client,$range){
                 
                 $type='cantine';
                 $enfant_prenom = "<br/>".getEnfantPrenom($row['idfacture']);
+		
+		$relance_date = getRelance($row['idfacture']);
+		if(isset($relance_date)) {
+		    $relance_date_fr=french_date($relance_date);
+		    $titlerelance="Derni&egrave;re relance le ".$relance_date_fr;
+		}else{
+		    $relance_date_fr="";
+		    $titlerelance="";
+		}
+		
                 $output .= "<tr><td>$type$enfant_prenom</td><td><a href='clients.php?edit=".$row["clientid"]."&hideerrors=1'>".$row["clientcivilite"]." ".strtoupper(htmlentities($row["clientnom"]))." ".strtoupper(htmlentities($row["clientprenom"]))." ".strtoupper(htmlentities($row["clientprenom2"]))."</a></td>".
                 "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de ";
                 $output .= trispace($row["montantfcp"]);
                 $output .= " FCP (soit ".$row["montanteuro"]."&euro;)</td><td><a href='createpdf.php?idfacture=".$row['idfacture']."&type=$type' target='_blank'>$pdf</a></td>".
-                "<td class='center'>$dayslate jours</td><td><a href='create_relance.php?idfacture=".$row['idfacture']."&type=$type&montant=".$row["montantfcp"]."&communeid=".$row["communeid"]."&date=".$row["datefacture"]."' target='_blank'><img src='img/gmail.png' /></a></td></tr>";
+                "<td class='center'>$dayslate jours</td><td>$relance_date_fr<br/><a href='create_relance.php?idfacture=".$row['idfacture']."&type=$type&table=factures_cantine&montant=".$row["montantfcp"]."&communeid=".$row["communeid"]."&date=".$row["datefacture"]."&relancedate=$relance_date' target='_blank'><img src='img/gmail.png' title='$titlerelance'/></a></td></tr>";
 		
 		$ar_ids[].=$row["idfacture"];
         }
@@ -184,4 +194,13 @@ function getEnfantPrenom($idfacture){
     return $output;
 }
 
+function getRelance($idfacture){
+    $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+    $query = "SELECT `date` FROM `chrono_relance` WHERE `idfacture`='$idfacture' ORDER BY `chrono` DESC LIMIT 1";
+    $result = $mysqli->query($query);
+    $row = $result->fetch_array(MYSQLI_ASSOC);
+    $output = $row["date"];
+    $mysqli->close();
+    return $output;
+}
 ?>
