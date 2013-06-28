@@ -9,8 +9,17 @@ $table = $_GET['table'];
 $montant = trispace($_GET['montant']);
 $nofacture = $_GET['communeid'];
 $lastrelancedate = $_GET['relancedate'];
+$force = $_GET['force'];
 $datefacture = reverse_date_to_normal($_GET['date']);
-$chrono = updatechrono($table,$idfacture);
+
+if($lastrelancedate=='' || $force=='1'){
+    $chrono = updatechrono($table,$idfacture);
+    $today = date("d/m/Y");
+}else{
+    $chrono = getlastchrono($idfacture);
+    $today = reverse_date_to_normal($lastrelancedate);
+}
+
 
 $mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
 
@@ -46,22 +55,48 @@ switch($typefacture){
 	break;
 
 	case "amarrage":
-		
+		$type = gettypemandataire($idfacture,'factures_amarrage');
+		if($type=='C'){
+		    $query = "SELECT `clients`.`clientcivilite`,`clients`.`clientnom`,`clients`.`clientprenom`,`clients`.`clientbp`,`clients`.`clientcp`,`clients`.`clientville` FROM `clients` INNER JOIN `factures_amarrage` ON `factures_amarrage`.`idclient` = `clients`.`clientid` WHERE `factures_amarrage`.`idfacture` = '$idfacture'";
+		    $result = $mysqli->query($query);
+		    $row = $result->fetch_array(MYSQLI_ASSOC);
+		    $client = $row["clientnom"]." ".$row["clientprenom"];
+		    $contact = "BP ".$row['clientbp']." - ".$row['clientcp']." ".$row['clientville'];
+		    switch($row["clientcivilite"]){
+			case "Mr":
+			    $civilite = "Monsieur";
+			break;
+			case "Mme":
+			    $civilite = "Madame";
+			break;
+			case "Mlle":
+			    $civilite = "Mademoiselle";
+			break;
+		    }
+		    $client = $civilite." ".$client;
+		}else{
+		    $query = "SELECT `mandataires`.`mandataireprefix`,`mandataires`.`mandataireRS`,`mandataires`.`mandatairenom`,`mandataires`.`mandataireprenom`,`mandataires`.`mandatairebp`,`mandataires`.`mandatairecp`,`mandataires`.`mandataireville` FROM `mandataires` INNER JOIN `factures_amarrage` ON `factures_amarrage`.`idclient` = `mandataires`.`mandataireid` WHERE `factures_amarrage`.`idfacture` = '$idfacture'";
+		    $result = $mysqli->query($query);
+		    $row = $result->fetch_array(MYSQLI_ASSOC);
+		    $client = $row["mandataireprefix"]." ".$row["mandataireRS"]."\nAttn : ".$row["mandatairenom"]." ".$row["mandataireprenom"];
+		    $contact = "BP ".$row['mandatairebp']." - ".$row['mandatairecp']." ".$row['mandataireville'];
+		    $civilite = "Monsieur, Madame";
+		}
 	break;
 }
 
 
 
-genpdf($typefacture,$datefacture,$nofacture,$montant,$civilite,$client,$contact,$chrono);
+genpdf($typefacture,$datefacture,$nofacture,$montant,$civilite,$client,$contact,$chrono,$today);
 
 $mysqli->close();
 
 
-function genpdf($typefacture,$datefacture,$nofacture,$montant,$civilite,$client,$contact,$chrono){	
+function genpdf($typefacture,$datefacture,$nofacture,$montant,$civilite,$client,$contact,$chrono,$today){	
 	$pdf=new FPDF("P","mm","A4");
 	$pdf->AddPage();
 	$pdf->SetMargins(20,20);
-	$today = date("d/m/Y");
+	
 	$pdf->AddFont("Arialb","","arialb.php");
 	//$pdf->AddFont("Courier","","arialb.php");
 
@@ -169,5 +204,25 @@ function updatechrono($table,$idfacture){
 	return $lastid;
 }
 
+function getlastchrono($idfacture){
+	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+	$query = "SELECT `chrono` FROM `chrono_relance` WHERE `idfacture`='$idfacture' ORDER BY `chrono` DESC LIMIT 1";
+	$result = $mysqli->query($query);
+	$row = $result->fetch_array(MYSQLI_ASSOC);
+	$lastchrono = $row["chrono"];
+	$mysqli->close();
+	return $lastchrono;
+}
+
+function gettypemandataire($idfacture,$table){
+	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
+	$query = "SELECT `type_client` FROM `$table` WHERE `idfacture`='$idfacture'";
+	$result = $mysqli->query($query);
+	$row = $result->fetch_array(MYSQLI_ASSOC);
+	$type = $row["type_client"];
+	$mysqli->close();
+	return $type;
+	
+}
 
 ?>

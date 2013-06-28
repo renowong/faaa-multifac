@@ -22,7 +22,8 @@ $login = $cUser->userlogin();
 
 	$("#list_validation").load("impayes_list.php?type=all&range=0");
 	$( "#dialog-form" ).hide();
-	
+	$("#opaquediv").hide();
+	$("#confirm").draggable();
 	$("#box_search").chosen();
 	});
 	
@@ -73,7 +74,33 @@ $login = $cUser->userlogin();
 	    document.body.appendChild(myForm) ;
 	    myForm.submit() ;
 	    document.body.removeChild(myForm) ;
-	  }
+	}
+	
+	function relance_warning(lastdate,link){
+	    if(lastdate!==""){
+		fconfirm('Etes vous certain(e) de vouloir g\351n\351rer un nouveau courrier? Cette action est irr\351versible!',link);
+	    }else{
+		window.open(link, '_blank');
+	    }
+	}
+	
+	function fconfirm(text,link){
+	    $("#opaquediv").show();
+	    $("#confirm-text").empty();
+	    $("#confirm-text").html("<p>"+text+"</p>");
+	    $("#confirm").show();
+	    $("#confirm button").click(function(){
+		    if($(this).val()=='true'){
+			window.open(link+'&force=1', '_blank');
+		    }else{
+			window.open(link, '_blank');
+		    }
+		    $("#confirm").hide();
+		    $("#opaquediv").hide();
+		    $("#confirm button").off('click');
+	    });
+	    
+	}
 
 	function init(){
 		showCompte(<?php echo '"' . $arCompte[0] . '", "' . $arCompte[1] . '", "' . $arCompte[2] . '"' ?>);
@@ -110,6 +137,13 @@ $login = $cUser->userlogin();
 				</select>
 				<button onclick="filter_byclient();">Filtrer par client</button>
 		<br/><br/>
+		
+		<div id="opaquediv" style="position:absolute;top:0px;width:100%;height:100%;z-index:20;">
+		    <div id="confirm" class="ui-widget-content">
+			<div id="confirm-text"></div>
+			<button value="false">Non</button> <button value="true">Oui</button>
+		    </div>
+		</div>
 		
 		<div id="list_validation" style="height:600px;"></div>
 		
