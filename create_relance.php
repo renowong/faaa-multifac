@@ -169,7 +169,7 @@ function genpdf($typefacture,$datefacture,$nofacture,$montant,$civilite,$client,
 	$Y = $pdf->GetY();
 	$pdf->SetY($Y+20);
 	
-	$text = "$civilite,\n\nJe vous informe que, sauf erreur de ma part, votre extrait de compte ci-joint présente un impayé ".
+	$text = "$civilite,\n\nJe vous informe que, sauf erreur de ma part, vous présentez un impayé ".
 	"envers la Commune de FAA'A d'un montant de $montant FCP au titre de la (des) $typefacture.\n\n".
 	"Aussi, je vous demande de bien vouloir vous rapprocher de la Régie municipale pour vous acquitter de la somme due.\n\n".
 	"A défaut de réponse de votre part dans un délai de 45 jours à compter de la date du présent courrier,".
