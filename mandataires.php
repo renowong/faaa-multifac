@@ -80,7 +80,7 @@ require_once('mandataires_top.php');
 			
 			$('#txt_Telephone').keypress(function(event) {
 				if(event.which=='0'||event.which=='8') return true;
-				if ($("#txt_Telephone").val().length == 2 || $("#txt_Telephone").val().length == 5){
+				if ($("#txt_Telephone").val().length == 2 || $("#txt_Telephone").val().length == 5 || $("#txt_Telephone").val().length == 8){
 				$("#txt_Telephone").val($("#txt_Telephone").val() + "-");
 				}
 				return /^[0-9]+$/.test(String.fromCharCode(event.which));
@@ -88,7 +88,7 @@ require_once('mandataires_top.php');
 			
 			$('#txt_Telephone2').keypress(function(event) {
 				if(event.which=='0'||event.which=='8') return true;
-				if ($("#txt_Telephone2").val().length == 2 || $("#txt_Telephone2").val().length == 5){
+				if ($("#txt_Telephone2").val().length == 2 || $("#txt_Telephone2").val().length == 5 || $("#txt_Telephone2").val().length == 8){
 				$("#txt_Telephone2").val($("#txt_Telephone2").val() + "-");
 				}
 				return /^[0-9]+$/.test(String.fromCharCode(event.which));
@@ -96,7 +96,7 @@ require_once('mandataires_top.php');
 			
 			$('#txt_Fax').keypress(function(event) {
 				if(event.which=='0'||event.which=='8') return true;
-				if ($("#txt_Fax").val().length == 2 || $("#txt_Fax").val().length == 5){
+				if ($("#txt_Fax").val().length == 2 || $("#txt_Fax").val().length == 5 || $("#txt_Fax").val().length == 8){
 				$("#txt_Fax").val($("#txt_Fax").val() + "-");
 				}
 				return /^[0-9]+$/.test(String.fromCharCode(event.which));
@@ -252,7 +252,7 @@ require_once('mandataires_top.php');
 									<td>
 										<!--Telephone-->
 										<label for="txt_Telephone">T&eacute;l&eacute;phone</label><br />
-										<input type="text" name="txt_Telephone" id="txt_Telephone" value="<?php echo $_SESSION['values']['txt_Telephone'] ?>" size="20" maxlength="8" onBlur="validate(this.value, this.id);" />
+										<input type="text" name="txt_Telephone" id="txt_Telephone" value="<?php echo $_SESSION['values']['txt_Telephone'] ?>" size="20" maxlength="11" onBlur="validate(this.value, this.id);" />
 										<span id="txt_TelephoneFailed" class="<?php echo $_SESSION['errors']['Telephone'] ?> red"><br/>
 											Veuillez entrer un num&eacute;ro t&eacute;l&eacute;phone valide (ex: 80-09-67).
 										</span>
@@ -260,7 +260,7 @@ require_once('mandataires_top.php');
 									<td>
 										<!--Telephone Portable-->
 										<label for="txt_Telephone2">T&eacute;l&eacute;phone Portable</label><br />
-										<input type="text" name="txt_Telephone2" id="txt_Telephone2" value="<?php echo $_SESSION['values']['txt_Telephone2'] ?>" size="20" maxlength="8" onBlur="validate(this.value, this.id);" />
+										<input type="text" name="txt_Telephone2" id="txt_Telephone2" value="<?php echo $_SESSION['values']['txt_Telephone2'] ?>" size="20" maxlength="11" onBlur="validate(this.value, this.id);" />
 										<span id="txt_Telephone2Failed" class="<?php echo $_SESSION['errors']['Telephone2'] ?> red"><br/>
 											Veuillez entrer un num&eacute;ro t&eacute;l&eacute;phone valide (ex: 80-09-67).
 										</span>
@@ -270,7 +270,7 @@ require_once('mandataires_top.php');
 									<td>
 										<!--Fax-->
 										<label for="txt_Fax">Fax</label><br />
-										<input type="text" name="txt_Fax" id="txt_Fax" value="<?php echo $_SESSION['values']['txt_Fax'] ?>" size="20" maxlength="8" onBlur="validate(this.value, this.id);" />
+										<input type="text" name="txt_Fax" id="txt_Fax" value="<?php echo $_SESSION['values']['txt_Fax'] ?>" size="20" maxlength="11" onBlur="validate(this.value, this.id);" />
 										<span id="txt_FaxFailed" class="<?php echo $_SESSION['errors']['Fax'] ?> red"><br/>
 											Veuillez entrer un num&eacute;ro de fax valide (ex: 80-09-67).
 										</span>

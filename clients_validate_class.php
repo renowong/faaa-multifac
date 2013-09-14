@@ -303,12 +303,12 @@ class Validate {
 	private function validateTelephone($value) {
 		//return (!preg_match('^[0-9]{2}-*[0-9]{2}-*[0-9]{2}$', $value)) ? 0 : 1;
 		if ($value=='') return 1;
-		return (!preg_match('/^[0-9]{2}-[0-9]{2}-[0-9]{2}$/', $value)) ? 0 : 1;
+		return (!preg_match('/^[0-9]{2}-[0-9]{2}-[0-9]{2}(-[0-9]{2})?$/', $value)) ? 0 : 1;
 	}
 
 	private function validateFax($value) {
 		if ($value=='') return 1;
-		return (!preg_match('/^[0-9]{2}-[0-9]{2}-[0-9]{2}$/', $value)) ? 0 : 1;
+		return (!preg_match('/^[0-9]{2}-[0-9]{2}-[0-9]{2}(-[0-9]{2})?$/', $value)) ? 0 : 1;
 	}
 
 	private function validateBP($value) {
