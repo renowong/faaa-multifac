@@ -91,7 +91,7 @@ require_once('paiement_comptant_top.php');
 				var payeur = $("#txt_payeur").val();
 				var type = $("#hid_type").val();
 				var mode = $("#box_Mode").val();
-				var echelonnage = $("#chk_Echelon:checked").length;
+				var echelonnage = $("#chk_echelon").prop("checked");
 				var obs = $("#txt_obs").val();
 				var num_chq = $("#txt_num_cheque").val();
 				var organisme = $("#box_Organisme").val();
@@ -154,6 +154,8 @@ require_once('paiement_comptant_top.php');
 					message("Montant de l'\351chelon supp\351rieur au montant \340 r\351gler!");
 					return false;
 				}
+				
+				if(echelonnage) {echelonnage=1;}else{echelonnage=0;}
 						
 				$.get("paiement_comptant_submit.php",{id:id,payeur:payeur,type:type,mode:mode,echelonnage:echelonnage,montantech:montantech,obs:obs,numero_cheque:num_chq,organisme:organisme,date_virement:date_virement,date_tresor:date_tresor,info_tresor:info_tresor,tpe:tpe,montantfcp:montantfcp,montanteuro:montanteuro,restearegler:restearegler,table:table},
 				      function(data){
