@@ -79,7 +79,8 @@ $menu .= "<div id='dropmenu6' class='dropmenudiv' style='width: 180px;'>";
 if ($admin) $menu .= "<a href='compte.php?reset=1'>Nouveau Compte</a>";
 $menu .= "<a href='compte.php?modif=0'>Modification de Compte</a>";
 if ($validator||$admin) $menu .= "<a href='migrate.php'>Migrations</a><a href='ecole_global_search.php'>Facturation Globale</a>".
-"<a href='cf_cps.php'>CF CPS</a>";
+"<a href='cf_cps.php'>CF CPS</a>".
+"<a href='rol_ssbp.php'>Suppression ROL des sans BP</a>";
 $menu .= "</div>";
 
 
