@@ -4,7 +4,7 @@ include_once('config.php');
 $allowedExts = array("txt");
 $extension = end(explode(".", $_FILES["file"]["name"]));
 if ((($_FILES["file"]["type"] == "text/plain")||($_FILES["file"]["type"] == "text/csv"))
-&& ($_FILES["file"]["size"] < 1000000)
+&& ($_FILES["file"]["size"] < 4000000)
 && in_array($extension, $allowedExts))
   {
   if ($_FILES["file"]["error"] > 0)
