@@ -168,9 +168,11 @@ require_once('clients_top.php');
 					//return /^[a-zA-Z\u00C0-\u00D6\u00D9-\u00F6\u00F9-\u00FD\-\ \']+$/.test(String.fromCharCode(event.which));
 				});
 				
-				if(edit==""|edit=="0"){
-						$('#txt_DateNaissance').datepicker({inline: true,changeMonth: true,changeYear: true,minDate: "-70Y",maxDate: "-18Y",yearRange: "-70:-18"});
-				}
+				//changement temporaire pour autoriser les enfants en tant que parents
+				//if(edit==""|edit=="0"){
+						//$('#txt_DateNaissance').datepicker({inline: true,changeMonth: true,changeYear: true,minDate: "-70Y",maxDate: "-18Y",yearRange: "-70:-18"});
+						$('#txt_DateNaissance').datepicker({inline: true,changeMonth: true,changeYear: true,minDate: "-70Y",maxDate: "0",yearRange: "-70:+0"});
+				//}
 				
 				$('#txt_dn_enfant').datepicker({inline: true,changeMonth: true,changeYear: true,minDate: "-18Y",maxDate: "0",yearRange: "-18:+0"});
 				$('#txt_entree_enfant').datepicker({inline: true,changeMonth: true,changeYear: true});
@@ -395,7 +397,7 @@ require_once('clients_top.php');
 									<td>
 										<!--Nom Patronimyque-->
 										<label for="txt_Nom">Nom<span class="red">*</span></label><br />
-										<input class="uppercase" type="text" name="txt_Nom" id="txt_Nom" value="<?php echo $_SESSION['values']['txt_Nom'] ?>" size="20" maxlength="20" onBlur="validate(this.value, this.id);" <? if($_GET['edit']>0) echo 'READONLY'; ?>/>
+										<input class="uppercase" type="text" name="txt_Nom" id="txt_Nom" value="<?php echo $_SESSION['values']['txt_Nom'] ?>" size="20" maxlength="20" onBlur="validate(this.value, this.id);" />
 										<span id="txt_NomFailed" class="<?php echo $_SESSION['errors']['Nom'] ?> red"><br/>
 										Veuillez entrer un nom valide.
 										</span>
@@ -413,7 +415,7 @@ require_once('clients_top.php');
 									<td>
 										<!--Prenom-->
 										<label for="txt_Prenom">Pr&eacute;nom<span class="red">*</span></label><br />
-										<input class="uppercase" type="text" name="txt_Prenom" id="txt_Prenom" value="<?php echo $_SESSION['values']['txt_Prenom'] ?>" size="20" maxlength="20" onBlur="validate(this.value, this.id);" <? if($_GET['edit']>0) echo 'READONLY'; ?>/>
+										<input class="uppercase" type="text" name="txt_Prenom" id="txt_Prenom" value="<?php echo $_SESSION['values']['txt_Prenom'] ?>" size="20" maxlength="20" onBlur="validate(this.value, this.id);" />
 										<span id="txt_PrenomFailed" class="<?php echo $_SESSION['errors']['Prenom'] ?> red"><br/>
 											Veuillez entrer un pr&eacute;nom valide.
 										</span>
