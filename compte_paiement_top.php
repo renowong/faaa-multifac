@@ -34,17 +34,17 @@ function getAllFactures($id,$type){
 				   $classpurple = " class=\"purple\" title=\"Facture b\351n\351ficiant d'une bourse\"";
 				   $check = "<img src='img/checked.png' alt='checked' style='width:32px;height:32px;'/>";
 				   $montantbourse = get_bourse($row['idfacture']);
-				   $infobourse = "<br/>Prise en charge par la bourse pour un montant de <b>$montantbourse FCP</b>";
+				   //$infobourse = "<br/>Prise en charge par la bourse pour un montant de <b>$montantbourse FCP</b>";
 				}else{
 				   $classpurple = "";
 				   $check = "";
 				   $montantbourse = "";
-				   $infobourse = "";
+				   //$infobourse = "";
 				}
 				
 				$output .= "<tr id=\"tr".$row['idfacture']."\"$classpurple><td>$typef$enfant_prenom</td>";
 				$output .= "<td>Facture ".$row["communeid"]." du ".french_date($row["datefacture"])." montant de <b>".trispace($row["montantfcp"])." FCP</b> (soit ".$row["montanteuro"]." &euro;)".$infobourse;
-				if($row["restearegler"]!==$row["montantfcp"]) {$output .= "<br/>Reste &agrave; r&eacute;gler : <b>".trispace($row["restearegler"])." FCP</b>";}
+				$output .= "<br/>Reste &agrave; r&eacute;gler : <b>".trispace($row["restearegler"])." FCP</b>";
 				$output .= "<br/>Infos : ".$comment;
 				$output .= "<br/>Obs : ".$row["obs"];
 				$output .= "</td><td style=\"text-align:center\"><a href=\"createpdf.php?idfacture=".$row['idfacture']."&type=$typef\" target=\"_blank\">$pdf</a></td>";

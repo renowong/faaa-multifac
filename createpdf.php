@@ -643,10 +643,10 @@ function get_solde($idfacture,$idclient,$table,$idenfant){
 	foreach($result_array as &$value){
 		$solde += $value['restearegler'];
 		
-		$montantpayecps = get_cps_paiements($value['idfacture']);
-		if(!$montantpayecps>0){
-			$solde -= get_bourse($value['idfacture']);
-		}
+		//$montantpayecps = get_cps_paiements($value['idfacture']);
+		//if($montantpayecps==0){
+		//	$solde -= get_bourse($value['idfacture']);
+		//}
 		
 	}
 	return $solde;

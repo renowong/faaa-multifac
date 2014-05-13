@@ -185,8 +185,8 @@ function enterbourse($factureid,$mode,$montant){
 		$ecole = $row['nomecole'];
 		
 		
-		$query = "INSERT INTO `bourses` (`idbourse`, `type`, `nom`, `prenom`, `status`, `ecole`, `classe`, `dn`, `montant`, `date`) ".
-		"VALUES (NULL, '$mode','$nom','$prenom','$status','$ecole','$classe','$dn','$montant',CURRENT_TIMESTAMP)";
+		$query = "INSERT INTO `bourses` (`idbourse`, `type`, `nom`, `prenom`, `status`, `ecole`, `classe`, `dn`, `montant`, `date`,`idfacture`) ".
+		"VALUES (NULL, '$mode','$nom','$prenom','$status','$ecole','$classe','$dn','$montant',CURRENT_TIMESTAMP,'$factureid')";
 		$mysqli->query($query);
 		$mysqli->close();
 		
