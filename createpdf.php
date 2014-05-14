@@ -628,7 +628,7 @@ function get_solde($idfacture,$idclient,$table,$idenfant){
 	$mysqli = new mysqli(DBSERVER, DBUSER, DBPWD, DB);
 	
 	if($idenfant>0){
-		$result = $mysqli->query("SELECT `$table`.`restearegler`,`$table`.`idfacture` FROM `$table` INNER JOIN `".$table."_details` ON `$table`.`idfacture`=`".$table."_details`.`idfacture` WHERE `$table`.`idfacture`<'$idfacture' AND `$table`.`idclient`='$idclient' AND `$table`.`reglement`='0' AND `$table`.`acceptation`='1' AND `".$table."_details`.`idenfant`='$idenfant'");
+		$result = $mysqli->query("SELECT `$table`.`restearegler`,`$table`.`idfacture`,`".$table."_details`.`idtarif` FROM `$table` INNER JOIN `".$table."_details` ON `$table`.`idfacture`=`".$table."_details`.`idfacture` WHERE `$table`.`idfacture`<'$idfacture' AND `$table`.`idclient`='$idclient' AND `$table`.`reglement`='0' AND `$table`.`acceptation`='1' AND `".$table."_details`.`idenfant`='$idenfant'");
 	}else{
 		$result = $mysqli->query("SELECT `restearegler`,`idfacture` FROM `$table` WHERE `idfacture`<'$idfacture' AND `idclient`='$idclient' AND `reglement`='0' AND `acceptation`='1'");
 	}
@@ -643,10 +643,13 @@ function get_solde($idfacture,$idclient,$table,$idenfant){
 	foreach($result_array as &$value){
 		$solde += $value['restearegler'];
 		
-		//$montantpayecps = get_cps_paiements($value['idfacture']);
-		//if($montantpayecps==0){
-		//	$solde -= get_bourse($value['idfacture']);
-		//}
+		if($value['idtarif']=='15' || $value['idtarif']=='16'){ //tarif CPS 50% et CPS 100% seulement!!
+			$montantpayecps = get_cps_paiements($value['idfacture']);
+			if($montantpayecps==0){
+				$solde -= get_bourse($value['idfacture']);
+			}
+		}
+		
 		
 	}
 	return $solde;
