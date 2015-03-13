@@ -379,7 +379,11 @@ require_once('clients_top.php');
 										<label for="chk_status">Compte Actif</label>
 										<input type="checkbox" name="chk_status" id="chk_status" value="1" <? if($_SESSION['values']['chk_status']) echo 'checked="checked"'; ?> <? echo $actiflock ?>/>
 										<div>
-										<? echo $totalfactures; ?>
+										<?
+										if($svc=="FTR"||$svc=="REG"||$svc=="INF"){
+											echo $totalfactures;
+										}
+										?>
 										</div>
 									</td>
 									<td>
@@ -589,7 +593,13 @@ require_once('clients_top.php');
 			</tr>
 		</table>
 		</div>
-		<div id="divhistorique">
+	<?php
+		if($svc=="FTR"||$svc=="REG"||$svc=="INF"){
+			echo "<div id='divhistorique'>";
+		} else {
+			echo "<div id='divhistorique' style='display: none;'>";
+		}
+	?>
 			<h1>Status des factures li&eacute;es au compte</h1> <button id="togglehistory">Afficher</button> <button id="showreject">Afficher les rejets</button>	
 			<div id="historique">
 				<?php 
@@ -598,7 +608,15 @@ require_once('clients_top.php');
 			<br/>
 			</div>
 		</div>
-		<div id="divavoirs">
+		
+	<?php
+		if($svc=="FTR"||$svc=="REG"||$svc=="INF"){
+			echo "<div id='divavoirs'>";
+		} else {
+			echo "<div id='divavoirs' style='display: none;'>";
+		}
+	?>		
+
 			<h1>Avoirs</h1> <button id="toggleavoirs">Afficher</button> <button onclick="div_avoir('avoirs.php');">Ajouter</button>	
 			<div id="avoirs">
 				<?php 
