@@ -22,7 +22,7 @@ $menu = "<div class='chromestyle' id='chromemenu'>".
 "<li><a href='#' data='dropmenu0'>Accueil</a></li>".
 "<li><a href='#' data='dropmenu1'>Nouveau</a></li>".
 "<li><a href='#' data='dropmenu2'>Comptes</a></li>";
-if (!empty($_SESSION['client'])) $menu .="<li><a href='#' data='dropmenu3'>Facturation</a></li>";
+if (!empty($_SESSION['client'])&&($svc=="FTR"||$svc=="REG"||$svc=="INF")) $menu .="<li><a href='#' data='dropmenu3'>Facturation</a></li>";
 if ($svc=="REG"||$admin) $menu .="<li><a href='#' data='dropmenu4'>R&egrave;glement</a></li>";
 if ($svc=="REG"||$admin) $menu .= "<li><a href='#' data='dropmenu5'>Extractions</a></li>";
 $menu .= "<li><a href='#' data='dropmenu6'>Administration</a></li>".
