@@ -6,6 +6,7 @@ $serviceOptions = array("0" => "[S&eacute;lectionner]",
 "INF" => "Cellule Informatique",
 "REG" => "R&eacute;gie",
 "FTR" => "Facturation Taxes",
+"EDU" => "Education",
 "ETU" => "Etudes");
 $legend = 'Nouveau compte';
 
