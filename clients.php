@@ -595,36 +595,26 @@ require_once('clients_top.php');
 		</div>
 	<?php
 		if($svc=="FTR"||$svc=="REG"||$svc=="INF"){
-			echo "<div id='divhistorique'>";
-		} else {
-			echo "<div id='divhistorique' style='display: none;'>";
+			echo "<div id='divhistorique'>".
+			"<h1>Status des factures li&eacute;es au compte</h1> <button id='togglehistory'>Afficher</button> <button id='showreject'>Afficher les rejets</button>".
+			"<div id='historique'>";
+			if (isset($_GET['edit'])) echo buildFacturesEnCoursTable($_GET['edit'],$ar_f_c);
+			echo "<br/></div></div>";
 		}
 	?>
-			<h1>Status des factures li&eacute;es au compte</h1> <button id="togglehistory">Afficher</button> <button id="showreject">Afficher les rejets</button>	
-			<div id="historique">
-				<?php 
-				if (isset($_GET['edit'])) echo buildFacturesEnCoursTable($_GET['edit'],$ar_f_c);
-				 ?>
-			<br/>
-			</div>
-		</div>
-		
-	<?php
-		if($svc=="FTR"||$svc=="REG"||$svc=="INF"){
-			echo "<div id='divavoirs'>";
-		} else {
-			echo "<div id='divavoirs' style='display: none;'>";
-		}
-	?>		
 
+		<!-- obsolete
+		<div id="divavoirs">
 			<h1>Avoirs</h1> <button id="toggleavoirs">Afficher</button> <button onclick="div_avoir('avoirs.php');">Ajouter</button>	
 			<div id="avoirs">
 				<?php 
-				if (isset($_GET['edit'])) echo buildAvoirsTable($_GET['edit']);
+				//if (isset($_GET['edit'])) echo buildAvoirsTable($_GET['edit']);
 				 ?>
 			<br/>
 			</div>
 		</div>
+		//-->
+		
 		<br/><br/>
 		<div id="opaquediv" style="position:absolute;top:0px;width:100%;height:100%;z-index:20;">
 			<div style="background-color:white;" id="div_avoir" ></div>
