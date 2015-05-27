@@ -9,7 +9,7 @@ require_once('migrate_top.php');
 	<head>
 	<?php echo $title.$icon.$charset.$defaultcss.$chromecss.$jquery.$jqueryui.$message_div.$compte_div ?>
 	<script type="text/javascript">
-	<? print "var listclasses = ".json_encode(buildOptionsClasses()).";\n"; ?>
+	<?php print "var listclasses = ".json_encode(buildOptionsClasses()).";\n"; ?>
 
 	$(document).ready(function(){
 	$('.check:button').hide();
@@ -104,7 +104,7 @@ require_once('migrate_top.php');
 	</script>
 	</head>
 	<body>
-		<? include_once('menu.php'); ?>
+		<?php include_once('menu.php'); ?>
 		<div id="message" ></div>
 		<div id="compte_div"></div>
 		<div id="version">version <?php echo VERSION ?></div>
@@ -118,14 +118,14 @@ require_once('migrate_top.php');
 				</td>
 				<td>
 					<h1>A Migrer ---</h1>
-					S&eacute;lection &eacute;cole : <select name="e_amigrer" id="e_amigrer" onchange="javascript:load_classes(this.value,'c_amigrer');"><? echo buildOptionsSchools(); ?></select><br/>
+					S&eacute;lection &eacute;cole : <select name="e_amigrer" id="e_amigrer" onchange="javascript:load_classes(this.value,'c_amigrer');"><?php echo buildOptionsSchools(); ?></select><br/>
 					Classe : <select name="c_amigrer" id="c_amigrer"></select>
 					<!--<input type="text" size="5" maxlength="5" name="c_amigrer" id="c_amigrer"/>-->
 					<button onclick="charger('false');">Charger</button>
 				</td>
 				<td>
 					<h1>Migrer vers ---</h1>
-					S&eacute;lection &eacute;cole : <select name="e_migrer" id="e_migrer" onchange="javascript:load_classes(this.value,'c_migrer');"><? echo buildOptionsSchools(); ?></select><br/>
+					S&eacute;lection &eacute;cole : <select name="e_migrer" id="e_migrer" onchange="javascript:load_classes(this.value,'c_migrer');"><?php echo buildOptionsSchools(); ?></select><br/>
 					Classe : <select name="c_migrer" id="c_migrer"></select>
 					<!--<input type="text" size="5" maxlength="5" name="c_migrer" id="c_migrer"/>-->
 					<button onclick="migrer();">Migrer</button>

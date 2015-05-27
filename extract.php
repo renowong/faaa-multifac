@@ -130,11 +130,11 @@ switch ($type) {
 	</script>
 	</head>
 	<body>
-		<? include_once('menu.php'); ?>
+		<?php include_once('menu.php'); ?>
 		<div id="message" ></div>
 		<div id="compte_div"></div>
 		<br/><br/>
-		<h1>Module d'extraction <? print $modtitle; ?></h1><br/><br/>
+		<h1>Module d'extraction <?php print $modtitle; ?></h1><br/><br/>
 		<div id="version">version <?php echo VERSION ?></div>
 		<div id="div_rol">
 			<table>

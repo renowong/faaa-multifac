@@ -54,7 +54,7 @@ require_once('compte_top.php');
 		</script>
 	</head>
 	<body onload="init();">
-		<? include_once('menu.php'); ?>
+		<?php include_once('menu.php'); ?>
 		<div id="message" ></div>
 		<div id="compte_div"></div>
 		<div id="version">version <?php echo VERSION ?></div>

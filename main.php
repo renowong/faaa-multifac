@@ -5,9 +5,13 @@ require_once('checksession.php');
 require_once('checkyear.php');
 
 if (!empty($_SESSION['client'])) {
+		error_log("session - client NOT empty : OK");
 		$arCompte = getCompteDisplay();
 		$arCompte = preg_split("/,/", $arCompte);
-	}
+}
+else {
+	error_log("session - client empty");
+}
 	
 	
 $cUser = unserialize($_SESSION['user']);
@@ -57,7 +61,7 @@ $admin = $cUser->userisadmin();
 
 	</head>
 	<body>
-		<? include_once('menu.php'); ?>
+		<?php include_once('menu.php'); ?>
 		<div id="message" ></div>
 		<div id="compte_div"></div>
 		<div id="version">version <?php echo VERSION ?></div>

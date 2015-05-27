@@ -13,7 +13,7 @@ require_once('ecole_global_search_top.php');
 	
 
 	<script type="text/javascript">
-	<? print "var listclasses = ".json_encode(buildOptionsClasses()).";\n"; ?>
+	<?php print "var listclasses = ".json_encode(buildOptionsClasses()).";\n"; ?>
 	
 	//values for the progress bar//
 	/**/var percent;	 //////
@@ -166,7 +166,7 @@ require_once('ecole_global_search_top.php');
 	</script>
 	</head>
 	<body>
-		<? include_once('menu.php'); ?>
+		<?php include_once('menu.php'); ?>
 		<div id="message"></div>
 		<div id="seeall"></div>
 		<div id="compte_div"></div>
@@ -180,7 +180,7 @@ require_once('ecole_global_search_top.php');
 				</td>
 				<td>
 					<h1>Recherche par Ecole</h1>
-					S&eacute;lection &eacute;cole : <select name="slt_ecole" id="slt_ecole" onchange="javascript:load_classes(this.value,'slt_classe');"><? echo buildOptionsSchools(); ?></select><br/>
+					S&eacute;lection &eacute;cole : <select name="slt_ecole" id="slt_ecole" onchange="javascript:load_classes(this.value,'slt_classe');"><?php echo buildOptionsSchools(); ?></select><br/>
 					Classe : <select name="slt_classe" id="slt_classe"></select><button onclick="charger('false');">Charger</button>
 				</td>
 				<td><h1>P&eacute;riode</h1>

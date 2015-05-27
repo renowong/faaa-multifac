@@ -143,11 +143,11 @@ if (isset($_POST['box_search'])) {
 
 	</head>
 	<body onload="init();">
-		<? include_once('menu.php'); ?>
+		<?php include_once('menu.php'); ?>
 		<div id="dialog-confirm" title="Demande de confirmation">
 		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><div id="modaltext"></div></p>
 		</div>
-		<div id="message"><? echo $message ?></div>
+		<div id="message"><?php echo $message ?></div>
 		<div id="compte_div"></div>
 		<div id="version">version <?php echo VERSION ?></div>
 		<br/><br/>
@@ -165,23 +165,23 @@ if (isset($_POST['box_search'])) {
 			?>
 		</div>
 		<!-- Suggestions -->
-		<p>Veuillez entrer votre recherche avec les &eacute;l&eacute;ments suivants : "<? echo $example ?>"</p>
+		<p>Veuillez entrer votre recherche avec les &eacute;l&eacute;ments suivants : "<?php echo $example ?>"</p>
 		<small style="float:right; visibility:hidden;">Hidden ID Field: <input type="text" id="suggestid" value="" style="font-size: 10px; width: 20px;" disabled="disabled" /></small>
 		<br/>
 
 		<br/>
 
-			<form method="POST" action="<? echo $_SERVER['PHP_SELF'] . "?form=" . $_GET['form'] ?>" style="width:100%;text-align:center;">
+			<form method="POST" action="<?php echo $_SERVER['PHP_SELF'] . "?form=" . $_GET['form'] ?>" style="width:100%;text-align:center;">
 				<input type="checkbox" id="active_xml" />
 				<label for="active_xml" id="label_compte_desactive">Voir comptes d&eacute;sactiv&eacute;s</label>
 				<br/>
-				<label for="box_search"><? echo $label ?></label>
+				<label for="box_search"><?php echo $label ?></label>
 				<select name="box_search" id="box_search" data-placeholder="S&eacute;lectionner un compte" class="chzn-select" tabindex="2" style="width:450px;"></select>
 				<input type="submit" id="submitbutton" value="Ouvrir le dossier" />
-				<input type="hidden" name="reaffect" id="reaffect" value="<? echo $_GET['reaffect']; ?>"/>
-				<input type="hidden" name="reaffecttype" id="reaffecttype" value="<? echo $_GET['type']; ?>"/>
-				<input type="hidden" name="reaffectfrom" id="reaffectfrom" value="<? echo $arCompte[1]; ?>"/>
-				<input type="hidden" name="reaffectfromfullname" id="reaffectfromfullname" value="<? echo $arCompte[0]; ?>"/>
+				<input type="hidden" name="reaffect" id="reaffect" value="<?php echo $_GET['reaffect']; ?>"/>
+				<input type="hidden" name="reaffecttype" id="reaffecttype" value="<?php echo $_GET['type']; ?>"/>
+				<input type="hidden" name="reaffectfrom" id="reaffectfrom" value="<?php echo $arCompte[1]; ?>"/>
+				<input type="hidden" name="reaffectfromfullname" id="reaffectfromfullname" value="<?php echo $arCompte[0]; ?>"/>
 			</form>
 
 	</body>

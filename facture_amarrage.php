@@ -153,7 +153,7 @@ $comptetype = getCompteType();
 		var eau = $("#txt_eau").val();
 		var lieu = $("#txt_lieu").val();
 		var nav = $("#txt_nav").val();
-		var comptetype = "<? print $comptetype; ?>";
+		var comptetype = "<?php print $comptetype; ?>";
 		//alert (period);
 		$.get("facture_amarrage_submit.php",{fdata:fdata,clientid:clientid,period:period,py:py,lieu:lieu,nav:nav,edt:edt,eau:eau,comptetype:comptetype},
 		      function(data){
@@ -178,7 +178,7 @@ $comptetype = getCompteType();
 	</script>
 	</head>
 	<body onload="init();">
-		<? include_once('menu.php'); ?>
+		<?php include_once('menu.php'); ?>
 		<div id="dialog-confirm" title="Demande de confirmation">
 		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Cr&eacute;er le devis ?</p>
 		</div>

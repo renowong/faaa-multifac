@@ -110,7 +110,7 @@ $login = $cUser->userlogin();
 
 	</head>
 	<body onload="init();">
-		<? include_once('menu.php'); ?>
+		<?php include_once('menu.php'); ?>
 		<div id="message" ></div>
 		<div id="compte_div"></div>
 		<div id="version">version <?php echo VERSION ?></div>
@@ -129,7 +129,7 @@ $login = $cUser->userlogin();
 			<option value="3">3 mois et plus</option>
 		</select><br/><br/>
 				
-				<label for="box_search"><? echo $label ?></label>
+				<label for="box_search"><?php echo $label ?></label>
 				
 				<select name="box_search" id="box_search" data-placeholder="S&eacute;lectionner un compte" class="chzn-select" tabindex="2" style="width:450px;">
 					<option value=""></option>

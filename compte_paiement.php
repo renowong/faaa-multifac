@@ -52,7 +52,7 @@ require_once('compte_paiement_top.php');
 
 	</head>
 	<body onload="init();">
-		<? include_once('menu.php'); ?>
+		<?php include_once('menu.php'); ?>
 		<div id="message" ></div>
 		<div id="compte_div"></div>
 		<br/><br/>
@@ -62,7 +62,7 @@ require_once('compte_paiement_top.php');
 		<table>
 			<tr>
 				<th>Type de Facture</th><th>Facture</th><th>PDF</th><th>Payer</th><th>Bourse</th>
-				<? echo $listfacture_avalider ?>
+				<?php echo $listfacture_avalider ?>
 			</tr>
 		</table>
 		<br /><br />
@@ -70,7 +70,7 @@ require_once('compte_paiement_top.php');
 		<table>
 			<tr>
 				<th>Type de Facture</th><th>Facture</th><th>PDF</th><th>Re&ccedil;u</th>
-				<? echo $listfacture_validees ?>
+				<?php echo $listfacture_validees ?>
 			</tr>
 		</table>
 		<br />

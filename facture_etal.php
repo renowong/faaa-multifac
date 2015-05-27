@@ -152,7 +152,7 @@ require_once('facture_etal_top.php');
 	</script>
 	</head>
 	<body onload="init();">
-		<? include_once('menu.php'); ?>
+		<?php include_once('menu.php'); ?>
 		<div id="dialog-confirm" title="Demande de confirmation">
 		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Cr&eacute;er le devis ?</p>
 		</div>

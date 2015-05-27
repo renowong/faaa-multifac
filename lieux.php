@@ -106,7 +106,7 @@ require_once('lieux_top.php');
 		</script>
 	</head>
 	<body onload="init();">
-		<? include_once('menu.php'); ?>
+		<?php include_once('menu.php'); ?>
 		<div id="message" ></div>
 		<div id="compte_div"></div>
 		<div id="version">version <?php echo VERSION ?></div>
@@ -115,18 +115,18 @@ require_once('lieux_top.php');
 		<table>
 			<tr>
 				<td>
-					<form name="frmRegistration" id="frmRegistration" action="lieux_validate.php?validationType=php<? echo $edit ?>" method="POST">
+					<form name="frmRegistration" id="frmRegistration" action="lieux_validate.php?validationType=php<?php echo $edit ?>" method="POST">
 						<table id="tbllieu" class="tblform">
 							<tbody>
 								<tr>
 									<td>
 										<!--Status-->
 										<label for="chk_status">Lieu Actif</label>
-										<input class="input" type="checkbox" name="chk_status" id="chk_status" value="1" <? if($_SESSION['values']['chk_status']) echo 'checked="checked"'; ?> />
+										<input class="input" type="checkbox" name="chk_status" id="chk_status" value="1" <?php if($_SESSION['values']['chk_status']) echo 'checked="checked"'; ?> />
 									</td>
 									<td>
 										<label for="chk_principal">R&eacute;sidence Principale</label>
-										<input class="input" type="checkbox" name="chk_principal" id="chk_principal" value="1" <? if($_SESSION['values']['chk_principal']) echo 'checked="checked"'; ?> />
+										<input class="input" type="checkbox" name="chk_principal" id="chk_principal" value="1" <?php if($_SESSION['values']['chk_principal']) echo 'checked="checked"'; ?> />
 									</td>
 								</tr>
 								<tr>

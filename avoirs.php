@@ -75,7 +75,7 @@ function buildFacturesPayeesTable($id){
 		<h1>Module de demande d'avoir</h1>
 		
 		<form id="form_avoir" name="form_avoir">
-                <input type="hidden" id="cuser" name="cuser" value="<? print $cUser->userid(); ?>" />
+                <input type="hidden" id="cuser" name="cuser" value="<?php print $cUser->userid(); ?>" />
                 Avoir pour le client <b><?php echo $arCompte[0] ?></b><br /><br />
                 Lier l&apos;avoir &agrave; la facture :
                 <?php 

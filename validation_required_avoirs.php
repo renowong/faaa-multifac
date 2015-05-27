@@ -57,7 +57,7 @@ $userid = $cUser->userid();
 	}
 	
 	function validateavoir(avoirid, acceptation, comment){
-		var userid = '<? print $userid; ?>';
+		var userid = '<?php print $userid; ?>';
 	    $.post('avoirs_validate.php',{avoirid:avoirid,acceptation:acceptation,comment:comment,userid:userid},
 		   function(data){
 			$("#list_validation").empty();
@@ -73,7 +73,7 @@ $userid = $cUser->userid();
 
 	</head>
 	<body onload="init();">
-		<? include_once('menu.php'); ?>
+		<?php include_once('menu.php'); ?>
 		<div id="message" ></div>
 		<div id="compte_div"></div>
 		<div id="version">version <?php echo VERSION ?></div>

@@ -15,7 +15,7 @@ require_once('clients_top.php');
 		<script src="chosen/chosen.jquery.js" type="text/javascript"></script>
 		<script type="text/javascript" src="js/jquery.ui.datepicker-fr.js"></script>
 		<script type="text/javascript">
-		<? print "var listclasses = ".json_encode(buildOptionsClasses()).";\n"; ?>
+		<?php print "var listclasses = ".json_encode(buildOptionsClasses()).";\n"; ?>
 		/////////////////////////////////////jquery start here /////////////////////////////////
 			$(document).ready(function() {
 				
@@ -184,8 +184,8 @@ require_once('clients_top.php');
 				load_classes($("#slt_ecole_enfant").val(),'slt_classe_enfant');
 				
 				///////session info for the kids form//////////////
-				$("#slt_classe_enfant").val('<? print $_SESSION['values']['slt_enfantClasse']; ?>');
-				$("#slt_sexe_enfant").val('<? print $_SESSION['values']['slt_enfantSexe']; ?>');
+				$("#slt_classe_enfant").val('<?php print $_SESSION['values']['slt_enfantClasse']; ?>');
+				$("#slt_sexe_enfant").val('<?php print $_SESSION['values']['slt_enfantSexe']; ?>');
 			});
 			
 
@@ -355,7 +355,7 @@ require_once('clients_top.php');
 		</script>
 	</head>
 	<body>
-		<? include_once('menu.php'); ?>
+		<?php include_once('menu.php'); ?>
 		<div id="message" ></div>
 		<div id="compte_div"></div>
 		<div id="version">version <?php echo VERSION ?></div>
@@ -369,7 +369,7 @@ require_once('clients_top.php');
 		<table>
 			<tr>
 				<td>
-					<form name="frmRegistration" action="clients_validate.php?validationType=php<? echo $edit ?>" method="POST">
+					<form name="frmRegistration" action="clients_validate.php?validationType=php<?php echo $edit ?>" method="POST">
 						<table id="tblclient" class="tblform">
 							<tbody>
 								<tr><th colspan="2">Donn&eacute;es du compte</th></tr>
@@ -377,9 +377,9 @@ require_once('clients_top.php');
 									<td title="Option d&eacute;sactiv&eacute;e lorsque des factures sont en cours ou la liste des enfants n'est pas vide.">
 										<!--Status-->
 										<label for="chk_status">Compte Actif</label>
-										<input type="checkbox" name="chk_status" id="chk_status" value="1" <? if($_SESSION['values']['chk_status']) echo 'checked="checked"'; ?> <? echo $actiflock ?>/>
+										<input type="checkbox" name="chk_status" id="chk_status" value="1" <?php if($_SESSION['values']['chk_status']) echo 'checked="checked"'; ?> <?php echo $actiflock ?>/>
 										<div>
-										<?
+										<?php
 										if($svc=="FTR"||$svc=="REG"||$svc=="INF"){
 											echo $totalfactures;
 										}

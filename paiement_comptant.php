@@ -108,7 +108,7 @@ require_once('paiement_comptant_top.php');
 					var montanteuro = eval(montantfcp/119.332);
 					var restearegler = montantfcp;
 				}else{
-					<? print "var details = ".json_encode(getAmount()).";\n"; ?>
+					<?php print "var details = ".json_encode(getAmount()).";\n"; ?>
 					var montantfcp = details['montantfcp'];
 					var montanteuro = details['montanteuro'];
 					var restearegler = details['restearegler'];
@@ -240,7 +240,7 @@ require_once('paiement_comptant_top.php');
 		</script>
 	</head>
 	<body>
-		<? include_once('menu.php'); ?>
+		<?php include_once('menu.php'); ?>
 		<div id="dialog-confirm" title="Demande de confirmation">
 		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Valider le paiement ?</p>
 		</div>
@@ -275,7 +275,7 @@ require_once('paiement_comptant_top.php');
 									<!--Mode-->
 									<label for="box_Mode">Mode de paiement</label><br />
 									<select class="input" name="box_Mode" id="box_Mode" onchange="selectmode(this.value);">
-										<? print Modes(); ?>
+										<?php print Modes(); ?>
 									</select>
 								</td>
 								<td>
