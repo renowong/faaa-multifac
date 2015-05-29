@@ -31,9 +31,9 @@ switch ($type) {
 		}
 		
 		
-		$('#db').datepicker({inline: true,minDate: "-1Y",maxDate: "0"});
+		$('#db').datepicker({inline: true,minDate: "-3Y",maxDate: "0"});
 		
-		$('#df').datepicker({inline: true,minDate: "-1Y",maxDate: "0"});
+		$('#df').datepicker({inline: true,minDate: "-3Y",maxDate: "0"});
                 showCompte(<?php echo '"' . $arCompte[0] . '", "' . $arCompte[1] . '", "' . $arCompte[2] . '"' ?>);
 		
 		if(gup('type')=="tivaa"){
