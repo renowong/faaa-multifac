@@ -53,8 +53,8 @@ $today = date("Y-m-d");
 		$mysqli->query($query);
 	
 		$query = "INSERT INTO `".DB."`.`factures_cantine` (`idfacture`, `idclient`,".
-				 " `datefacture`, `communeid`, `montantfcp`, `montanteuro`, `restearegler`,`validation`,`date_validation`,`acceptation`,`obs`)".
-				 " VALUES (NULL, '".$clientid."', '".$today."', '".$chrono."', '".$totalfcp."', '".$totaleuro."', '".$totalfcp."', '1', '".$today."', '1', '".$period."')";
+				 " `datefacture`, `communeid`, `montantfcp`, `montanteuro`, `restearegler`,`validation`,`date_validation`,`acceptation`,`obs`,`comment`)".
+				 " VALUES (NULL, '".$clientid."', '".$today."', '".$chrono."', '".$totalfcp."', '".$totaleuro."', '".$totalfcp."', '1', '".$today."', '1', '".$period."', 'facturation globale')";
 	//return $query;
 	$mysqli->query($query);
 	$lastid = $mysqli->insert_id; //use it to insert the details.
